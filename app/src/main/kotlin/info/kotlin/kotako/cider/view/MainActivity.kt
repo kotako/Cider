@@ -1,6 +1,5 @@
 package info.kotlin.kotako.cider.view
 
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -31,5 +30,6 @@ class MainActivity: AppCompatActivity() , MainActivityContract{
 //  viewModelから実行され、viewの変更を行う
     override fun startPostActivity() {
         Toast.makeText(this, "start Post", Toast.LENGTH_SHORT).show()
+        PostActivity.start(this)
     }
 }

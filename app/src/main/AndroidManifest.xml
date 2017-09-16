@@ -21,7 +21,7 @@
 
         <activity
             android:name=".view.PostActivity"
-            android:theme="@style/AppTheme.NoActionBarTheme" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".view.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBarTheme" />

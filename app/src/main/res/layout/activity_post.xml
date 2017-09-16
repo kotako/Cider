@@ -1,8 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-</LinearLayout>
+    <data>
+        <!--ViewModelにバインド-->
+        <variable
+            name="viewModel"
+            type="info.kotlin.kotako.cider.viewmodel.PostViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/imageView_tweet_author_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:onClick="@{viewModel::onIconClicked}"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/textView_tweet_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/imageView_tweet_author_icon"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:hint="@string/hint_tweet" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary">
+
+            <ImageButton
+                android:id="@+id/bbn_camera"
+                android:onClick="@{viewModel::onCameraClicked}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:src="@mipmap/photo_camera_white"
+                android:theme="@style/ButtonHighLight" />
+
+            <ImageButton
+                android:id="@+id/bbn_media"
+                android:onClick="@{viewModel::onMediaClicked}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/bbn_camera"
+                android:backgroundTint="@color/colorPrimary"
+                android:src="@mipmap/insert_photo_white" />
+
+            <ImageButton
+                android:id="@+id/bbn_music"
+                android:onClick="@{viewModel::onMusnoteClicked}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/bbn_media"
+                android:backgroundTint="@color/colorPrimary"
+                android:src="@mipmap/musnote_white" />
+
+            <ImageButton
+                android:id="@+id/bbn_location"
+                android:onClick="@{viewModel::onLocationClicked}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/bbn_music"
+                android:backgroundTint="@color/colorPrimary"
+                android:src="@mipmap/room_white"/>
+
+            <ImageButton
+                android:id="@+id/bbn_post"
+                android:onClick="@{viewModel::post}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="@color/colorPrimary"
+                android:src="@mipmap/send_white" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>
