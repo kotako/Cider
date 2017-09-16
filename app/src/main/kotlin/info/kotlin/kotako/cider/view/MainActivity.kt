@@ -2,6 +2,8 @@ package info.kotlin.kotako.cider.view
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.widget.Toast
@@ -22,8 +24,10 @@ class MainActivity: AppCompatActivity() , MainActivityContract{
 
     private fun setUpView(){
         val toolbar = findViewById(R.id.toolbar) as Toolbar
+        val navigation = findViewById(R.id.drawer) as DrawerLayout
         toolbar.title = getString(R.string.app_name)
         toolbar.setNavigationIcon(R.mipmap.menu_white)
+        toolbar.setNavigationOnClickListener { navigation.openDrawer(GravityCompat.START) }
     }
 
 //  ----implements MainActivityContract----
