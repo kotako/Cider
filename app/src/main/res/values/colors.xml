@@ -5,4 +5,5 @@
     <color name="colorAccent">#4ECDC4</color>
     <color name="colorTextPrimary">#FDFFFC</color>
     <color name="colorTextAccent">#01161E</color>
+    <color name="dividerColor">#49000000</color>
 </resources>

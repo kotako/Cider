@@ -30,4 +30,10 @@
     <style name="AppTheme.FlatButton" parent="Widget.AppCompat.Button.Borderless"/>
     <style name="AppTheme.FlatButton.Accent" parent="Widget.AppCompat.Button.Borderless.Colored"/>
 
+    <style name="divider">
+        <item name="android:background">@color/dividerColor</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+
 </resources>
