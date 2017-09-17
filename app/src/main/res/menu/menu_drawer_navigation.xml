@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:title="Main">
+        <menu>
+            <item
+                android:id="@+id/nav_home"
+                android:checkable="true"
+                android:icon="@mipmap/home_grey"
+                android:title="Home" />
+        </menu>
+    </item>
+
+    <item android:title="Others">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@mipmap/settings_grey"
+                android:title="Settings" />
+        </menu>
+    </item>
 </menu>
