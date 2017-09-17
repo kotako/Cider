@@ -2,7 +2,10 @@ package info.kotlin.kotako.cider.view
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.TabLayout
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -28,6 +31,10 @@ class MainActivity: AppCompatActivity() , MainActivityContract{
         toolbar.title = getString(R.string.app_name)
         toolbar.setNavigationIcon(R.mipmap.menu_white)
         toolbar.setNavigationOnClickListener { navigation.openDrawer(GravityCompat.START) }
+
+        val viewPager = findViewById(R.id.pager) as ViewPager
+        viewPager.adapter = PagerAdapter(supportFragmentManager)
+        (findViewById(R.id.tabs) as TabLayout).setupWithViewPager(viewPager)
     }
 
 //  ----implements MainActivityContract----
