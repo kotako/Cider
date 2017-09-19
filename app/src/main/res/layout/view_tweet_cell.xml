@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <ImageButton
+        android:id="@+id/imageview_cell_author_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/shape_profile_image"
+        android:scaleType="centerCrop"
+        android:src="" />
+
+    <TextView
+        android:id="@+id/textview_cell_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toRightOf="@id/imageview_cell_author_icon"
+        android:text="Name"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/textview_cell_screen_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/textview_cell_name"
+        android:gravity="center"
+        android:text="/@name" />
+
+    <TextView
+        android:id="@+id/textview_cell_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="10m"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+    <TextView
+        android:id="@+id/textview_cell_centent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_cell_name"
+        android:layout_toRightOf="@id/imageview_cell_author_icon"
+        android:text="うんちもらしました"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
+
+</RelativeLayout>
