@@ -20,19 +20,21 @@
 
             <ImageView
                 android:id="@+id/imageView_tweet_author_icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:onClick="@{viewModel::onIconClicked}"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/textView_tweet_author_name"
+                android:typeface="normal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:text="hogehoge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:layout_toRightOf="@id/imageView_tweet_author_icon"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                android:layout_toRightOf="@id/imageView_tweet_author_icon"/>
         </RelativeLayout>
 
         <include layout="@layout/divider" />

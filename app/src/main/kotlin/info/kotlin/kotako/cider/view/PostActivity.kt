@@ -37,8 +37,6 @@ class PostActivity : AppCompatActivity(), PostActivityContract {
     }
 
     //  ----implements PostActivityContract----
-    override fun makeToast(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
+    override fun makeToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 
 }
