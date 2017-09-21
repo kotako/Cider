@@ -31,7 +31,7 @@
                     <ImageView
                         android:id="@+id/imageView_profile_header"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
+                        android:layout_height="100dp"
                         android:layout_gravity="top"
                         android:fitsSystemWindows="true"
                         android:scaleType="centerCrop"
@@ -48,29 +48,29 @@
 
             <ImageButton
                 android:id="@+id/imageView_profile_photo"
-                android:layout_width="104dp"
-                android:layout_height="104dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_below="@id/appBarLayout_profile"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="-60dp"
+                android:layout_marginTop="-48dp"
                 android:background="@drawable/shape_profile_image"
                 android:elevation="5dp"
-                android:padding="20dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher" />
+                android:tint="#ffffff"
+                android:src="@mipmap/home_grey"/>
 
             <TextView
                 android:id="@+id/textView_profile_screen_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/appBarLayout_profile"
-                android:layout_marginLeft="24dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="-60dp"
+                android:layout_marginTop="-48dp"
                 android:layout_toRightOf="@id/imageView_profile_photo"
                 android:elevation="5dp"
-                android:text="ほげほげ"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:text="@string/name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="#f9f9f9" />
 
             <TextView
@@ -78,23 +78,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textView_profile_screen_name"
-                android:layout_marginLeft="24dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_toRightOf="@id/imageView_profile_photo"
                 android:elevation="5dp"
-                android:text="/@Takorras_"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:text="@string/screen_name"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                 android:textColor="#f9f9f9" />
 
             <Button
+                android:visibility="invisible"
                 android:id="@+id/button_profile_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_profile_name"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_toRightOf="@id/imageView_profile_photo"
-                android:text="ふぉろお" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="-40dp"
+                android:layout_alignParentRight="true"
+                android:background="#3498db"
+                android:textColor="#ffffff"
+                android:theme="?attr/borderlessButtonStyle"
+                android:text="Following" />
 
             <TextView
                 android:id="@+id/textVIew_profile_bio"
@@ -102,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageView_profile_photo"
                 android:layout_margin="16dp"
-                android:text="うんこだいすきぽこちんこ"
+                android:text="ほげほげほげほげ\nほげほげほげ"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <LinearLayout
@@ -111,10 +117,11 @@
                 android:layout_below="@id/textVIew_profile_bio"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
@@ -123,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        android:text="Follow"
+                        android:text="@string/follow"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
                     <TextView
@@ -136,9 +143,8 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:layout_weight="1">
 
                     <TextView
@@ -146,7 +152,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        android:text="Follower"
+                        android:text="@string/follower"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
                     <TextView

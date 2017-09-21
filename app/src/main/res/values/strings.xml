@@ -3,4 +3,8 @@
     <string name="from">From</string>
     <string name="take_photo">Take photo</string>
     <string name="hint_tweet">いまなにしてる？</string>
+    <string name="screen_name">screen_name</string>
+    <string name="name">Name</string>
+    <string name="follow">Follow</string>
+    <string name="follower">Follower</string>
 </resources>
