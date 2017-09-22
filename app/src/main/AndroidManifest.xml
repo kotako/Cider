@@ -25,6 +25,9 @@
         <activity
             android:name=".view.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBarTheme" />
+        <activity
+            android:name=".view.SettingsActivity"
+            android:theme="@style/AppTheme"/>
 
     </application>
 
