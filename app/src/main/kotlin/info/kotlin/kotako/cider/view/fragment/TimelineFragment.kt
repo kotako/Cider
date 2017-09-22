@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.view.fragment
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
-import info.kotlin.kotako.cider.databinding.ViewTweetCellBinding
+import info.kotlin.kotako.cider.databinding.FragmentTimelineBinding
+import info.kotlin.kotako.cider.view.activity.ProfileActivity
+import info.kotlin.kotako.cider.view.TimelineRecyclerViewAdapter
 import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
 
 class TimelineFragment: Fragment(), TimelineFragmentContract{
@@ -24,7 +26,15 @@ class TimelineFragment: Fragment(), TimelineFragmentContract{
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         //val binding = DataBindingUtil.inflate<ViewTweetCellBinding>(inflater, R.layout.fragment_timeline, container, false)
         //binding.viewModel = TimelineViewModel(this)
-        return inflater.inflate(R.layout.fragment_timeline, container, false)
+
+        val binding = DataBindingUtil.inflate<FragmentTimelineBinding>(inflater, R.layout.fragment_timeline, container, false)
+        binding.viewModel = TimelineViewModel(this)
+        binding.recyclerViewTimeline.adapter = TimelineRecyclerViewAdapter()
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
     }
 
     //  ----implements TimelineFragmentContract----

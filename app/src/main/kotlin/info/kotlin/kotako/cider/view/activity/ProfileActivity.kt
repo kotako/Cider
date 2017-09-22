@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.view.activity
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.widget.Toast
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.ProfileActivityContract
+import info.kotlin.kotako.cider.view.PagerAdapter
 
 class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
 

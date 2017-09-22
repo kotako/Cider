@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.view.fragment
 
 import android.app.Fragment
 import android.os.Bundle

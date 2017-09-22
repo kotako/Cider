@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.view.activity
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import info.kotlin.kotako.cider.R
+import info.kotlin.kotako.cider.view.fragment.SettingsFragment
 
 class SettingsActivity : AppCompatActivity() {
 

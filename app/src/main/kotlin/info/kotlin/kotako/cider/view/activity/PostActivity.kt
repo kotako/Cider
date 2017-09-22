@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.view.activity
 
 import android.content.Context
 import android.content.Intent

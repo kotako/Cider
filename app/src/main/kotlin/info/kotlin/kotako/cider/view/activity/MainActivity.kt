@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.view.activity
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -9,10 +9,11 @@ import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.widget.Toast
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.MainActivityContract
 import info.kotlin.kotako.cider.databinding.ActivityMainBinding
+import info.kotlin.kotako.cider.view.NavigationDrawerListener
+import info.kotlin.kotako.cider.view.PagerAdapter
 import info.kotlin.kotako.cider.viewmodel.MainViewModel
 
 class MainActivity: AppCompatActivity() , MainActivityContract {

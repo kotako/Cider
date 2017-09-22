@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include layout="@layout/view_tweet_cell" />
+    <data>
 
-    <include layout="@layout/view_tweet_cell" />
+        <variable
+            name="viewModel"
+            type="info.kotlin.kotako.cider.viewmodel.TimelineViewModel" />
+    </data>
 
-    <include layout="@layout/view_tweet_cell" />
-
-</LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_timeline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</layout>

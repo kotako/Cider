@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.viewmodel
 
 import android.view.View
 import info.kotlin.kotako.cider.contract.ProfileActivityContract
