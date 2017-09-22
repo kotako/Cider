@@ -1,109 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="info.kotlin.kotako.cider.viewmodel.TimelineViewModel" />
+    </data>
 
     <RelativeLayout
-        android:id="@+id/layout_cell_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/imageview_cell_author_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/shape_profile_image"
-            android:scaleType="centerCrop" />
-
-        <TextView
-            android:id="@+id/textview_cell_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_toRightOf="@id/imageview_cell_author_icon"
-            android:text="Name"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
-            android:typeface="normal" />
-
-        <TextView
-            android:id="@+id/textview_cell_screen_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/textview_cell_name"
-            android:gravity="center"
-            android:text="screen_name" />
-
-        <TextView
-            android:id="@+id/textview_cell_time"
+        <RelativeLayout
+            android:id="@+id/layout_cell_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="10m"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/textview_cell_centent"
+            <ImageButton
+                android:id="@+id/imageview_cell_author_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/shape_profile_image"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/textview_cell_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_toRightOf="@id/imageview_cell_author_icon"
+                android:text="Name"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+                android:typeface="normal" />
+
+            <TextView
+                android:id="@+id/textview_cell_screen_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/textview_cell_name"
+                android:gravity="center"
+                android:text="screen_name" />
+
+            <TextView
+                android:id="@+id/textview_cell_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="10m"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <TextView
+                android:id="@+id/textview_cell_centent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_cell_name"
+                android:layout_toRightOf="@id/imageview_cell_author_icon"
+                android:text="つらい"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_cell_sub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textview_cell_name"
-            android:layout_toRightOf="@id/imageview_cell_author_icon"
-            android:text="つらい"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
+            android:layout_below="@id/layout_cell_main"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:visibility="gone">
 
+            <ImageButton
+                android:id="@+id/button_cell_reply"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:src="@mipmap/reply_white" />
+
+            <ImageButton
+                android:id="@+id/button_cell_favorite"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:scaleType="centerInside"
+                android:src="@mipmap/favorite_grey"
+                android:tint="#ffffff" />
+
+            <ImageButton
+                android:id="@+id/button_cell_retweet"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_twitter_retweet_grey"
+                android:tint="#ffffff" />
+
+            <ImageView
+                android:id="@+id/button_cell_detail"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:src="@mipmap/list_grey"
+                android:tint="#ffffff" />
+        </LinearLayout>
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_cell_sub"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_cell_main"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp"
-        android:visibility="gone">
-
-        <ImageButton
-            android:id="@+id/button_cell_reply"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:src="@mipmap/reply_white" />
-
-        <ImageButton
-            android:id="@+id/button_cell_favorite"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:scaleType="centerInside"
-            android:src="@mipmap/favorite_grey"
-            android:tint="#ffffff" />
-
-        <ImageButton
-            android:id="@+id/button_cell_retweet"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:scaleType="centerInside"
-            android:src="@mipmap/ic_twitter_retweet_grey"
-            android:tint="#ffffff" />
-
-        <ImageView
-            android:id="@+id/button_cell_detail"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:src="@mipmap/list_grey"
-            android:tint="#ffffff" />
-    </LinearLayout>
-</RelativeLayout>
+</layout>

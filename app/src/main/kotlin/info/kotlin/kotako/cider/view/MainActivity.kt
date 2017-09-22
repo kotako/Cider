@@ -46,7 +46,6 @@ class MainActivity: AppCompatActivity() , MainActivityContract{
 //  ----implements MainActivityContract----
 //  viewModelから実行され、viewの変更を行う
     override fun startPostActivity() {
-        Toast.makeText(this, "start Post", Toast.LENGTH_SHORT).show()
-        ProfileActivity.start(this)
+        PostActivity.start(this)
     }
 }
