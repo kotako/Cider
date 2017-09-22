@@ -4,8 +4,11 @@
     <data>
 
         <variable
+            name="tweet"
+            type="info.kotlin.kotako.cider.model.Tweet" />
+        <variable
             name="viewModel"
-            type="info.kotlin.kotako.cider.viewmodel.TimelineViewModel" />
+            type="info.kotlin.kotako.cider.viewmodel.TweetViewModel" />
     </data>
 
     <RelativeLayout

@@ -3,6 +3,7 @@ package info.kotlin.kotako.cider.view.fragment
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,12 +25,10 @@ class TimelineFragment: Fragment(), TimelineFragmentContract{
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        //val binding = DataBindingUtil.inflate<ViewTweetCellBinding>(inflater, R.layout.fragment_timeline, container, false)
-        //binding.viewModel = TimelineViewModel(this)
-
         val binding = DataBindingUtil.inflate<FragmentTimelineBinding>(inflater, R.layout.fragment_timeline, container, false)
         binding.viewModel = TimelineViewModel(this)
         binding.recyclerViewTimeline.adapter = TimelineRecyclerViewAdapter()
+        binding.recyclerViewTimeline.layoutManager = LinearLayoutManager(context)
         return binding.root
     }
 
