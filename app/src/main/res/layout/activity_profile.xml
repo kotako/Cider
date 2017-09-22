@@ -5,7 +5,7 @@
         <!-- bind viewmodel -->
         <variable
             name="viewModel"
-            type="info.kotlin.kotako.cider.view.ProfileViewModel" />
+            type="info.kotlin.kotako.cider.viewmodel.ProfileViewModel" />
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
