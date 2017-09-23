@@ -12,8 +12,10 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import info.kotlin.kotako.cider.R
+import info.kotlin.kotako.cider.contract.AccountListActivityContract
+import info.kotlin.kotako.cider.viewmodel.AccountListViewModel
 
-class AccountActivity : AppCompatActivity() {
+class AccountActivity : AppCompatActivity(), AccountListActivityContract {
 
     companion object {
         fun start(context: Context) = context.startActivity(Intent(context, AccountActivity::class.java))
@@ -29,10 +31,11 @@ class AccountActivity : AppCompatActivity() {
         supportActionBar?.title = "Account"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val viewModel = AccountListViewModel(this)
         val loginButton = findViewById(R.id.button_login_with_twitter) as TwitterLoginButton
         loginButton.callback = ( object : Callback<TwitterSession>() {
             override fun success(result: Result<TwitterSession>?) {
-                finish()
+                viewModel.onTokenReceived(result)
                 Snackbar.make(findViewById(R.id.layout_account_list), "Successfully", Snackbar.LENGTH_SHORT)
                         .show()
             }
@@ -52,5 +55,14 @@ class AccountActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         finish()
         return super.onOptionsItemSelected(item)
+    }
+
+
+    override fun setCurrentAccountView() {
+//      動的に追加する
+    }
+
+    override fun setOthersAccountView() {
+//      動的に追加する
     }
 }
