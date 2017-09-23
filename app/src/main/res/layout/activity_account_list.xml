@@ -19,11 +19,11 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         <RelativeLayout
+            android:id="@+id/layout_container_account_current"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textview_account_list_current">
 
-            <include layout="@layout/view_account_cell" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -43,15 +43,11 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         <LinearLayout
+            android:id="@+id/layout_container_account_others"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textview_account_list_others"
             android:orientation="vertical">
-
-            <include layout="@layout/view_account_cell" />
-
-            <include layout="@layout/view_account_cell" />
-
         </LinearLayout>
     </RelativeLayout>
 

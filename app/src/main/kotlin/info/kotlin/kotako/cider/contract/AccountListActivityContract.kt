@@ -1,6 +1,8 @@
 package info.kotlin.kotako.cider.contract
 
-interface AccountListActivityContract{
-    fun setCurrentAccountView()
-    fun setOthersAccountView()
+import info.kotlin.kotako.cider.model.Account
+
+interface AccountListActivityContract {
+    fun setAccountView(account: Account)
+    fun resetAccountView()
 }
