@@ -4,6 +4,7 @@ import android.app.Application
 import com.twitter.sdk.android.core.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
+import io.realm.Realm
 
 class CiderApplication : Application() {
 
@@ -13,5 +14,6 @@ class CiderApplication : Application() {
                 .twitterAuthConfig(TwitterAuthConfig(getString(R.string.CONSUMER_KEY), getString(R.string.CONSUMER_SECRET)))
                 .build()
         Twitter.initialize(config)
+        Realm.init(this)
     }
 }
