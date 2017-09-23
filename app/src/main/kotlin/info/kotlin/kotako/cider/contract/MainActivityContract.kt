@@ -4,5 +4,6 @@ import android.content.Context
 
 interface MainActivityContract {
     fun startPostActivity()
+    fun startAccountListActivity()
     fun getContext(): Context
 }

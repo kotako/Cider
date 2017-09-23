@@ -20,12 +20,12 @@ import info.kotlin.kotako.cider.view.AccountCellView
 import info.kotlin.kotako.cider.viewmodel.AccountListViewModel
 import io.realm.Realm
 
-class AccountActivity : AppCompatActivity(), AccountListActivityContract {
+class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
 
     val realm = Realm.getDefaultInstance()
 
     companion object {
-        fun start(context: Context) = context.startActivity(Intent(context, AccountActivity::class.java))
+        fun start(context: Context) = context.startActivity(Intent(context, AccountListActivity::class.java))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

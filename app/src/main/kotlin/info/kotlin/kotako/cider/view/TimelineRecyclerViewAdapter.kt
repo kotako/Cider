@@ -9,11 +9,7 @@ import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.Tweet
 import info.kotlin.kotako.cider.viewmodel.TweetViewModel
 
-class TimelineRecyclerViewAdapter(val context :Context,val tweetList: ArrayList<Tweet> = ArrayList()) : RecyclerView.Adapter<TweetViewHolder>() {
-
-    init {
-        for(i in 0..50) tweetList.add(Tweet())
-    }
+class TimelineRecyclerViewAdapter(val context :Context,val tweetList: ArrayList<Tweet>) : RecyclerView.Adapter<TweetViewHolder>() {
 
     //  viewの作成
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TweetViewHolder =

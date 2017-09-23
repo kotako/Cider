@@ -66,7 +66,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_toRightOf="@id/imageview_cell_author_icon"
-                android:text="Name"
+                android:text="@{tweet.user.name}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
                 android:typeface="normal" />
 
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/textview_cell_name"
                 android:gravity="center"
-                android:text="screen_name" />
+                android:text="@{tweet.user_sn}" />
 
             <TextView
                 android:id="@+id/textview_cell_time"
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_cell_name"
                 android:layout_toRightOf="@id/imageview_cell_author_icon"
-                android:text="つらい"
+                android:text="@{tweet.text}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
         </RelativeLayout>

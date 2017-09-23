@@ -2,6 +2,7 @@ package info.kotlin.kotako.cider.view.fragment
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -11,11 +12,14 @@ import android.view.ViewGroup
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.databinding.FragmentTimelineBinding
+import info.kotlin.kotako.cider.model.Tweet
 import info.kotlin.kotako.cider.view.activity.ProfileActivity
 import info.kotlin.kotako.cider.view.TimelineRecyclerViewAdapter
 import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
 
 class TimelineFragment: Fragment(), TimelineFragmentContract{
+
+    val tweetList = ArrayList<Tweet>()
 
     companion object {
         fun newInstance(): Fragment = TimelineFragment()
@@ -28,7 +32,7 @@ class TimelineFragment: Fragment(), TimelineFragmentContract{
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = DataBindingUtil.inflate<FragmentTimelineBinding>(inflater, R.layout.fragment_timeline, container, false)
         binding.viewModel = TimelineViewModel(this)
-        binding.recyclerViewTimeline.adapter = TimelineRecyclerViewAdapter(context)
+        binding.recyclerViewTimeline.adapter = TimelineRecyclerViewAdapter(context, tweetList)
         binding.recyclerViewTimeline.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewTimeline.addItemDecoration(DividerItemDecoration(binding.recyclerViewTimeline.context, LinearLayoutManager(activity).orientation))
         return binding.root
@@ -41,5 +45,14 @@ class TimelineFragment: Fragment(), TimelineFragmentContract{
     //  ----implements TimelineFragmentContract----
     override fun startProfileActivity() {
         ProfileActivity.start(context)
+    }
+
+    override fun addTweet(tweet: Tweet) {
+        tweetList.add(tweet)
+        DataBindingUtil.getBinding<FragmentTimelineBinding>(view).recyclerViewTimeline.adapter.notifyItemInserted(tweetList.size)
+    }
+
+    override fun showSnackBar(msg: String) {
+        view?.let { Snackbar.make(it, msg, Snackbar.LENGTH_SHORT).show() }
     }
 }

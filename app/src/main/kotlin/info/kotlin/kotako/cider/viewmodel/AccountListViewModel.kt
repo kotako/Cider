@@ -1,19 +1,22 @@
 package info.kotlin.kotako.cider.viewmodel
 
 import com.twitter.sdk.android.core.Result
-import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.TwitterSession
 import info.kotlin.kotako.cider.contract.AccountListActivityContract
 import info.kotlin.kotako.cider.model.Account
+import info.kotlin.kotako.cider.model.TimelineManager
 import io.realm.Realm
 
 class AccountListViewModel(private val accountListActivity: AccountListActivityContract, private val realm: Realm) {
 
+    val twitterManager = TimelineManager.getInstance()
+
     fun setAccountView() {
 //      Realmから認証済みアカウントを取得して、Viewにセットしていく
+        if (twitterManager.getActiveUserId() == null) return
         realm.let {
-            val allAccount = it.where(Account::class.java).notEqualTo("userId", TwitterCore.getInstance().sessionManager.activeSession.userId).findAll()
-            val activeAccount = it.where(Account::class.java).equalTo("userId", TwitterCore.getInstance().sessionManager.activeSession.userId).findAll().first()
+            val allAccount = it.where(Account::class.java).notEqualTo("userId", twitterManager.getActiveUserId()).findAll()
+            val activeAccount = it.where(Account::class.java).equalTo("userId", twitterManager.getActiveUserId()).findAll().first()
 
             accountListActivity.setAccountView(activeAccount)
             allAccount.forEach { accountListActivity.setAccountView(it) }
