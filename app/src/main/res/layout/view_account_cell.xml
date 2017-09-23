@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     andorid:layout_width="match_parent"
     andorid:layout_height="wrap_content"
-    andorid:padding="16dp">
+    andorid:layout_marginRight="16dp"
+    andorid:layout_marginLeft="16dp"
+    andorid:layout_marginTop="8dp"
+    andorid:layout_marginBottom="8dp">
 
     <ImageButton
         andorid:id="@+id/imageview_cellaccount_image"

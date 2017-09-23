@@ -49,7 +49,8 @@ class MainActivity: AppCompatActivity() , MainActivityContract {
     //  ----implements MainActivityContract----
 //  viewModelから実行され、viewの変更を行う
     override fun startPostActivity() {
-        PostActivity.start(this)
+        AccountActivity.start(this)
+        //PostActivity.start(this)
     }
 
     override fun getContext() = this

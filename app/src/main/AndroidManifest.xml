@@ -28,6 +28,9 @@
         <activity
             android:name=".view.activity.SettingsActivity"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".view.activity.AccountActivity"
+            android:theme="@style/AppTheme" />
 
     </application>
 
