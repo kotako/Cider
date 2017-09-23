@@ -7,4 +7,6 @@
     <string name="name">Name</string>
     <string name="follow">Follow</string>
     <string name="follower">Follower</string>
+    <string name="CONSUMER_KEY">XXXXXXXXXXX</string>
+    <string name="CONSUMER_SECRET">XXXXXXXXXXX</string>
 </resources>
