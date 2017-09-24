@@ -17,29 +17,22 @@ import info.kotlin.kotako.cider.view.activity.ProfileActivity
 import info.kotlin.kotako.cider.view.TimelineRecyclerViewAdapter
 import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
 
-class TimelineFragment: Fragment(), TimelineFragmentContract{
+class TimelineFragment : Fragment(), TimelineFragmentContract {
 
     val tweetList = ArrayList<Tweet>()
 
     companion object {
         fun newInstance(): Fragment = TimelineFragment()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        fun newInstance(bundle: Bundle): Fragment = TimelineFragment().apply { arguments = bundle }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = DataBindingUtil.inflate<FragmentTimelineBinding>(inflater, R.layout.fragment_timeline, container, false)
-        binding.viewModel = TimelineViewModel(this)
+        binding.viewModel = TimelineViewModel(this, arguments?.getString("Target"))
         binding.recyclerViewTimeline.adapter = TimelineRecyclerViewAdapter(context, tweetList)
         binding.recyclerViewTimeline.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewTimeline.addItemDecoration(DividerItemDecoration(binding.recyclerViewTimeline.context, LinearLayoutManager(activity).orientation))
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
     }
 
     //  ----implements TimelineFragmentContract----
