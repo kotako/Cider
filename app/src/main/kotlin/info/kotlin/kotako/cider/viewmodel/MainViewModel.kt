@@ -8,6 +8,6 @@ import io.realm.Realm
 class MainViewModel(private val mainView: MainActivityContract) {
 
     fun onFabClicked(view: View) {
-        mainView.startAccountListActivity()
+        mainView.startPostActivity()
     }
 }
