@@ -23,7 +23,7 @@ class TimelineViewModel(val timelineView: TimelineFragmentContract) {
     }
 
     fun setTimeline() {
-        timelineManager.loadTweet(object : Observer<Tweet> {
+        timelineManager.homeTimeline(object : Observer<Tweet> {
             override fun onNext(t: Tweet?) { t?.let { timelineView.addTweet(it) } }
             override fun onError(e: Throwable?) {}
             override fun onCompleted() {}
