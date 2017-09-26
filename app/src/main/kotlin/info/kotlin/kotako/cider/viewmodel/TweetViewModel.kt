@@ -15,5 +15,4 @@ class TweetViewModel(val context: Context) {
     fun createdAtJpn(createdAt: String): String = DateManager.createdAt(createdAt, Locale.JAPAN)
 
     fun createdInterval(createdAt: String): String = DateManager.intervalFromCreated(createdAt)
-
 }
