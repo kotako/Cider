@@ -13,9 +13,11 @@ import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.databinding.FragmentTimelineBinding
 import info.kotlin.kotako.cider.model.Tweet
+import info.kotlin.kotako.cider.view.PagerAdapter
 import info.kotlin.kotako.cider.view.activity.ProfileActivity
 import info.kotlin.kotako.cider.view.TimelineRecyclerViewAdapter
-import info.kotlin.kotako.cider.viewmodel.HomeTimelineViewModel
+import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
+import info.kotlin.kotako.cider.viewmodel.MentionViewModel
 
 class TimelineFragment : Fragment(), TimelineFragmentContract {
 
@@ -30,7 +32,11 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = DataBindingUtil.inflate<FragmentTimelineBinding>(inflater, R.layout.fragment_timeline, container, false)
         adapter = TimelineRecyclerViewAdapter(context, tweetList)
-        binding.viewModel = HomeTimelineViewModel(this)
+        binding.viewModel = when {
+            arguments == null -> TimelineViewModel(this)
+            arguments[PagerAdapter.PAGE_TAG] == PagerAdapter.MENTION -> MentionViewModel(this)
+            else -> TimelineViewModel(this)
+        }
         binding.recyclerViewTimeline.adapter = adapter
         binding.recyclerViewTimeline.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewTimeline.addItemDecoration(DividerItemDecoration(binding.recyclerViewTimeline.context, LinearLayoutManager(activity).orientation))

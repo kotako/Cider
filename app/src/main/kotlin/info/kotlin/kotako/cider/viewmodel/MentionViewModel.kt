@@ -4,15 +4,22 @@ import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.model.APIClient
 import info.kotlin.kotako.cider.model.Tweet
+import rx.schedulers.Schedulers
 
-class MentionViewModel(val timelineView: TimelineFragmentContract) {
+class MentionViewModel(private val timelineView:TimelineFragmentContract): TimelineViewModel(timelineView) {
 
-    private fun setTimeline() {
+    init {
+        setTimeline()
+    }
+
+    override fun setTimeline() {
         APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .mentionTimeline(50, null, null, null, null)
                 .map { t -> t.map { tweet -> Tweet(tweet) } }
+                .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver<List<Tweet>>(
-                        next = { timelineView.addTweetList(it) }))
+                        next = { timelineView.addTweetList(it) },
+                        error = {e -> e.printStackTrace() }))
     }
 }

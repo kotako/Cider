@@ -7,13 +7,13 @@ import info.kotlin.kotako.cider.model.APIClient
 import info.kotlin.kotako.cider.model.Tweet
 import rx.schedulers.Schedulers
 
-class HomeTimelineViewModel(val timelineView: TimelineFragmentContract) {
+open class TimelineViewModel(private val timelineView: TimelineFragmentContract) {
 
     init {
         setTimeline()
     }
 
-    private fun setTimeline() {
+    open fun setTimeline() {
         APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .homeTimeline(50, null, null, null, null, null)
