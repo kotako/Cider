@@ -15,7 +15,7 @@ import info.kotlin.kotako.cider.databinding.FragmentTimelineBinding
 import info.kotlin.kotako.cider.model.Tweet
 import info.kotlin.kotako.cider.view.activity.ProfileActivity
 import info.kotlin.kotako.cider.view.TimelineRecyclerViewAdapter
-import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
+import info.kotlin.kotako.cider.viewmodel.HomeTimelineViewModel
 
 class TimelineFragment : Fragment(), TimelineFragmentContract {
 
@@ -30,7 +30,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = DataBindingUtil.inflate<FragmentTimelineBinding>(inflater, R.layout.fragment_timeline, container, false)
         adapter = TimelineRecyclerViewAdapter(context, tweetList)
-        binding.viewModel = TimelineViewModel(this)
+        binding.viewModel = HomeTimelineViewModel(this)
         binding.recyclerViewTimeline.adapter = adapter
         binding.recyclerViewTimeline.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewTimeline.addItemDecoration(DividerItemDecoration(binding.recyclerViewTimeline.context, LinearLayoutManager(activity).orientation))

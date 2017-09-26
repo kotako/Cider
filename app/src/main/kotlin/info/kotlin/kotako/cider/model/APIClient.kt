@@ -18,7 +18,7 @@ import rx.Observable
 class APIClient(session: TwitterSession) {
 
 //  Retrofit2の返す値は全てCall<T>でラップされてしまう
-//  TwitterApiClientのObservableでラップさせる版です
+//  TwitterApiClientのObservableでラップさせる版
 
     private val retrofit = Retrofit.Builder()
             .client(OkHttpClientHelper.getOkHttpClient(session, TwitterCore.getInstance().authConfig))
@@ -38,13 +38,23 @@ class APIClient(session: TwitterSession) {
     @SuppressWarnings("unchecked")
     private fun <T : Any?> getService(cls: Class<T>?): T = retrofit.create(cls)
 
-//  独自に定義するAPI
+    //  独自に定義するAPI
     fun TimelineObservable(): TimelineObservable = getService(TimelineObservable::class.java)
 
     interface TimelineObservable {
         @GET("/1.1/statuses/home_timeline.json")
         fun homeTimeline(@Query("count") count: Int?,
                          @Query("since_id") since_id: Long?,
-                         @Query("max_id") max_id: Long?): Observable<List<Tweet>>
+                         @Query("max_id") max_id: Long?,
+                         @Query("trim_user") trim_user: Boolean?,
+                         @Query("exclude_replies") exclude_replies: Boolean?,
+                         @Query("include_entities") include_entities: Boolean?): Observable<List<Tweet>>
+
+        @GET("/1.1/statuses/mentions_timeline.json")
+        fun mentionTimeline(@Query("count") count: Int?,
+                            @Query("since_id") since_id: Long?,
+                            @Query("max_id") max_id: Long?,
+                            @Query("trim_user") trim_user: Boolean?,
+                            @Query("include_entities") include_entities: Boolean?): Observable<List<Tweet>>
     }
 }
