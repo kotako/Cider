@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.view.listener
 
 import android.content.Context
 import android.support.design.widget.NavigationView

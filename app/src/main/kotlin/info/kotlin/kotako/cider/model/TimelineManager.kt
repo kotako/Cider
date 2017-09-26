@@ -7,7 +7,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import rx.Observable
 import rx.Observer
-import rx.Subscription
 
 class TimelineManager {
 
@@ -18,7 +17,7 @@ class TimelineManager {
 
     fun getActiveUserId(): Long? = twitterInstance.sessionManager?.activeSession?.userId
 
-    fun homeTimeline(observer: Observer<info.kotlin.kotako.cider.model.Tweet>, sinceId: Long? = null) {
+    fun homeTimeline(observer: Observer<info.kotlin.kotako.cider.model.entity.Tweet>, sinceId: Long? = null) {
         if (getActiveUserId() == null) return
         twitterInstance.apiClient.statusesService.homeTimeline(50, sinceId, null, false, false, false, false)
                 .enqueue(object : retrofit2.Callback<List<Tweet>> {
@@ -26,9 +25,9 @@ class TimelineManager {
                         Observable.from(response.body())
                                 .map { t ->
                                     if (t.retweeted) {
-                                        info.kotlin.kotako.cider.model.Tweet(t.retweetedStatus)
+                                        info.kotlin.kotako.cider.model.entity.Tweet(t.retweetedStatus)
                                     }
-                                    info.kotlin.kotako.cider.model.Tweet(t)
+                                    info.kotlin.kotako.cider.model.entity.Tweet(t)
                                 }
                                 .subscribe(observer)
                     }
@@ -39,13 +38,13 @@ class TimelineManager {
                 })
     }
 
-    fun mentionsTimeline(observer: Observer<info.kotlin.kotako.cider.model.Tweet>, sinceId: Long? = null) {
+    fun mentionsTimeline(observer: Observer<info.kotlin.kotako.cider.model.entity.Tweet>, sinceId: Long? = null) {
         if (getActiveUserId() == null) return
         twitterInstance.apiClient.statusesService.mentionsTimeline(50, sinceId, null, false, false, false)
                 .enqueue(object : Callback<List<Tweet>> {
                     override fun onResponse(call: Call<List<Tweet>>?, response: Response<List<Tweet>>) {
                         Observable.from(response.body())
-                                .map { t -> info.kotlin.kotako.cider.model.Tweet(t) }
+                                .map { t -> info.kotlin.kotako.cider.model.entity.Tweet(t) }
                                 .subscribe(observer)
                     }
 

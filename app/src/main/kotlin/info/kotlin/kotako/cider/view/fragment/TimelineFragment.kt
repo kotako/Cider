@@ -12,10 +12,10 @@ import android.view.ViewGroup
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.databinding.FragmentTimelineBinding
-import info.kotlin.kotako.cider.model.Tweet
-import info.kotlin.kotako.cider.view.PagerAdapter
+import info.kotlin.kotako.cider.model.entity.Tweet
+import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.view.activity.ProfileActivity
-import info.kotlin.kotako.cider.view.TimelineRecyclerViewAdapter
+import info.kotlin.kotako.cider.view.adapter.TimelineRecyclerViewAdapter
 import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
 import info.kotlin.kotako.cider.viewmodel.MentionViewModel
 

@@ -4,7 +4,8 @@ import android.util.Log
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.model.APIClient
-import info.kotlin.kotako.cider.model.Tweet
+import info.kotlin.kotako.cider.model.entity.Tweet
+import info.kotlin.kotako.cider.rx.DefaultObserver
 import rx.schedulers.Schedulers
 
 open class TimelineViewModel(private val timelineView: TimelineFragmentContract) {

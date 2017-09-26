@@ -1,10 +1,9 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.view.adapter
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.app.FragmentStatePagerAdapter
 import info.kotlin.kotako.cider.view.fragment.TimelineFragment
 
 class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {

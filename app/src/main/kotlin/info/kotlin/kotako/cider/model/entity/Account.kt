@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.model
+package info.kotlin.kotako.cider.model.entity
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

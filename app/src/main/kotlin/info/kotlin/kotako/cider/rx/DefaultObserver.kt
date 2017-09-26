@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.viewmodel
+package info.kotlin.kotako.cider.rx
 
 import rx.Observer
 

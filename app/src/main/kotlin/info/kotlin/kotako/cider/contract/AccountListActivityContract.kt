@@ -1,6 +1,6 @@
 package info.kotlin.kotako.cider.contract
 
-import info.kotlin.kotako.cider.model.Account
+import info.kotlin.kotako.cider.model.entity.Account
 
 interface AccountListActivityContract {
     fun setAccountView(account: Account)

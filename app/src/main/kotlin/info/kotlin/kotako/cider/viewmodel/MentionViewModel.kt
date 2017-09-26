@@ -3,7 +3,8 @@ package info.kotlin.kotako.cider.viewmodel
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.model.APIClient
-import info.kotlin.kotako.cider.model.Tweet
+import info.kotlin.kotako.cider.model.entity.Tweet
+import info.kotlin.kotako.cider.rx.DefaultObserver
 import rx.schedulers.Schedulers
 
 class MentionViewModel(private val timelineView:TimelineFragmentContract): TimelineViewModel(timelineView) {
@@ -20,6 +21,6 @@ class MentionViewModel(private val timelineView:TimelineFragmentContract): Timel
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it) },
-                        error = {e -> e.printStackTrace() }))
+                        error = { e -> e.printStackTrace() }))
     }
 }
