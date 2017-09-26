@@ -3,6 +3,7 @@ package info.kotlin.kotako.cider.model
 import com.twitter.sdk.android.core.models.Tweet
 
 class Tweet(tweet: Tweet) {
+
     val id = tweet.id
     val createdAt = tweet.createdAt
     val favoriteCount = tweet.favoriteCount

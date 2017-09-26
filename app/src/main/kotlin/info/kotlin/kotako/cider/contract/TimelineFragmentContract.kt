@@ -5,5 +5,6 @@ import info.kotlin.kotako.cider.model.Tweet
 interface TimelineFragmentContract {
     fun startProfileActivity()
     fun addTweet(tweet:Tweet)
+    fun addTweetList(tweet: List<Tweet>)
     fun showSnackBar(msg:String)
 }

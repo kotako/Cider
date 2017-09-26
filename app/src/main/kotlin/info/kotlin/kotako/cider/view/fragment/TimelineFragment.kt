@@ -19,7 +19,8 @@ import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
 
 class TimelineFragment : Fragment(), TimelineFragmentContract {
 
-    val tweetList = ArrayList<Tweet>()
+    private val tweetList = ArrayList<Tweet>()
+    private var adapter: TimelineRecyclerViewAdapter? = null
 
     companion object {
         fun newInstance(): Fragment = TimelineFragment()
@@ -28,8 +29,9 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = DataBindingUtil.inflate<FragmentTimelineBinding>(inflater, R.layout.fragment_timeline, container, false)
-        binding.viewModel = TimelineViewModel(this, arguments?.getString("Target"))
-        binding.recyclerViewTimeline.adapter = TimelineRecyclerViewAdapter(context, tweetList)
+        adapter = TimelineRecyclerViewAdapter(context, tweetList)
+        binding.viewModel = TimelineViewModel(this)
+        binding.recyclerViewTimeline.adapter = adapter
         binding.recyclerViewTimeline.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewTimeline.addItemDecoration(DividerItemDecoration(binding.recyclerViewTimeline.context, LinearLayoutManager(activity).orientation))
         return binding.root
@@ -43,6 +45,11 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun addTweet(tweet: Tweet) {
         tweetList.add(tweet)
         DataBindingUtil.getBinding<FragmentTimelineBinding>(view).recyclerViewTimeline.adapter.notifyItemInserted(tweetList.size)
+    }
+
+    override fun addTweetList(tweet: List<Tweet>) {
+        tweetList.addAll(tweet)
+        activity.runOnUiThread { adapter?.notifyDataSetChanged() }
     }
 
     override fun showSnackBar(msg: String) {

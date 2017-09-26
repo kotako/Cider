@@ -7,6 +7,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import rx.Observable
 import rx.Observer
+import rx.Subscription
 
 class TimelineManager {
 
@@ -23,7 +24,12 @@ class TimelineManager {
                 .enqueue(object : retrofit2.Callback<List<Tweet>> {
                     override fun onResponse(call: Call<List<Tweet>>?, response: Response<List<Tweet>>) {
                         Observable.from(response.body())
-                                .map { t -> info.kotlin.kotako.cider.model.Tweet(t) }
+                                .map { t ->
+                                    if (t.retweeted) {
+                                        info.kotlin.kotako.cider.model.Tweet(t.retweetedStatus)
+                                    }
+                                    info.kotlin.kotako.cider.model.Tweet(t)
+                                }
                                 .subscribe(observer)
                     }
 
