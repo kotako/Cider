@@ -3,7 +3,7 @@ package info.kotlin.kotako.cider.viewmodel
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterSession
 import info.kotlin.kotako.cider.contract.AccountListActivityContract
-import info.kotlin.kotako.cider.model.Account
+import info.kotlin.kotako.cider.model.entity.Account
 import info.kotlin.kotako.cider.model.TimelineManager
 import io.realm.Realm
 

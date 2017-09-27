@@ -15,7 +15,7 @@ import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.AccountListActivityContract
-import info.kotlin.kotako.cider.model.Account
+import info.kotlin.kotako.cider.model.entity.Account
 import info.kotlin.kotako.cider.view.AccountCellView
 import info.kotlin.kotako.cider.viewmodel.AccountListViewModel
 import io.realm.Realm

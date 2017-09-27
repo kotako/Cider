@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="tweet"
-            type="info.kotlin.kotako.cider.model.Tweet" />
+            type="info.kotlin.kotako.cider.model.entity.Tweet" />
+
         <variable
             name="viewModel"
             type="info.kotlin.kotako.cider.viewmodel.TweetViewModel" />
@@ -55,9 +57,10 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/shape_profile_image"
-                android:onClick="@{viewModel::onIconClicked}"
-                android:scaleType="centerCrop" />
+                android:background="@color/tw__solid_white"
+                android:onClick="@{() -> viewModel.onIconClicked(tweet.user)}"
+                android:scaleType="centerCrop"
+                app:loadImage="@{tweet.user.profileImageUrl}" />
 
             <TextView
                 android:id="@+id/textview_cell_name"
