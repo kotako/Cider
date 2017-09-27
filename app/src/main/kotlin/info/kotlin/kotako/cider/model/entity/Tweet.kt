@@ -1,8 +1,9 @@
 package info.kotlin.kotako.cider.model.entity
 
 import com.twitter.sdk.android.core.models.Tweet
+import java.io.Serializable
 
-class Tweet(tweet: Tweet) {
+class Tweet(tweet: Tweet):Serializable {
 
     val id = tweet.id
     val createdAt = tweet.createdAt

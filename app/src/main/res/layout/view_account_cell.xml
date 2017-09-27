@@ -5,7 +5,7 @@
 
         <variable
             name="account"
-            type="info.kotlin.kotako.cider.model.Account" />
+            type="info.kotlin.kotako.cider.model.entity.Account" />
     </data>
 
 

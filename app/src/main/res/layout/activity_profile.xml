@@ -6,6 +6,9 @@
         <variable
             name="viewModel"
             type="info.kotlin.kotako.cider.viewmodel.ProfileViewModel" />
+        <variable
+            name="user"
+            type="info.kotlin.kotako.cider.model.entity.User" />
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -57,33 +60,33 @@
                 android:elevation="5dp"
                 android:scaleType="centerCrop"
                 android:tint="#ffffff"
-                android:src="@mipmap/home_grey"/>
+                app:loadImage="@{user.profileImageUrl}"/>
+
+            <TextView
+                android:id="@+id/textView_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/appBarLayout_profile"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="-48dp"
+                android:layout_toRightOf="@id/imageView_profile_photo"
+                android:elevation="5dp"
+                android:text="@{user.name}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="#f9f9f9" />
 
             <TextView
                 android:id="@+id/textView_profile_screen_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/appBarLayout_profile"
-                android:layout_marginLeft="16dp"
+                android:layout_below="@id/textView_profile_name"
+                android:layout_marginLeft="24dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="-48dp"
+                android:layout_marginTop="0dp"
                 android:layout_toRightOf="@id/imageView_profile_photo"
                 android:elevation="5dp"
-                android:text="@string/name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="#f9f9f9" />
-
-            <TextView
-                android:id="@+id/textview_profile_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView_profile_screen_name"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_toRightOf="@id/imageView_profile_photo"
-                android:elevation="5dp"
-                android:text="@string/screen_name"
+                android:text="@{user.screenName}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                 android:textColor="#f9f9f9" />
 
@@ -92,7 +95,7 @@
                 android:id="@+id/button_profile_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textview_profile_name"
+                android:layout_below="@id/textView_profile_screen_name"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="-40dp"
@@ -108,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageView_profile_photo"
                 android:layout_margin="16dp"
-                android:text="ほげほげほげほげ\nほげほげほげ"
+                android:text="@{user.description}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <LinearLayout
@@ -138,7 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/view_profile_follow"
-                        android:text="100"
+                        android:text=""
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
                 </RelativeLayout>
 
@@ -160,7 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/view_profile_follower"
-                        android:text="100"
+                        android:text=""
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
                 </RelativeLayout>
             </LinearLayout>

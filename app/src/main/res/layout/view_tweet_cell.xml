@@ -6,7 +6,7 @@
 
         <variable
             name="tweet"
-            type="info.kotlin.kotako.cider.model.Tweet" />
+            type="info.kotlin.kotako.cider.model.entity.Tweet" />
 
         <variable
             name="viewModel"
@@ -56,11 +56,11 @@
                 android:id="@+id/imageview_cell_author_icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@color/tw__solid_white"
                 android:layout_marginRight="8dp"
-                android:onClick="@{viewModel::onIconClicked}"
-                app:loadImage="@{tweet.user.profileImageUrl}"
-                android:scaleType="centerCrop"/>
+                android:background="@color/tw__solid_white"
+                android:onClick="@{() -> viewModel.onIconClicked(tweet.user)}"
+                android:scaleType="centerCrop"
+                app:loadImage="@{tweet.user.profileImageUrl}" />
 
             <TextView
                 android:id="@+id/textview_cell_name"
