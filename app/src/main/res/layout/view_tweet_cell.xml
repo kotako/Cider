@@ -71,6 +71,7 @@
                 android:layout_toRightOf="@id/imageview_cell_author_icon"
                 android:text="@{tweet.user.name}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+                android:textStyle="bold"
                 android:typeface="normal" />
 
             <TextView
