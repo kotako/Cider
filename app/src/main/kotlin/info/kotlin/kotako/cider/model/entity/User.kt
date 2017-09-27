@@ -11,8 +11,8 @@ class User (user:User) :Serializable {
     val description = user.description
     val email = user.email
     val favoritesCount = user.favouritesCount
-    val followersCount = user.followersCount
-    val followingCount = user.friendsCount
+    val followersCount = user.followersCount.toString()
+    val followingCount = user.friendsCount.toString()
     val followRequestSent = user.followRequestSent
     val geoEnabled = user.geoEnabled
     val id = user.id

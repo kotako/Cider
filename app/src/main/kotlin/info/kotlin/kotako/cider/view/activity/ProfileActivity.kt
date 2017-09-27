@@ -10,26 +10,33 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.widget.ImageButton
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.ProfileActivityContract
 import info.kotlin.kotako.cider.databinding.ActivityProfileBinding
 import info.kotlin.kotako.cider.model.entity.User
+import info.kotlin.kotako.cider.model.loadImage
 import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.viewmodel.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
 
+    var binding: ActivityProfileBinding? = null
+
     companion object {
         fun start(context: Context) = context.startActivity(Intent(context, ProfileActivity::class.java))
-        fun start(context: Context, user:User) = context.startActivity(Intent(context, ProfileActivity::class.java).putExtra("user", user))
+        fun start(context: Context, userId: Long) = context.startActivity(Intent(context, ProfileActivity::class.java).putExtra("userId", userId))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityProfileBinding>(this, R.layout.activity_profile)
-        binding.viewModel = ProfileViewModel(this)
-        intent.extras.getSerializable("user")?.let { binding.user = it as User }
+        val viewModel = ProfileViewModel(this)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
+        binding?.viewModel = viewModel
+        intent.extras.getSerializable("userId")?.let { viewModel.loadUser(it as Long) }
         setUpView()
     }
 
@@ -49,8 +56,18 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
         tabLayout.getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null)
     }
 
-    //  ----implements PostActivityContract----
+    override fun setUser(user: User) {
+        runOnUiThread {
+            binding?.user = user
+            Glide.with(this)
+                    .load(user.profileImageUrl)
+                    .apply(RequestOptions().circleCrop())
+                    .into(findViewById(R.id.imageView_profile_photo) as ImageButton)
+        }
+    }
+
+    override fun getContext() = this
     override fun showImage() {}
 
-    override fun makeToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    override fun makeToast(msg: String) = runOnUiThread { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }
 }

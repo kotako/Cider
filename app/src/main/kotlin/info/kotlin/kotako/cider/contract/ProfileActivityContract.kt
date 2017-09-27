@@ -1,7 +1,13 @@
 package info.kotlin.kotako.cider.contract
 
-interface ProfileActivityContract{
+import android.content.Context
+import info.kotlin.kotako.cider.model.entity.User
+
+
+interface ProfileActivityContract {
     fun finish()
-    fun makeToast(msg:String)
+    fun getContext():Context
+    fun makeToast(msg: String)
     fun showImage()
+    fun setUser(user: User)
 }

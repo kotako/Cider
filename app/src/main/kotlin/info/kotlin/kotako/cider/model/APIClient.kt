@@ -41,6 +41,8 @@ class APIClient(session: TwitterSession) {
     //  独自に定義するAPI
     fun TimelineObservable(): TimelineObservable = getService(TimelineObservable::class.java)
 
+    fun UsersObservable(): UsersObservable = getService(UsersObservable::class.java)
+
     interface TimelineObservable {
         @GET("/1.1/statuses/home_timeline.json")
         fun homeTimeline(@Query("count") count: Int?,
@@ -56,5 +58,12 @@ class APIClient(session: TwitterSession) {
                             @Query("max_id") max_id: Long?,
                             @Query("trim_user") trim_user: Boolean?,
                             @Query("include_entities") include_entities: Boolean?): Observable<List<Tweet>>
+    }
+
+    interface UsersObservable {
+        @GET("/1.1/users/show.json")
+        fun showUser(@Query("user_id") user_id: Long?,
+                     @Query("screen_name") screen_name: String?,
+                     @Query("include_entities") include_entities: Boolean?): Observable<User>
     }
 }

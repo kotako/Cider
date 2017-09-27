@@ -58,9 +58,7 @@
                 android:layout_marginTop="-48dp"
                 android:background="@drawable/shape_profile_image"
                 android:elevation="5dp"
-                android:scaleType="centerCrop"
-                android:tint="#ffffff"
-                app:loadImage="@{user.profileImageUrl}"/>
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/textView_profile_name"
@@ -141,7 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/view_profile_follow"
-                        android:text=""
+                        android:text="@{user.followingCount}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
                 </RelativeLayout>
 
@@ -163,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/view_profile_follower"
-                        android:text=""
+                        android:text="@{user.followersCount}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
                 </RelativeLayout>
             </LinearLayout>

@@ -10,8 +10,8 @@ import java.util.*
 class TweetViewModel(val context: Context) {
 
     fun onIconClicked(user: User) {
-        Log.d("hoge", user.screenName)
-        ProfileActivity.start(context, info.kotlin.kotako.cider.model.entity.User(user))
+        //Log.d("hoge", user.screenName)
+        ProfileActivity.start(context, user.id)
     }
 
     fun createdAtJpn(createdAt: String): String = DateManager.createdAt(createdAt, Locale.JAPAN)
