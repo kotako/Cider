@@ -2,12 +2,13 @@ package info.kotlin.kotako.cider.viewmodel
 
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
+import info.kotlin.kotako.cider.contract.TimelineViewModelContract
 import info.kotlin.kotako.cider.model.APIClient
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import rx.schedulers.Schedulers
 
-class MentionViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModel(timelineView) {
+class MentionViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
     init {
         setTimeline()
@@ -24,5 +25,9 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
                         next = { timelineView.addTweetList(it) },
                         error = { timelineView.hideProgressBar() },
                         completed = { timelineView.hideProgressBar() }))
+    }
+
+    override fun loadMore(sinceId: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

@@ -56,7 +56,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
 
     override fun addTweetList(tweet: List<Tweet>) {
         tweetList.addAll(tweet)
-        activity.runOnUiThread { adapter?.notifyDataSetChanged() }
+        activity.runOnUiThread { adapter?.notifyItemRangeInserted(tweetList.size - tweet.size, tweet.size) }
     }
 
     override fun showSnackBar(msg: String) {

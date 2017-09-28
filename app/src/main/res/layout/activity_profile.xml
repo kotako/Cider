@@ -56,7 +56,7 @@
                 android:layout_below="@id/appBarLayout_profile"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="-48dp"
-                android:background="@drawable/shape_profile_image"
+                android:background="@color/tw__solid_white"
                 android:elevation="5dp"
                 android:scaleType="centerCrop" />
 

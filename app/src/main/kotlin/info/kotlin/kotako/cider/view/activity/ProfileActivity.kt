@@ -3,9 +3,7 @@ package info.kotlin.kotako.cider.view.activity
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
@@ -18,8 +16,7 @@ import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.ProfileActivityContract
 import info.kotlin.kotako.cider.databinding.ActivityProfileBinding
 import info.kotlin.kotako.cider.model.entity.User
-import info.kotlin.kotako.cider.model.loadImage
-import info.kotlin.kotako.cider.view.adapter.PagerAdapter
+import info.kotlin.kotako.cider.view.adapter.ProfilePagerAdapter
 import info.kotlin.kotako.cider.viewmodel.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
@@ -48,7 +45,7 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
         // viewpager, tablayout setup
         val viewPager = findViewById(R.id.pager_profile) as ViewPager
         val tabLayout = findViewById(R.id.tabs_profile) as TabLayout
-        viewPager.adapter = PagerAdapter(supportFragmentManager)
+        intent.extras.getSerializable("userId")?.let { viewPager.adapter = ProfilePagerAdapter(supportFragmentManager, it as Long) }
         tabLayout.setupWithViewPager(viewPager)
 
         tabLayout.getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_tweet, null)
