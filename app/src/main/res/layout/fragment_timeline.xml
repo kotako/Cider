@@ -7,9 +7,21 @@
             name="viewModel"
             type="info.kotlin.kotako.cider.viewmodel.TimelineViewModel" />
     </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        style="?android:progressBarStyle"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_timeline"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    </LinearLayout>
 </layout>

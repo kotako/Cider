@@ -7,4 +7,6 @@ interface TimelineFragmentContract {
     fun addTweet(tweet: Tweet)
     fun addTweetList(tweet: List<Tweet>)
     fun showSnackBar(msg:String)
+    fun showProgressBar()
+    fun hideProgressBar()
 }

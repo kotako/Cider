@@ -1,6 +1,5 @@
 package info.kotlin.kotako.cider.viewmodel
 
-import android.util.Log
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.model.APIClient
@@ -15,6 +14,7 @@ open class TimelineViewModel(private val timelineView: TimelineFragmentContract)
     }
 
     open fun setTimeline() {
+        timelineView.showProgressBar()
         APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .homeTimeline(50, null, null, null, null, null)
@@ -22,7 +22,7 @@ open class TimelineViewModel(private val timelineView: TimelineFragmentContract)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it) },
-                        error = { e -> e.printStackTrace() },
-                        completed = { Log.d("LoadHomeTimeline", "finish") }))
+                        error = { timelineView.hideProgressBar() },
+                        completed = { timelineView.hideProgressBar() }))
     }
 }

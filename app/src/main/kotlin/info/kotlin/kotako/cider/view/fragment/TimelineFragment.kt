@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.widget.ContentLoadingProgressBar
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -60,5 +61,13 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
 
     override fun showSnackBar(msg: String) {
         view?.let { Snackbar.make(it, msg, Snackbar.LENGTH_SHORT).show() }
+    }
+
+    override fun showProgressBar() {
+        view?.let { (it.findViewById(R.id.progress_bar) as ContentLoadingProgressBar).show() }
+    }
+
+    override fun hideProgressBar() {
+        activity.runOnUiThread { view?.let { (it.findViewById(R.id.progress_bar) as ContentLoadingProgressBar).hide() } }
     }
 }

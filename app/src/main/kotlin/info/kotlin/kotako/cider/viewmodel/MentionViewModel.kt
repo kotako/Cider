@@ -7,13 +7,14 @@ import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import rx.schedulers.Schedulers
 
-class MentionViewModel(private val timelineView:TimelineFragmentContract): TimelineViewModel(timelineView) {
+class MentionViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModel(timelineView) {
 
     init {
         setTimeline()
     }
 
     override fun setTimeline() {
+        timelineView.showProgressBar()
         APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .mentionTimeline(50, null, null, null, null)
@@ -21,6 +22,7 @@ class MentionViewModel(private val timelineView:TimelineFragmentContract): Timel
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it) },
-                        error = { e -> e.printStackTrace() }))
+                        error = { timelineView.hideProgressBar() },
+                        completed = { timelineView.hideProgressBar() }))
     }
 }
