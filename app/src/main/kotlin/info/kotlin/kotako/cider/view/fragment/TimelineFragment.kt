@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.widget.ContentLoadingProgressBar
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.view.activity.ProfileActivity
 import info.kotlin.kotako.cider.view.adapter.TimelineRecyclerViewAdapter
+import info.kotlin.kotako.cider.view.listener.RecyclerScrollListener
 import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
 import info.kotlin.kotako.cider.viewmodel.MentionViewModel
 
@@ -40,6 +42,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
         }
         binding.recyclerViewTimeline.adapter = adapter
         binding.recyclerViewTimeline.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewTimeline.addOnScrollListener(RecyclerScrollListener({ binding.viewModel.loadMore(tweetList.last().id) }))
         binding.recyclerViewTimeline.addItemDecoration(DividerItemDecoration(binding.recyclerViewTimeline.context, LinearLayoutManager(activity).orientation))
         return binding.root
     }

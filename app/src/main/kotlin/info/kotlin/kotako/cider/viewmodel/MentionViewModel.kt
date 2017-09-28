@@ -18,16 +18,32 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
         timelineView.showProgressBar()
         APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
-                .mentionTimeline(50, null, null, null, null)
+                .mentionTimeline(20, null, null, null, null)
                 .map { t -> t.map { tweet -> Tweet(tweet) } }
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it) },
-                        error = { timelineView.hideProgressBar() },
+                        error = { throwable ->
+                            timelineView.hideProgressBar()
+                            timelineView.showSnackBar(throwable.localizedMessage)
+                        },
                         completed = { timelineView.hideProgressBar() }))
     }
 
-    override fun loadMore(sinceId: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun loadMore(maxId: Long) {
+        timelineView.showProgressBar()
+        APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+                .TimelineObservable()
+                .mentionTimeline(20, null, maxId, null, null)
+                .map { t -> t.drop(1) }
+                .map { t -> t.map { tweet -> Tweet(tweet) } }
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(DefaultObserver<List<Tweet>>(
+                        next = { timelineView.addTweetList(it) },
+                        error = { throwable ->
+                            timelineView.hideProgressBar()
+                            timelineView.showSnackBar(throwable.localizedMessage)
+                        },
+                        completed = { timelineView.hideProgressBar() }))
     }
 }

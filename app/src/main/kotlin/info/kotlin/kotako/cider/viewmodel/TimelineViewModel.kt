@@ -23,20 +23,27 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract):Time
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it) },
-                        error = { timelineView.hideProgressBar() },
+                        error = { throwable ->
+                            timelineView.hideProgressBar()
+                            timelineView.showSnackBar(throwable.localizedMessage)
+                        },
                         completed = { timelineView.hideProgressBar() }))
     }
 
-    override fun loadMore(sinceId:Long) {
+    override fun loadMore(maxId:Long) {
         timelineView.showProgressBar()
         APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
-                .homeTimeline(50, sinceId, null, null, null, null)
+                .homeTimeline(50, null, maxId, null, null, null)
+                .map { t -> t.drop(1) }
                 .map { t -> t.map { tweet -> Tweet(tweet) } }
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it) },
-                        error = { timelineView.hideProgressBar() },
+                        error = { throwable ->
+                            timelineView.hideProgressBar()
+                            timelineView.showSnackBar(throwable.localizedMessage)
+                        },
                         completed = { timelineView.hideProgressBar() }))
     }
 }
