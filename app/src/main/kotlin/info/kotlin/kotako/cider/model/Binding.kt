@@ -6,9 +6,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 @BindingAdapter("loadImage")
-fun ImageButton.loadImage(url: String) {
-    Glide.with(context)
-            .load(url)
-            .apply(RequestOptions().circleCrop())
-            .into(this)
+fun ImageButton.loadImage(url: String?) {
+    url?.let {
+        Glide.with(context)
+                .load(it)
+                .apply(RequestOptions().circleCrop())
+                .into(this)
+    }
 }

@@ -13,6 +13,6 @@ class Tweet(tweet: Tweet):Serializable {
     val retweeted = tweet.retweeted
     var retweetedStatus: info.kotlin.kotako.cider.model.entity.Tweet? = if (retweeted) Tweet(tweet.retweetedStatus) else null
     val user = tweet.user
-    val user_sn = "@" + tweet.user.screenName
+    val user_sn = tweet.user.screenName
     val text = tweet.text
 }

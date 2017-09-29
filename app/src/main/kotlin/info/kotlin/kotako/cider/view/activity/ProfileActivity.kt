@@ -31,37 +31,26 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = ProfileViewModel(this)
+        intent.extras.getSerializable("userId")?.let { viewModel.loadUser(it as Long) }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
         binding?.viewModel = viewModel
-        intent.extras.getSerializable("userId")?.let { viewModel.loadUser(it as Long) }
         setUpView()
     }
 
     private fun setUpView() {
-        val toolbar = findViewById(R.id.toolbar_profile) as Toolbar
-        toolbar.setNavigationIcon(R.mipmap.arrow_back_white)
-        toolbar.setNavigationOnClickListener { finish() }
+        binding?.toolbarProfile?.setNavigationIcon(R.mipmap.arrow_back_white)
+        binding?.toolbarProfile?.setNavigationOnClickListener { finish() }
 
         // viewpager, tablayout setup
-        val viewPager = findViewById(R.id.pager_profile) as ViewPager
-        val tabLayout = findViewById(R.id.tabs_profile) as TabLayout
-        intent.extras.getSerializable("userId")?.let { viewPager.adapter = ProfilePagerAdapter(supportFragmentManager, it as Long) }
-        tabLayout.setupWithViewPager(viewPager)
+        intent.extras.getSerializable("userId")?.let { binding?.pagerProfile?.adapter = ProfilePagerAdapter(supportFragmentManager, it as Long) }
+        binding?.tabsProfile?.setupWithViewPager(binding?.pagerProfile)
 
-        tabLayout.getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_tweet, null)
-        tabLayout.getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_photo, null)
-        tabLayout.getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null)
+        binding?.tabsProfile?.getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_tweet, null)
+        binding?.tabsProfile?.getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_photo, null)
+        binding?.tabsProfile?.getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null)
     }
 
-    override fun setUser(user: User) {
-        runOnUiThread {
-            binding?.user = user
-            Glide.with(this)
-                    .load(user.profileImageUrl)
-                    .apply(RequestOptions().circleCrop())
-                    .into(findViewById(R.id.imageView_profile_photo) as ImageButton)
-        }
-    }
+    override fun setUser(user: User) = runOnUiThread { binding?.user = user }
 
     override fun getContext() = this
     override fun showImage() {}

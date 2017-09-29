@@ -30,7 +30,7 @@ class User (user:User) :Serializable {
     val profileSidebarFillColor = user.profileSidebarFillColor
     val profileTextColor = user.profileTextColor
     val protectedUser = user.protectedUser
-    val screenName = "@" + user.screenName
+    val screenName = user.screenName
     val statusesCount = user.statusesCount
     val url = user.url
     val verified = user.verified
