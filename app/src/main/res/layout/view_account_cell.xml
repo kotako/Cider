@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -21,7 +22,8 @@
             android:id="@+id/imageview_cellaccount_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/shape_profile_image" />
+            android:background="@drawable/shape_profile_image"
+            app:loadImageFromSession="@{account}"/>
 
         <TextView
             android:id="@+id/textview_cellaccount_name"
@@ -30,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/imageview_cellaccount_image"
-            android:text="@{account.userName}"
+            android:text='@{"@"+account.userName}'
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     </RelativeLayout>

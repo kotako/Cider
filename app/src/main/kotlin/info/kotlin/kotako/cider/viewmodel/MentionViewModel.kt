@@ -11,7 +11,9 @@ import rx.schedulers.Schedulers
 class MentionViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
     init {
-        setTimeline()
+        TwitterCore.getInstance().sessionManager?.activeSession?.let {
+            setTimeline()
+        }
     }
 
     override fun setTimeline() {

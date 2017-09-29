@@ -1,5 +1,6 @@
 package info.kotlin.kotako.cider.viewmodel
 
+import com.twitter.sdk.android.core.Twitter
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
@@ -11,7 +12,9 @@ import rx.schedulers.Schedulers
 class TimelineViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
     init {
-        setTimeline()
+        TwitterCore.getInstance().sessionManager?.activeSession?.let {
+            setTimeline()
+        }
     }
 
     override fun setTimeline() {

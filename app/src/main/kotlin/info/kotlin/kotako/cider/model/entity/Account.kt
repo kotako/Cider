@@ -7,4 +7,5 @@ import io.realm.annotations.RealmClass
 @RealmClass
 open class Account(@PrimaryKey open var userId: Long = 0,
                    open var userName: String = "",
-                   open var accessToken: String = "") : RealmObject()
+                   open var token: String = "",
+                   open var tokenSecret: String = "") : RealmObject()
