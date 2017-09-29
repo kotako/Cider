@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="tweet"
             type="info.kotlin.kotako.cider.model.entity.Tweet" />
@@ -21,26 +23,28 @@
             android:id="@+id/layout_cell_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:visibility="gone">
+            android:layout_marginBottom="-4dp"
+            android:layout_marginTop="4dp"
+            android:visibility="@{tweet.retweetedUser!=null ? View.VISIBLE: View.GONE}">
 
             <ImageView
                 android:id="@+id/imageview_cell_tweet_relation"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginLeft="32dp"
+                android:layout_marginLeft="40dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_twitter_retweet_grey" />
+                android:src="@mipmap/ic_twitter_retweet_grey"
+                android:tint="#2ecc71" />
 
             <TextView
                 android:id="@+id/textview_cell_tweet_relation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginRight="16dp"
                 android:layout_toRightOf="@id/imageview_cell_tweet_relation"
-                android:text="user Retweeted"
+                android:text='@{tweet.retweetedUser!=null ? tweet.retweetedUser.name : ""}'
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         </RelativeLayout>
@@ -66,7 +70,7 @@
                 android:id="@+id/textview_cell_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
                 android:layout_marginRight="8dp"
                 android:layout_toRightOf="@id/imageview_cell_author_icon"
                 android:text="@{tweet.user.name}"

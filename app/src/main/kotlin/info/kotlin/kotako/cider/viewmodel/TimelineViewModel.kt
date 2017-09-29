@@ -8,7 +8,7 @@ import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import rx.schedulers.Schedulers
 
-class TimelineViewModel(private val timelineView: TimelineFragmentContract):TimelineViewModelContract {
+class TimelineViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
     init {
         setTimeline()
@@ -19,7 +19,7 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract):Time
         APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .homeTimeline(50, null, null, null, null, null)
-                .map { t -> t.map { tweet -> Tweet(tweet) } }
+                .map { t -> t.map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, tweet.user) else Tweet(tweet) } }
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it) },
@@ -30,7 +30,7 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract):Time
                         completed = { timelineView.hideProgressBar() }))
     }
 
-    override fun loadMore(maxId:Long) {
+    override fun loadMore(maxId: Long) {
         timelineView.showProgressBar()
         APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
