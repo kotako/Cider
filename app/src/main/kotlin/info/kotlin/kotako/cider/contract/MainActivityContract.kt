@@ -6,4 +6,5 @@ interface MainActivityContract {
     fun startPostActivity()
     fun startAccountListActivity()
     fun getContext(): Context
+    fun showSnackBar(msg: String)
 }

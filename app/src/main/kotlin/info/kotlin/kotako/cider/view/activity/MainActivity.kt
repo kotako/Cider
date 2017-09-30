@@ -3,6 +3,7 @@ package info.kotlin.kotako.cider.view.activity
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
@@ -16,23 +17,23 @@ import info.kotlin.kotako.cider.view.listener.NavigationDrawerListener
 import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.viewmodel.MainViewModel
 
-class MainActivity: AppCompatActivity() , MainActivityContract {
+class MainActivity : AppCompatActivity(), MainActivityContract {
+
+    var binding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.viewModel = MainViewModel(this)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding?.viewModel = MainViewModel(this)
         setUpView()
     }
 
     private fun setUpView() {
 //      toolbar setup
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
-        val navigation = findViewById(R.id.drawer) as DrawerLayout
-        toolbar.title = getString(R.string.app_name)
-        toolbar.setNavigationIcon(R.mipmap.menu_white)
-        toolbar.setNavigationOnClickListener { navigation.openDrawer(GravityCompat.START) }
-        (findViewById(R.id.navigation) as NavigationView).setNavigationItemSelectedListener(NavigationDrawerListener(this))
+        binding?.toolbar?.title = getString(R.string.app_name)
+        binding?.toolbar?.setNavigationIcon(R.mipmap.menu_white)
+        binding?.toolbar?.setNavigationOnClickListener { binding?.drawer?.openDrawer(GravityCompat.START) }
+        binding?.navigation?.setNavigationItemSelectedListener(NavigationDrawerListener(this))
 
 //      viewpager, tablayout setup
         val viewPager = findViewById(R.id.pager) as ViewPager
@@ -57,4 +58,10 @@ class MainActivity: AppCompatActivity() , MainActivityContract {
     }
 
     override fun getContext() = this
+
+    override fun showSnackBar(msg: String) {
+        binding?.let {
+            Snackbar.make(it.root, msg, Snackbar.LENGTH_SHORT).show()
+        }
+    }
 }
