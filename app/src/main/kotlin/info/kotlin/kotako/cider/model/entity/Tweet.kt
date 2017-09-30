@@ -10,6 +10,7 @@ class Tweet(tweet: Tweet, val retweetedUser: User? = null) : Serializable {
     val createdAt = tweet.createdAt
     val favoriteCount = tweet.favoriteCount
     val favorited = tweet.favorited
+    val retweeted = tweet.retweeted
     val retweetCount = tweet.retweetCount
     val user = tweet.user
     val user_sn = tweet.user.screenName
