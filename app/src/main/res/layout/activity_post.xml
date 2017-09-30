@@ -8,7 +8,7 @@
             type="info.kotlin.kotako.cider.viewmodel.PostViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -17,20 +17,32 @@
             layout="@layout/view_account_cell" />
 
         <!--<include layout="@layout/divider" />-->
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/progressbar_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            android:layout_centerInParent="true"
+            android:background="#00000000"
+            style="?android:progressBarStyle"/>
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/text_input_tweet"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_weight="1"
+            android:layout_below="@id/layout_author_account_cell"
             android:gravity="top"
-            android:hint="@string/hint_tweet" />
+            android:hint="@string/hint_tweet"
+            android:layout_above="@+id/layout_post_tools" />
 
         <RelativeLayout
+            android:id="@+id/layout_post_tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:background="@color/colorPrimary">
 
             <ImageButton
@@ -82,5 +94,5 @@
                 android:src="@mipmap/send_white"
                 android:theme="@style/ButtonHighLight"/>
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

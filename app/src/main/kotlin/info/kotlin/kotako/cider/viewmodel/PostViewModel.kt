@@ -10,19 +10,21 @@ import rx.schedulers.Schedulers
 class PostViewModel(private val postView: PostActivityContract) {
 
     fun post() {
+        postView.showProgressbar()
         APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .PostObservable()
                 .post(postView.inputText(), null, null, null)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver(
                         next = { },
-                        error = { postView.makeToast("失敗した") },
-                        completed = { postView.finish() }))
-    }
-
-    fun onIconClicked(view: View) {
-//      プロフィールのアイコンクリックでアカウント選択
-        postView.makeToast("profile icon clicked")
+                        error = {
+                            postView.hideProgressbar()
+                            postView.makeToast("失敗した")
+                        },
+                        completed = {
+                            postView.hideProgressbar()
+                            postView.finish()
+                        }))
     }
 
     fun onCameraClicked(view: View) {

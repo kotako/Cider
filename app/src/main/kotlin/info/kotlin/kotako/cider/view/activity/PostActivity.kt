@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import info.kotlin.kotako.cider.R
@@ -44,4 +45,16 @@ class PostActivity : AppCompatActivity(), PostActivityContract {
     override fun makeToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 
     override fun inputText(): String = binding?.textInputTweet?.text.toString()
+
+    override fun showProgressbar() {
+        binding?.progressbarPost?.visibility = View.VISIBLE
+        binding?.progressbarPost?.show()
+    }
+
+    override fun hideProgressbar() {
+        runOnUiThread {
+            binding?.progressbarPost?.visibility = View.INVISIBLE
+            binding?.progressbarPost?.hide()
+        }
+    }
 }

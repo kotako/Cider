@@ -4,10 +4,8 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v4.widget.ContentLoadingProgressBar
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +23,7 @@ import info.kotlin.kotako.cider.viewmodel.MentionViewModel
 class TimelineFragment : Fragment(), TimelineFragmentContract {
 
     private val tweetList = ArrayList<Tweet>()
-    private var adapter: TimelineRecyclerViewAdapter? = null
+    private var binding: FragmentTimelineBinding? = null
 
     companion object {
         fun newInstance(): Fragment = TimelineFragment()
@@ -33,18 +31,17 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val binding = DataBindingUtil.inflate<FragmentTimelineBinding>(inflater, R.layout.fragment_timeline, container, false)
-        adapter = TimelineRecyclerViewAdapter(context, tweetList)
-        binding.viewModel = when {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_timeline, container, false)
+        binding?.viewModel = when {
             arguments == null -> TimelineViewModel(this)
             arguments[PagerAdapter.PAGE_TAG] == PagerAdapter.MENTION -> MentionViewModel(this)
             else -> TimelineViewModel(this)
         }
-        binding.recyclerViewTimeline.adapter = adapter
-        binding.recyclerViewTimeline.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewTimeline.addOnScrollListener(RecyclerScrollListener({ binding.viewModel.loadMore(tweetList.last().id) }))
-        binding.recyclerViewTimeline.addItemDecoration(DividerItemDecoration(binding.recyclerViewTimeline.context, LinearLayoutManager(activity).orientation))
-        return binding.root
+        binding?.recyclerViewTimeline?.adapter = TimelineRecyclerViewAdapter(context, tweetList)
+        binding?.recyclerViewTimeline?.layoutManager = LinearLayoutManager(context)
+        binding?.recyclerViewTimeline?.addOnScrollListener(RecyclerScrollListener({ binding?.viewModel?.loadMore(tweetList.last().id) }))
+        binding?.recyclerViewTimeline?.addItemDecoration(DividerItemDecoration(binding?.recyclerViewTimeline?.context, LinearLayoutManager(activity).orientation))
+        return binding!!.root
     }
 
     //  ----implements TimelineFragmentContract----
@@ -54,12 +51,12 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
 
     override fun addTweet(tweet: Tweet) {
         tweetList.add(tweet)
-        DataBindingUtil.getBinding<FragmentTimelineBinding>(view).recyclerViewTimeline.adapter.notifyItemInserted(tweetList.size)
+        binding?.recyclerViewTimeline?.adapter?.notifyItemInserted(tweetList.size)
     }
 
     override fun addTweetList(tweet: List<Tweet>) {
         tweetList.addAll(tweet)
-        activity.runOnUiThread { adapter?.notifyItemRangeInserted(tweetList.size - tweet.size, tweet.size) }
+        activity.runOnUiThread { binding?.recyclerViewTimeline?.adapter?.notifyItemRangeInserted(tweetList.size - tweet.size, tweet.size) }
     }
 
     override fun showSnackBar(msg: String) {
@@ -67,10 +64,14 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     }
 
     override fun showProgressBar() {
-        view?.let { (it.findViewById(R.id.progress_bar) as ContentLoadingProgressBar).show() }
+        binding?.progressBar?.visibility = View.VISIBLE
+        binding?.progressBar?.show()
     }
 
     override fun hideProgressBar() {
-        activity.runOnUiThread { view?.let { (it.findViewById(R.id.progress_bar) as ContentLoadingProgressBar).hide() } }
+        activity.runOnUiThread {
+            binding?.progressBar?.visibility = View.INVISIBLE
+            binding?.progressBar?.hide()
+        }
     }
 }
