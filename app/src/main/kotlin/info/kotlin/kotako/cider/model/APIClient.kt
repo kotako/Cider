@@ -13,6 +13,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 import rx.Observable
 
@@ -46,6 +47,10 @@ class APIClient(session: TwitterSession) {
 
     fun PostObservable(): PostObservable = getService(PostObservable::class.java)
 
+    fun FavoriteObservable(): FavoriteObservable = getService(FavoriteObservable::class.java)
+
+    fun RetweetObservable(): RetweetObservable = getService(RetweetObservable::class.java)
+
     interface TimelineObservable {
         @GET("/1.1/statuses/home_timeline.json")
         fun homeTimeline(@Query("count") count: Int?,
@@ -76,5 +81,21 @@ class APIClient(session: TwitterSession) {
                  @Query("in_reply_to_status_id") in_reply_to_status_id: String?,
                  @Query("possibly_sensitive") possibly_sensitive: Boolean?,
                  @Query("media_ids") media_ids: Long?): Observable<Tweet>
+    }
+
+    interface FavoriteObservable {
+        @POST("/1.1/favorites/create.json")
+        fun favorite(@Query("id") id: Long): Observable<Tweet>
+
+        @POST("/1.1/favorites/destroy.json")
+        fun unFavorite(@Query("id") id: Long): Observable<Tweet>
+    }
+
+    interface RetweetObservable {
+        @POST("/1.1/statuses/retweet/{id}.json")
+        fun retweet(@Path("id") id: Long): Observable<Tweet>
+
+        @POST("/1.1/statuses/unretweet/{id}.json")
+        fun unRetweet(@Path("id") id: Long): Observable<Tweet>
     }
 }
