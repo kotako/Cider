@@ -1,5 +1,7 @@
 package info.kotlin.kotako.cider.view.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -26,6 +28,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding?.viewModel = MainViewModel(this)
         setUpView()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) setUpView()
     }
 
     private fun setUpView() {

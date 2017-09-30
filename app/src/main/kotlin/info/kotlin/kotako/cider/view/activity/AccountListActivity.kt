@@ -1,10 +1,12 @@
 package info.kotlin.kotako.cider.view.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -22,10 +24,11 @@ import io.realm.Realm
 
 class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
 
-    val realm = Realm.getDefaultInstance()
+    override var accountChanged: Boolean = false
+    var viewModel:AccountListViewModel? = null
 
     companion object {
-        fun start(context: Context) = context.startActivity(Intent(context, AccountListActivity::class.java))
+        fun start(activity: Activity) = activity.startActivityForResult((Intent(activity, AccountListActivity::class.java)), 1)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,14 +42,14 @@ class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Account一覧をセット
-        val viewModel = AccountListViewModel(this, realm)
-        viewModel.setAccountView()
+        viewModel = AccountListViewModel(this)
+        viewModel?.setAccountView()
 
         // Login Buttonのアクションをセット
         val loginButton = findViewById(R.id.button_login_with_twitter) as TwitterLoginButton
         loginButton.callback = (object : Callback<TwitterSession>() {
             override fun success(result: Result<TwitterSession>) {
-                viewModel.onTokenReceived(result)
+                viewModel?.onTokenReceived(result)
                 Snackbar.make(findViewById(R.id.layout_account_list), "Successfully", Snackbar.LENGTH_SHORT)
                         .show()
             }
@@ -58,17 +61,14 @@ class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
         })
     }
 
-    override fun onDestroy() {
-        realm.close()
-        super.onDestroy()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         (findViewById(R.id.button_login_with_twitter) as TwitterLoginButton).onActivityResult(requestCode, resultCode, data)
+        viewModel?.setAccountView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (accountChanged) setResult(Activity.RESULT_OK)
         finish()
         return super.onOptionsItemSelected(item)
     }
