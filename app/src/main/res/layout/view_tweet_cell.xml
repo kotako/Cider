@@ -188,6 +188,7 @@
                     android:layout_centerVertical="true"
                     android:background="#00000000"
                     android:scaleType="centerInside"
+                    android:onClick="@{() -> viewModel.onFavoriteClicked(tweet)}"
                     android:src="@mipmap/favorite_grey"
                     app:tintSetFav='@{tweet.favorited}' />
 
