@@ -45,4 +45,28 @@ class TweetViewModel(val context: Context) {
                             }))
         }
     }
+
+    fun onRetweetClicked(tweet: Tweet) {
+        if (tweet.retweeted) {
+            APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+                    .RetweetObservable()
+                    .unRetweet(tweet.id)
+                    .subscribeOn(Schedulers.newThread())
+                    .subscribe(DefaultObserver(
+                            completed = {
+                                tweet.retweeted = false
+                                tweet.retweetCount--
+                            }))
+        } else {
+            APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+                    .RetweetObservable()
+                    .retweet(tweet.id)
+                    .subscribeOn(Schedulers.newThread())
+                    .subscribe(DefaultObserver(
+                            completed = {
+                                tweet.retweeted = true
+                                tweet.retweetCount++
+                            }))
+        }
+    }
 }

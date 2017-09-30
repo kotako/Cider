@@ -158,6 +158,7 @@
                     android:background="#00000000"
                     android:scaleType="centerInside"
                     android:src="@mipmap/ic_twitter_retweet_grey"
+                    android:onClick="@{() -> viewModel.onRetweetClicked(tweet)}"
                     app:tintSetRT='@{tweet.retweeted}' />
 
                 <TextView
