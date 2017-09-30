@@ -1,13 +1,23 @@
 package info.kotlin.kotako.cider.viewmodel
 
 import android.view.View
+import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.PostActivityContract
+import info.kotlin.kotako.cider.model.APIClient
+import info.kotlin.kotako.cider.rx.DefaultObserver
+import rx.schedulers.Schedulers
 
 class PostViewModel(private val postView: PostActivityContract) {
 
-    fun post(view: View) {
-        postView.makeToast("post clicked")
-        postView.finish()
+    fun post() {
+        APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+                .PostObservable()
+                .post(postView.inputText(), null, null, null)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(DefaultObserver(
+                        next = { },
+                        error = { postView.makeToast("失敗した") },
+                        completed = { postView.finish() }))
     }
 
     fun onIconClicked(view: View) {

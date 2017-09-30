@@ -11,9 +11,12 @@ import android.widget.Toast
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.PostActivityContract
 import info.kotlin.kotako.cider.databinding.ActivityPostBinding
+import info.kotlin.kotako.cider.model.AccountManager
 import info.kotlin.kotako.cider.viewmodel.PostViewModel
 
 class PostActivity : AppCompatActivity(), PostActivityContract {
+
+    var binding:ActivityPostBinding? = null
 
     companion object {
         fun start(context: Context) = context.startActivity(Intent(context, PostActivity::class.java))
@@ -21,14 +24,15 @@ class PostActivity : AppCompatActivity(), PostActivityContract {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<ActivityPostBinding>(this, R.layout.activity_post).viewModel = PostViewModel(this)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_post)
+        binding?.viewModel = PostViewModel(this)
         setUpView()
     }
 
     private fun setUpView() {
         supportActionBar?.title = "Tweet"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (findViewById(R.id.textView_tweet_author_name) as TextView).text = "@Takorras_"
+        binding?.layoutAuthorAccountCell?.account = AccountManager.currentAccount()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -39,4 +43,5 @@ class PostActivity : AppCompatActivity(), PostActivityContract {
     //  ----implements PostActivityContract----
     override fun makeToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 
+    override fun inputText(): String = binding?.textInputTweet?.text.toString()
 }

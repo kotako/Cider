@@ -13,33 +13,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+        <include android:id="@+id/layout_author_account_cell"
+            layout="@layout/view_account_cell" />
 
-            <ImageView
-                android:id="@+id/imageView_tweet_author_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:onClick="@{viewModel::onIconClicked}"
-                android:src="@mipmap/ic_launcher" />
-
-            <TextView
-                android:id="@+id/textView_tweet_author_name"
-                android:typeface="normal"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:text="hogehoge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
-                android:layout_toRightOf="@id/imageView_tweet_author_icon"/>
-        </RelativeLayout>
-
-        <include layout="@layout/divider" />
+        <!--<include layout="@layout/divider" />-->
 
         <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/text_input_tweet"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="16dp"
@@ -98,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:backgroundTint="@color/colorPrimary"
-                android:onClick="@{viewModel::post}"
+                android:onClick="@{() -> viewModel.post()}"
                 android:src="@mipmap/send_white"
                 android:theme="@style/ButtonHighLight"/>
         </RelativeLayout>

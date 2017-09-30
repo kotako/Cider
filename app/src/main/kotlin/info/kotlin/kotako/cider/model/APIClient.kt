@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 import rx.Observable
 
@@ -43,6 +44,8 @@ class APIClient(session: TwitterSession) {
 
     fun UsersObservable(): UsersObservable = getService(UsersObservable::class.java)
 
+    fun PostObservable(): PostObservable = getService(PostObservable::class.java)
+
     interface TimelineObservable {
         @GET("/1.1/statuses/home_timeline.json")
         fun homeTimeline(@Query("count") count: Int?,
@@ -65,5 +68,13 @@ class APIClient(session: TwitterSession) {
         fun showUser(@Query("user_id") user_id: Long?,
                      @Query("screen_name") screen_name: String?,
                      @Query("include_entities") include_entities: Boolean?): Observable<User>
+    }
+
+    interface PostObservable {
+        @POST("/1.1/statuses/update.json")
+        fun post(@Query("status") status: String,
+                 @Query("in_reply_to_status_id") in_reply_to_status_id: String?,
+                 @Query("possibly_sensitive") possibly_sensitive: Boolean?,
+                 @Query("media_ids") media_ids: Long?): Observable<Tweet>
     }
 }
