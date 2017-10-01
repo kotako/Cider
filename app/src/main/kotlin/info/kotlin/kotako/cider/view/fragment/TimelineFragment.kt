@@ -70,8 +70,8 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
 
     override fun hideProgressBar() {
         activity.runOnUiThread {
-            binding?.progressBar?.visibility = View.INVISIBLE
             binding?.progressBar?.hide()
+            binding?.progressBar?.visibility = View.INVISIBLE
         }
     }
 }

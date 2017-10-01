@@ -1,6 +1,5 @@
 package info.kotlin.kotako.cider.viewmodel
 
-import com.twitter.sdk.android.core.Twitter
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
@@ -39,7 +38,7 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
                 .TimelineObservable()
                 .homeTimeline(50, null, maxId, null, null, null)
                 .map { t -> t.drop(1) }
-                .map { t -> t.map { tweet -> Tweet(tweet) } }
+                .map { t -> t.map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, tweet.user) else Tweet(tweet)  } }
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it) },
