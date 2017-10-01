@@ -17,7 +17,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="@{() -> viewModel.onTweetClicked(tweet)}">
 
         <RelativeLayout
             android:id="@+id/layout_cell_caption"
@@ -115,7 +117,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="4dp"
-            android:visibility="visible">
+            android:visibility="@{tweet.expanded ? View.VISIBLE : View.GONE}">
 
             <RelativeLayout
                 android:id="@+id/layout_tweet_rep"

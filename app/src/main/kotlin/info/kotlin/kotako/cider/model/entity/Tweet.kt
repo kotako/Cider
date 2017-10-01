@@ -42,4 +42,11 @@ class Tweet(tweet: Tweet, val retweetedUser: User? = null) : Serializable, BaseO
     val inReplyToStatusId = tweet.inReplyToStatusId
     val inReplyToUserId = tweet.inReplyToUserId
     val inReplyToScreenName = tweet.inReplyToScreenName
+
+    @get:Bindable
+    var expanded = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.expanded)
+        }
 }

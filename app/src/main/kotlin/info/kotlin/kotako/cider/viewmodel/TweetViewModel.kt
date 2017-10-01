@@ -22,6 +22,10 @@ class TweetViewModel(val context: Context) {
 
     fun createdInterval(createdAt: String): String = DateManager.intervalFromCreated(createdAt)
 
+    fun onTweetClicked(tweet:Tweet) {
+        tweet.expanded = tweet.expanded.not()
+    }
+
     fun onFavoriteClicked(tweet: Tweet) {
         if (tweet.favorited) {
             APIClient(TwitterCore.getInstance().sessionManager.activeSession)
