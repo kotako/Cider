@@ -108,6 +108,17 @@
                 android:text="@{tweet.text}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/imageview_cell_author_icon"
+                android:layout_below="@id/textview_cell_centent"
+                android:visibility="gone"
+                android:scaleType="centerCrop"/>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -115,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_below="@id/layout_cell_main"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorTweetExpand"
             android:paddingBottom="4dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -132,7 +143,8 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_centerVertical="true"
-                    android:background="@color/colorPrimary"
+                    android:background="#00000000"
+                    android:tint="#ffffff"
                     android:scaleType="centerInside"
                     android:src="@mipmap/reply_white" />
 
