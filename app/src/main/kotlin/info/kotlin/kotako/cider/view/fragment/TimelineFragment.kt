@@ -37,17 +37,17 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
             arguments[PagerAdapter.PAGE_TAG] == PagerAdapter.MENTION -> MentionViewModel(this)
             else -> TimelineViewModel(this)
         }
+
+//      RecyclerViewにAdapter, LayoutManager, ScrollListener, 仕切り線をセット
         binding?.recyclerViewTimeline?.adapter = TimelineRecyclerViewAdapter(context, tweetList)
         binding?.recyclerViewTimeline?.layoutManager = LinearLayoutManager(context)
         binding?.recyclerViewTimeline?.addOnScrollListener(RecyclerScrollListener({ binding?.viewModel?.loadMore(tweetList.last().id) }))
-        binding?.recyclerViewTimeline?.addItemDecoration(DividerItemDecoration(binding?.recyclerViewTimeline?.context, LinearLayoutManager(activity).orientation))
+        binding?.recyclerViewTimeline?.addItemDecoration(DividerItemDecoration(binding?.recyclerViewTimeline?.context, LinearLayoutManager(context).orientation))
         return binding!!.root
     }
 
     //  ----implements TimelineFragmentContract----
-    override fun startProfileActivity() {
-        ProfileActivity.start(context)
-    }
+    override fun startProfileActivity() = ProfileActivity.start(context)
 
     override fun addTweet(tweet: Tweet) {
         tweetList.add(tweet)
@@ -57,6 +57,12 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun addTweetList(tweet: List<Tweet>) {
         tweetList.addAll(tweet)
         activity.runOnUiThread { binding?.recyclerViewTimeline?.adapter?.notifyItemRangeInserted(tweetList.size - tweet.size, tweet.size) }
+    }
+
+    override fun clearTweetList() {
+        binding?.layoutRefresh?.isRefreshing = false
+        tweetList.clear()
+        binding?.recyclerViewTimeline?.adapter?.notifyDataSetChanged()
     }
 
     override fun showSnackBar(msg: String) {

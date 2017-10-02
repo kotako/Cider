@@ -27,7 +27,7 @@ class RecyclerScrollListener(private val onLoadMore: () -> Unit = {}) : Recycler
             }
         }
 
-        if (!loading && (totalItemCount - visibleItemCount) <= firstVisibleItem + 5) {
+        if (!loading && (totalItemCount - visibleItemCount) <= firstVisibleItem + 5 && totalItemCount != 0) {
             previousTotalItemCount = totalItemCount
             loading = true
             onLoadMore()

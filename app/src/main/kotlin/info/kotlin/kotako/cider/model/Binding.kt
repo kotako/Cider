@@ -1,6 +1,8 @@
 package info.kotlin.kotako.cider.model
 
 import android.databinding.BindingAdapter
+import android.support.v4.widget.SwipeRefreshLayout
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -32,4 +34,9 @@ fun ImageButton.loadImageFromSession(account: Account) {
             .subscribe(DefaultObserver(
                     next = { profileImageUrl = it.profileImageUrl },
                     completed = { this.post { loadImage(profileImageUrl) } }))
+}
+
+@BindingAdapter("onRefresh")
+fun SwipeRefreshLayout.onRefresh(listener:SwipeRefreshLayout.OnRefreshListener){
+    this.setOnRefreshListener(listener)
 }

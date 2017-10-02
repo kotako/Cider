@@ -1,5 +1,6 @@
 package info.kotlin.kotako.cider.viewmodel
 
+import android.util.Log
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
@@ -47,5 +48,10 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
                             timelineView.showSnackBar(throwable.localizedMessage)
                         },
                         completed = { timelineView.hideProgressBar() }))
+    }
+
+    override fun onRefresh() {
+        timelineView.clearTweetList()
+        setTimeline()
     }
 }
