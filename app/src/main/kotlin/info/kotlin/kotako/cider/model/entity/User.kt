@@ -28,6 +28,7 @@ class User (user:User) :Serializable {
     val profileLinkColor = user.profileLinkColor
     val profileSidebarBorderColor = user.profileSidebarBorderColor
     val profileSidebarFillColor = user.profileSidebarFillColor
+    val profileBannerUrl = user.profileBannerUrl
     val profileTextColor = user.profileTextColor
     val protectedUser = user.protectedUser
     val screenName = user.screenName

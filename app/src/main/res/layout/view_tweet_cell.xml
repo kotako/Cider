@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.graphics.Color" />
+
         <import type="android.view.View" />
 
         <variable
@@ -158,10 +160,10 @@
                     android:layout_height="16dp"
                     android:layout_centerVertical="true"
                     android:background="#00000000"
+                    android:onClick="@{() -> viewModel.onRetweetClicked(tweet)}"
                     android:scaleType="centerInside"
                     android:src="@mipmap/ic_twitter_retweet_grey"
-                    android:onClick="@{() -> viewModel.onRetweetClicked(tweet)}"
-                    app:tintSetRT='@{tweet.retweeted}' />
+                    android:tint='@{Color.parseColor(tweet.retweeted ? "#2ecc71" : "#FFFFFF")}' />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -190,10 +192,10 @@
                     android:layout_height="12dp"
                     android:layout_centerVertical="true"
                     android:background="#00000000"
-                    android:scaleType="centerInside"
                     android:onClick="@{() -> viewModel.onFavoriteClicked(tweet)}"
+                    android:scaleType="centerInside"
                     android:src="@mipmap/favorite_grey"
-                    app:tintSetFav='@{tweet.favorited}' />
+                    android:tint='@{Color.parseColor(tweet.favorited ? "#E74C3C" : "#FFFFFF")}' />
 
                 <TextView
                     android:layout_width="wrap_content"

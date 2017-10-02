@@ -39,7 +39,7 @@
                         android:layout_gravity="top"
                         android:fitsSystemWindows="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/hogehoge" />
+                        app:loadImage="@{user.profileBannerUrl}"/>
 
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar_profile"
