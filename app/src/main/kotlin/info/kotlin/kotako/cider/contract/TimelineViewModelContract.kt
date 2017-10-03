@@ -4,4 +4,5 @@ interface TimelineViewModelContract {
     fun setTimeline()
     fun loadMore(maxId: Long)
     fun onRefresh()
+    fun unSubscribe()
 }

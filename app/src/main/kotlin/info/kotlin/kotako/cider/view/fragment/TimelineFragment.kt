@@ -55,6 +55,11 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
         if (tweetList.isEmpty()) binding?.viewModel?.setTimeline()
     }
 
+    override fun onStop() {
+        super.onStop()
+        binding?.viewModel?.unSubscribe()
+    }
+
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
         savedInstanceState?.let { tweetList.addAll(it.getSerializable(SAVED_TWEET_LIST_KEY) as ArrayList<Tweet>) }
