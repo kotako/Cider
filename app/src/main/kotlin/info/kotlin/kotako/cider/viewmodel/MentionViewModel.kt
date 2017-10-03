@@ -11,9 +11,10 @@ import rx.subscriptions.CompositeSubscription
 
 class MentionViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
-    private val subscription = CompositeSubscription()
+    private var subscription = CompositeSubscription()
 
     override fun setTimeline() {
+        if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
         timelineView.showProgressBar()
         subscription.add(APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
@@ -30,6 +31,7 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
     }
 
     override fun loadMore(maxId: Long) {
+        if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
         timelineView.showProgressBar()
         subscription.add(APIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
