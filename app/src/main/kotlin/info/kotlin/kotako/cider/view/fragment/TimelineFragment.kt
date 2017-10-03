@@ -6,9 +6,11 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.databinding.FragmentTimelineBinding
@@ -22,10 +24,11 @@ import info.kotlin.kotako.cider.viewmodel.MentionViewModel
 
 class TimelineFragment : Fragment(), TimelineFragmentContract {
 
-    private val tweetList = ArrayList<Tweet>()
+    private var tweetList = ArrayList<Tweet>()
     private var binding: FragmentTimelineBinding? = null
 
     companion object {
+        val SAVED_TWEET_LIST_KEY = "tweetList"
         fun newInstance(): Fragment = TimelineFragment()
         fun newInstance(bundle: Bundle): Fragment = TimelineFragment().apply { arguments = bundle }
     }
@@ -44,6 +47,23 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
         binding?.recyclerViewTimeline?.addOnScrollListener(RecyclerScrollListener({ binding?.viewModel?.loadMore(tweetList.last().id) }))
         binding?.recyclerViewTimeline?.addItemDecoration(DividerItemDecoration(binding?.recyclerViewTimeline?.context, LinearLayoutManager(context).orientation))
         return binding!!.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (TwitterCore.getInstance().sessionManager?.activeSession == null) return
+        if (tweetList.isEmpty()) binding?.viewModel?.setTimeline()
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.let { tweetList.addAll(it.getSerializable(SAVED_TWEET_LIST_KEY) as ArrayList<Tweet>) }
+        binding?.recyclerViewTimeline?.adapter?.notifyDataSetChanged()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putSerializable(SAVED_TWEET_LIST_KEY, tweetList)
     }
 
     //  ----implements TimelineFragmentContract----

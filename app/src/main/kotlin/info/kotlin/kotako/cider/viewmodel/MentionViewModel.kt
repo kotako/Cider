@@ -1,6 +1,5 @@
 package info.kotlin.kotako.cider.viewmodel
 
-import android.util.Log
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
@@ -10,12 +9,6 @@ import info.kotlin.kotako.cider.rx.DefaultObserver
 import rx.schedulers.Schedulers
 
 class MentionViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
-
-    init {
-        TwitterCore.getInstance().sessionManager?.activeSession?.let {
-            setTimeline()
-        }
-    }
 
     override fun setTimeline() {
         timelineView.showProgressBar()

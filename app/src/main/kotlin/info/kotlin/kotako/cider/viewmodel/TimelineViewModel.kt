@@ -12,12 +12,6 @@ import rx.schedulers.Schedulers
 
 class TimelineViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
-    init {
-        TwitterCore.getInstance().sessionManager?.activeSession?.let {
-            setTimeline()
-        }
-    }
-
     override fun setTimeline() {
         timelineView.showProgressBar()
         APIClient(TwitterCore.getInstance().sessionManager.activeSession)
