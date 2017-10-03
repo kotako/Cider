@@ -5,6 +5,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:tint="#ffffff"
         android:layout_gravity="center"
         android:src="@mipmap/view_list_grey"/>
 </FrameLayout>

@@ -30,25 +30,19 @@
                     android:layout_height="?attr/actionBarSize"
                     android:theme="@style/NoActionBar"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
-            </android.support.design.widget.AppBarLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="?attr/actionBarSize">
 
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tabs"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:tabMode="fixed" />
+            </android.support.design.widget.AppBarLayout>
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/pager"
-                    android:layout_below="@id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </RelativeLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab"
@@ -58,7 +52,7 @@
                 android:layout_margin="16dp"
                 android:onClick="@{viewModel::onFabClicked}"
                 android:src="@mipmap/add_white"
-                app:backgroundTint="@color/colorAccent"/>
+                app:backgroundTint="@color/colorAccent" />
 
         </android.support.design.widget.CoordinatorLayout>
 
@@ -69,7 +63,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:headerLayout="@layout/header_drawer_navigation"
-            app:menu="@menu/menu_drawer_navigation"/>
+            app:menu="@menu/menu_drawer_navigation" />
 
     </android.support.v4.widget.DrawerLayout>
 </layout>

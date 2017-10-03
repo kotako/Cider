@@ -6,5 +6,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/insert_photo_grey"
+        android:tint="#ffffff"
         android:layout_gravity="center"/>
 </LinearLayout>
