@@ -67,7 +67,7 @@
                 android:layout_height="48dp"
                 android:layout_marginRight="8dp"
                 android:background="@drawable/shape_profile_image"
-                android:onClick="@{() -> viewModel.onIconClicked(tweet.user)}"
+                android:onClick="@{() -> viewModel.onIconClicked(tweet)}"
                 android:scaleType="centerCrop"
                 app:loadImage="@{tweet.user.profileImageUrl}" />
 
@@ -146,6 +146,7 @@
                     android:background="#00000000"
                     android:tint="#ffffff"
                     android:scaleType="centerInside"
+                    android:onClick="@{() -> viewModel.onReplyClicked(tweet)}"
                     android:src="@mipmap/reply_white" />
 
                 <TextView

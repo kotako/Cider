@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.twitter.sdk.android.core.TwitterAuthToken
 import com.twitter.sdk.android.core.TwitterSession
+import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.entity.Account
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import rx.schedulers.Schedulers
@@ -38,5 +39,6 @@ fun ImageButton.loadImageFromSession(account: Account) {
 
 @BindingAdapter("onRefresh")
 fun SwipeRefreshLayout.onRefresh(listener:SwipeRefreshLayout.OnRefreshListener){
+    this.setColorSchemeResources(R.color.colorAccent)
     this.setOnRefreshListener(listener)
 }

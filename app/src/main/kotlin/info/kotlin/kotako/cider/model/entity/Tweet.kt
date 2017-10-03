@@ -3,7 +3,6 @@ package info.kotlin.kotako.cider.model.entity
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.twitter.sdk.android.core.models.Tweet
-import com.twitter.sdk.android.core.models.User
 import info.kotlin.kotako.cider.BR
 import java.io.Serializable
 
@@ -35,7 +34,7 @@ class Tweet(tweet: Tweet, val retweetedUser: User? = null) : Serializable, BaseO
             field = value
             notifyPropertyChanged(BR.retweetCount)
         }
-    val user = tweet.user
+    val user = User(tweet.user)
     val user_sn = tweet.user.screenName
     val text = tweet.text
     val source = tweet.source

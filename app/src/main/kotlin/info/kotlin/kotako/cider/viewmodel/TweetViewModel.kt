@@ -2,20 +2,20 @@ package info.kotlin.kotako.cider.viewmodel
 
 import android.content.Context
 import com.twitter.sdk.android.core.TwitterCore
-import com.twitter.sdk.android.core.models.User
 import info.kotlin.kotako.cider.model.APIClient
 import info.kotlin.kotako.cider.model.DateManager
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
+import info.kotlin.kotako.cider.view.activity.PostActivity
 import info.kotlin.kotako.cider.view.activity.ProfileActivity
 import rx.schedulers.Schedulers
 import java.util.*
 
 class TweetViewModel(val context: Context) {
 
-    fun onIconClicked(user: User) {
+    fun onIconClicked(tweet: Tweet) {
         //Log.d("hoge", user.screenName)
-        ProfileActivity.start(context, user.id)
+        ProfileActivity.start(context, tweet.user.id)
     }
 
     fun createdAtJpn(createdAt: String): String = DateManager.createdAt(createdAt, Locale.JAPAN)
@@ -24,6 +24,10 @@ class TweetViewModel(val context: Context) {
 
     fun onTweetClicked(tweet:Tweet) {
         tweet.expanded = tweet.expanded.not()
+    }
+
+    fun onReplyClicked(tweet: Tweet) {
+        PostActivity.start(context, tweet)
     }
 
     fun onFavoriteClicked(tweet: Tweet) {

@@ -78,7 +78,7 @@ class APIClient(session: TwitterSession) {
     interface PostObservable {
         @POST("/1.1/statuses/update.json")
         fun post(@Query("status") status: String,
-                 @Query("in_reply_to_status_id") in_reply_to_status_id: String?,
+                 @Query("in_reply_to_status_id") in_reply_to_status_id: Long?,
                  @Query("possibly_sensitive") possibly_sensitive: Boolean?,
                  @Query("media_ids") media_ids: Long?): Observable<Tweet>
     }
