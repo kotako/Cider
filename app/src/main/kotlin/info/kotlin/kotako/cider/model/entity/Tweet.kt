@@ -4,44 +4,49 @@ import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.twitter.sdk.android.core.models.Tweet
 import info.kotlin.kotako.cider.BR
+import twitter4j.Status
 import java.io.Serializable
 
-class Tweet(tweet: Tweet, val retweetedUser: User? = null) : Serializable, BaseObservable() {
+class Tweet(val id: Long, val createdAt: String, favoriteCount: Int, favorited: Boolean, retweeted: Boolean,
+            retweetCount: Int, val user: User, val text: String, val source: String, val inReplyToStatusId: Long?,
+            val inReplyToUserId: Long?, val inReplyToScreenName: String?, val retweetedUser: User?) : Serializable, BaseObservable() {
 
-    val id = tweet.id
-    val createdAt = tweet.createdAt
+    constructor(tweet:Tweet, retweetedUser:User? = null):this(
+            tweet.id, tweet.createdAt, tweet.favoriteCount, tweet.favorited, tweet.retweeted,
+            tweet.retweetCount, User(tweet.user), tweet.text, tweet.source, tweet.inReplyToStatusId,
+            tweet.inReplyToUserId, tweet.inReplyToScreenName, retweetedUser
+    )
+
+    constructor(status:Status):this(
+            status.id, status.createdAt.toString(), status.favoriteCount, status.isFavorited, status.isRetweeted,
+            status.retweetCount, User(status.user), status.text, status.source, status.inReplyToStatusId,
+            status.inReplyToUserId,status.inReplyToScreenName, null
+    )
+
     @get:Bindable
-    var favoriteCount = tweet.favoriteCount
+    var favoriteCount = favoriteCount
         set(value) {
             field = value
             notifyPropertyChanged(BR.favoriteCount)
         }
     @get:Bindable
-    var favorited = tweet.favorited
+    var favorited = favorited
         set(value) {
             field = value
             notifyPropertyChanged(BR.favorited)
         }
     @get:Bindable
-    var retweeted = tweet.retweeted
+    var retweeted = retweeted
         set(value) {
             field = value
             notifyPropertyChanged(BR.retweeted)
         }
     @get:Bindable
-    var retweetCount = tweet.retweetCount
+    var retweetCount = retweetCount
         set(value) {
             field = value
             notifyPropertyChanged(BR.retweetCount)
         }
-    val user = User(tweet.user)
-    val user_sn = tweet.user.screenName
-    val text = tweet.text
-    val source = tweet.source
-    val inReplyToStatusId = tweet.inReplyToStatusId
-    val inReplyToUserId = tweet.inReplyToUserId
-    val inReplyToScreenName = tweet.inReplyToScreenName
-
     @get:Bindable
     var expanded = false
         set(value) {

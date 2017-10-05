@@ -5,15 +5,28 @@ import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
 import info.kotlin.kotako.cider.model.APIClient
+import info.kotlin.kotako.cider.model.AccountManager
+import info.kotlin.kotako.cider.model.StreamApiClient
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.rx.DefaultObserver
+import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import twitter4j.*
 
 class TimelineViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
     private var subscription = CompositeSubscription()
+
+    override fun startStream() {
+        subscription.add(StreamApiClient.statusObservable
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(DefaultObserver<Status>(
+                next = { Log.d("japanication",it.text) },
+                error = {  }
+        )))
+    }
 
     override fun setTimeline() {
         if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()

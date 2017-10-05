@@ -141,7 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/view_profile_follow"
-                        android:text="@{user.followingCount}"
+                        android:text="@{String.valueOf(user.followingCount)}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
                 </RelativeLayout>
 
@@ -163,7 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/view_profile_follower"
-                        android:text="@{user.followersCount}"
+                        android:text="@{String.valueOf(user.followersCount)}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
                 </RelativeLayout>
             </LinearLayout>

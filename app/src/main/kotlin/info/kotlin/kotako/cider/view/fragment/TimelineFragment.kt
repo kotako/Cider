@@ -53,6 +53,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
         super.onStart()
         if (TwitterCore.getInstance().sessionManager?.activeSession == null) return
         if (tweetList.isEmpty()) binding?.viewModel?.setTimeline()
+        binding?.viewModel?.startStream()
     }
 
     override fun onStop() {

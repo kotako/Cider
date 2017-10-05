@@ -3,36 +3,30 @@ package info.kotlin.kotako.cider.model.entity
 import com.twitter.sdk.android.core.models.User
 import java.io.Serializable
 
-class User (user:User) :Serializable {
-    val contributorsEnabled = user.contributorsEnabled
-    val createdAt = user.createdAt
-    val defaultProfile = user.defaultProfile
-    val defaultProfileImage = user.defaultProfileImage
-    val description = user.description
-    val email = user.email
-    val favoritesCount = user.favouritesCount
-    val followersCount = user.followersCount.toString()
-    val followingCount = user.friendsCount.toString()
-    val followRequestSent = user.followRequestSent
-    val geoEnabled = user.geoEnabled
-    val id = user.id
-    val isTranslator = user.isTranslator
-    val lang = user.lang
-    val listedCount = user.listedCount
-    val location = user.location
-    val name = user.name
-    val profileBackgroundColor = user.profileBackgroundColor
-    val profileBackgroundImageUrl = user.profileBackgroundImageUrl
-    val profileBackgroundTile = user.profileBackgroundTile
-    val profileImageUrl = user.profileImageUrl
-    val profileLinkColor = user.profileLinkColor
-    val profileSidebarBorderColor = user.profileSidebarBorderColor
-    val profileSidebarFillColor = user.profileSidebarFillColor
-    val profileBannerUrl = user.profileBannerUrl
-    val profileTextColor = user.profileTextColor
-    val protectedUser = user.protectedUser
-    val screenName = user.screenName
-    val statusesCount = user.statusesCount
-    val url = user.url
-    val verified = user.verified
+class User(val contributorsEnabled: Boolean?, val createdAt: String, val defaultProfile: Boolean,
+           val defaultProfileImage: Boolean, val description: String, val favoritesCount: Int,
+           val followersCount: Int, val followingCount: Int, val followRequestSent: Boolean,
+           val geoEnabled: Boolean, val id: Long, val lang: String, val listedCount: Int, val location: String?,
+           val name: String, val profileBackgroundColor: String?, val profileBackgroundImageUrl: String?,
+           val profileBackgroundTile: Boolean?, val profileImageUrl: String, val profileLinkColor: String?,
+           val profileSidebarBorderColor: String?, val profileSidebarFillColor: String?,
+           val profileBannerUrl: String?, val profileTextColor: String?, val protectedUser: Boolean,
+           val screenName: String, val statusCount: Int, val url: String?, val verified: Boolean) : Serializable {
+
+    constructor(user: User) : this(user.contributorsEnabled, user.createdAt, user.defaultProfile,
+            user.defaultProfileImage, user.description, user.favouritesCount, user.followersCount,
+            user.friendsCount, user.followRequestSent, user.geoEnabled, user.id, user.lang, user.listedCount,
+            user.location, user.name, user.profileBackgroundColor, user.profileBackgroundImageUrl,
+            user.profileBackgroundTile, user.profileImageUrl, user.profileLinkColor, user.profileSidebarBorderColor,
+            user.profileSidebarFillColor, user.profileBannerUrl, user.profileTextColor, user.protectedUser,
+            user.screenName, user.statusesCount, user.url, user.verified)
+
+    constructor(user: twitter4j.User) : this(user.isContributorsEnabled, user.createdAt.toString(),
+            user.isDefaultProfile, user.isDefaultProfileImage, user.description,
+            user.favouritesCount, user.followersCount, user.friendsCount, user.isFollowRequestSent,
+            user.isGeoEnabled, user.id, user.lang, user.listedCount, user.location, user.name,
+            user.profileBackgroundColor, user.profileBackgroundImageURL, user.isProfileBackgroundTiled,
+            user.profileImageURL, user.profileLinkColor, user.profileSidebarBorderColor, user.profileSidebarFillColor,
+            user.profileBannerURL, user.profileTextColor, user.isProtected, user.screenName, user.statusesCount,
+            user.url, user.isVerified)
 }

@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/textview_cell_name"
                 android:gravity="center"
-                android:text='@{"@"+tweet.user_sn}' />
+                android:text='@{"@"+tweet.user.screenName}' />
 
             <TextView
                 android:id="@+id/textview_cell_time"

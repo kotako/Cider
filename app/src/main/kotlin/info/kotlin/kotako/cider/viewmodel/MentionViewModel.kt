@@ -1,5 +1,6 @@
 package info.kotlin.kotako.cider.viewmodel
 
+import android.util.Log
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
@@ -13,6 +14,9 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
 
     private var subscription = CompositeSubscription()
 
+    override fun startStream() {
+        Log.d("java", "hoge")
+    }
     override fun setTimeline() {
         if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
         timelineView.showProgressBar()

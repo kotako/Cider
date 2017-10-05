@@ -33,7 +33,7 @@ class PostActivity : AppCompatActivity(), PostActivityContract {
 
 //      リプの時はidをセットしる
         intent.extras?.getSerializable("replyTo")?.let {
-            var tmp = "@" + (it as Tweet).user_sn + " "
+            var tmp = "@" + (it as Tweet).user.screenName + " "
             if (it.inReplyToScreenName !in listOf(null, AccountManager.currentAccount()?.userName)) tmp += "@" + it.inReplyToScreenName + " "
             binding?.textInputTweet?.text = Editable.Factory.getInstance().newEditable(tmp)
             binding?.textInputTweet?.setSelection(binding?.textInputTweet?.text?.length ?: 0)
