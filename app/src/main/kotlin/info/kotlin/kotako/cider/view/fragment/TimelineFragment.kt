@@ -75,15 +75,18 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun startProfileActivity() = ProfileActivity.start(context)
 
     override fun addTweet(tweet: Tweet) {
+        tweetList.add(0, tweet)
         activity.runOnUiThread {
-            tweetList.add(0, tweet)
             binding?.recyclerViewTimeline?.adapter?.notifyItemInserted(0)
+            if((binding?.recyclerViewTimeline?.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0){
+                binding?.recyclerViewTimeline?.smoothScrollToPosition(0)
+            }
         }
     }
 
     override fun addTweetList(tweet: List<Tweet>) {
         tweetList.addAll(tweet)
-        activity.runOnUiThread { binding?.recyclerViewTimeline?.adapter?.notifyItemRangeInserted(tweetList.size - tweet.size, tweet.size) }
+        activity.runOnUiThread { binding?.recyclerViewTimeline?.adapter?.notifyItemRangeChanged(tweetList.size - tweet.size, tweet.size) }
     }
 
     override fun clearTweetList() {
