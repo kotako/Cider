@@ -52,13 +52,12 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun onStart() {
         super.onStart()
         if (TwitterCore.getInstance().sessionManager?.activeSession == null) return
-        if (tweetList.isEmpty()) binding?.viewModel?.setTimeline()
-        binding?.viewModel?.startStream()
+        binding?.viewModel?.start()
     }
 
     override fun onStop() {
         super.onStop()
-        binding?.viewModel?.unSubscribe()
+        Log.d("fragment", "stopped")
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -76,8 +75,10 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun startProfileActivity() = ProfileActivity.start(context)
 
     override fun addTweet(tweet: Tweet) {
-        tweetList.add(tweet)
-        binding?.recyclerViewTimeline?.adapter?.notifyItemInserted(tweetList.size)
+        activity.runOnUiThread {
+            tweetList.add(0, tweet)
+            binding?.recyclerViewTimeline?.adapter?.notifyItemInserted(0)
+        }
     }
 
     override fun addTweetList(tweet: List<Tweet>) {

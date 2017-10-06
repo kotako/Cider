@@ -17,10 +17,10 @@ class Tweet(val id: Long, val createdAt: String, favoriteCount: Int, favorited: 
             tweet.inReplyToUserId, tweet.inReplyToScreenName, retweetedUser
     )
 
-    constructor(status:Status):this(
+    constructor(status:Status, retweetedUser: User? = null):this(
             status.id, status.createdAt.toString(), status.favoriteCount, status.isFavorited, status.isRetweeted,
             status.retweetCount, User(status.user), status.text, status.source, status.inReplyToStatusId,
-            status.inReplyToUserId,status.inReplyToScreenName, null
+            status.inReplyToUserId,status.inReplyToScreenName, retweetedUser
     )
 
     @get:Bindable

@@ -5,28 +5,35 @@ import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
 import info.kotlin.kotako.cider.model.APIClient
-import info.kotlin.kotako.cider.model.AccountManager
 import info.kotlin.kotako.cider.model.StreamApiClient
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.rx.DefaultObserver
-import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
-import twitter4j.*
 
 class TimelineViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
     private var subscription = CompositeSubscription()
 
     override fun startStream() {
-        subscription.add(StreamApiClient.statusObservable
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(DefaultObserver<Status>(
-                next = { Log.d("japanication",it.text) },
-                error = {  }
-        )))
+        if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
+        subscription.add(
+                StreamApiClient.statusObservable
+                        .map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) }
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe(DefaultObserver<Tweet>(
+                                next = { timelineView.addTweet(it) },
+                                error = { Log.d("TimelineViewModel", it.localizedMessage) }
+                        )))
     }
+
+    override fun start() {
+        setTimeline()
+        startStream()
+    }
+
+    override fun stop() = subscription.unsubscribe()
 
     override fun setTimeline() {
         if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
@@ -62,8 +69,6 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
                         },
                         completed = { timelineView.hideProgressBar() })))
     }
-
-    override fun unSubscribe() = subscription.unsubscribe()
 
     override fun onRefresh() {
         timelineView.clearTweetList()

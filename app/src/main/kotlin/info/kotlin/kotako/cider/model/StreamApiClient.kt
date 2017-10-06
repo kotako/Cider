@@ -2,16 +2,18 @@ package info.kotlin.kotako.cider.model
 
 import rx.Observable
 import twitter4j.*
+import java.lang.Exception
 
-class StreamApiClient {
-    companion object {
-        val statusObservable = Observable.create<Status> { subscriber ->
-            TwitterStreamFactory(AccountManager.currentConfig()).instance
-                    .run {
-                        onStatus { subscriber.onNext(it) }
-                        onException { subscriber.onError(it) }
-                        user()
-                    }
-        }.share()
-    }
+object StreamApiClient {
+
+    val statusObservable = Observable.create<Status> { subscriber ->
+        TwitterStreamFactory(AccountManager.currentConfig()).instance
+                .apply {
+                    StreamListenerWrapper.addStatusListener(this, object : UserStreamAdapter() {
+                        override fun onStatus(status: Status?) = subscriber.onNext(status)
+                        override fun onException(ex: Exception?) = subscriber.onError(ex)
+                    })
+                    user()
+                }
+    }.share()
 }

@@ -5,6 +5,8 @@ import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
 import info.kotlin.kotako.cider.model.APIClient
+import info.kotlin.kotako.cider.model.AccountManager
+import info.kotlin.kotako.cider.model.StreamApiClient
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import rx.schedulers.Schedulers
@@ -15,8 +17,18 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
     private var subscription = CompositeSubscription()
 
     override fun startStream() {
-        Log.d("java", "hoge")
+        if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
+        subscription.add(
+                StreamApiClient.statusObservable
+                        .filter { status -> status.inReplyToUserId == AccountManager.currentAccount()?.userId }
+                        .map { status -> Tweet(status) }
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe(DefaultObserver<Tweet>(
+                                next = { timelineView.addTweet(it) },
+                                error = { Log.d("MentionViewModel", it.localizedMessage) }
+                        )))
     }
+
     override fun setTimeline() {
         if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
         timelineView.showProgressBar()
@@ -52,7 +64,12 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
                         completed = { timelineView.hideProgressBar() })))
     }
 
-    override fun unSubscribe() = subscription.unsubscribe()
+    override fun start() {
+        setTimeline()
+        startStream()
+    }
+
+    override fun stop() = subscription.unsubscribe()
 
     override fun onRefresh() {
         timelineView.clearTweetList()

@@ -4,7 +4,7 @@ import com.twitter.sdk.android.core.models.User
 import java.io.Serializable
 
 class User(val contributorsEnabled: Boolean?, val createdAt: String, val defaultProfile: Boolean,
-           val defaultProfileImage: Boolean, val description: String, val favoritesCount: Int,
+           val defaultProfileImage: Boolean, val description: String?, val favoritesCount: Int,
            val followersCount: Int, val followingCount: Int, val followRequestSent: Boolean,
            val geoEnabled: Boolean, val id: Long, val lang: String, val listedCount: Int, val location: String?,
            val name: String, val profileBackgroundColor: String?, val profileBackgroundImageUrl: String?,
