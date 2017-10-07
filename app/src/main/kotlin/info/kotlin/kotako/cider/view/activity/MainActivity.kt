@@ -30,20 +30,26 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
     }
 
     private fun setUpView() {
-//      toolbar setup
-        binding?.toolbar?.title = "tinpo"
-        binding?.toolbar?.navigationIcon = getDrawable(R.mipmap.menu_white)
-        binding?.toolbar?.setNavigationOnClickListener { openDrawer() }
-        binding?.navigation?.setNavigationItemSelectedListener { binding?.viewModel?.navigationOnClick(it); false }
+        binding?.apply {
 
-//      viewpager, tablayout setup
-        binding?.pager?.adapter = PagerAdapter(supportFragmentManager)
-        binding?.tabs?.setupWithViewPager(binding?.pager)
+            toolbar?.apply {
+                title = "Cider"
+                navigationIcon = getDrawable(R.mipmap.menu_white)
+                setNavigationOnClickListener { openDrawer() }
+            }
 
-        binding?.tabs?.getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_home, null)
-        binding?.tabs?.getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_mention, null)
-        binding?.tabs?.getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null)
-        binding?.tabs?.getTabAt(3)?.customView = layoutInflater.inflate(R.layout.tab_mail, null)
+            navigation?.setNavigationItemSelectedListener { viewModel.navigationOnClick(it); false }
+
+            pager?.adapter = PagerAdapter(supportFragmentManager)
+
+            tabs?.apply {
+                setupWithViewPager(pager)
+                getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_home, null)
+                getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_mention, null)
+                getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null)
+                getTabAt(3)?.customView = layoutInflater.inflate(R.layout.tab_mail, null)
+            }
+        }
     }
 
     //  ----implements MainActivityContract----

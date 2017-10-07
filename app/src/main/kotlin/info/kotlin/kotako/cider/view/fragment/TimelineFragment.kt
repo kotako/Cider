@@ -34,18 +34,22 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_timeline, container, false)
-        binding?.viewModel = when {
-            arguments == null -> TimelineViewModel(this)
-            arguments[PagerAdapter.PAGE_TAG] == PagerAdapter.MENTION -> MentionViewModel(this)
-            else -> TimelineViewModel(this)
+        if (binding == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_timeline, container, false)
+            binding?.viewModel = when {
+                arguments == null -> TimelineViewModel(this)
+                arguments[PagerAdapter.PAGE_TAG] == PagerAdapter.MENTION -> MentionViewModel(this)
+                else -> TimelineViewModel(this)
+            }
         }
 
 //      RecyclerViewにAdapter, LayoutManager, ScrollListener, 仕切り線をセット
-        binding?.recyclerViewTimeline?.adapter = TimelineRecyclerViewAdapter(context, tweetList)
-        binding?.recyclerViewTimeline?.layoutManager = LinearLayoutManager(context)
-        binding?.recyclerViewTimeline?.addOnScrollListener(RecyclerScrollListener({ binding?.viewModel?.loadMore(tweetList.last().id) }))
-        binding?.recyclerViewTimeline?.addItemDecoration(DividerItemDecoration(binding?.recyclerViewTimeline?.context, LinearLayoutManager(context).orientation))
+        binding?.recyclerViewTimeline?.apply {
+            adapter = TimelineRecyclerViewAdapter(context, tweetList)
+            layoutManager = LinearLayoutManager(context)
+            addOnScrollListener(RecyclerScrollListener({ binding?.viewModel?.loadMore(tweetList.last().id) }))
+            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager(context).orientation))
+        }
         return binding!!.root
     }
 
@@ -55,15 +59,20 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
         binding?.viewModel?.start()
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.let { tweetList.addAll(it.getSerializable(SAVED_TWEET_LIST_KEY) as ArrayList<Tweet>) }
+        binding?.recyclerViewTimeline?.adapter?.notifyDataSetChanged()
+    }
+
     override fun onStop() {
         super.onStop()
         Log.d("fragment", "stopped")
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.let { tweetList.addAll(it.getSerializable(SAVED_TWEET_LIST_KEY) as ArrayList<Tweet>) }
-        binding?.recyclerViewTimeline?.adapter?.notifyDataSetChanged()
+    override fun onDestroy() {
+        super.onDestroy()
+        binding?.viewModel?.stop()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -77,9 +86,9 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun addTweet(tweet: Tweet) {
         tweetList.add(0, tweet)
         activity.runOnUiThread {
-            binding?.recyclerViewTimeline?.adapter?.notifyItemInserted(0)
-            if((binding?.recyclerViewTimeline?.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0){
-                binding?.recyclerViewTimeline?.smoothScrollToPosition(0)
+            binding?.recyclerViewTimeline?.apply {
+                adapter.notifyItemInserted(0)
+                if((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0) smoothScrollToPosition(0)
             }
         }
     }
@@ -100,14 +109,18 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     }
 
     override fun showProgressBar() {
-        binding?.progressBar?.visibility = View.VISIBLE
-        binding?.progressBar?.show()
+        binding?.progressBar?.apply {
+            visibility = View.VISIBLE
+            show()
+        }
     }
 
     override fun hideProgressBar() {
         activity.runOnUiThread {
-            binding?.progressBar?.hide()
-            binding?.progressBar?.visibility = View.INVISIBLE
+            binding?.progressBar?.apply {
+                hide()
+                visibility = View.INVISIBLE
+            }
         }
     }
 }
