@@ -19,8 +19,8 @@ class Tweet(val id: Long, val createdAt: String, favoriteCount: Int, favorited: 
     constructor(tweet:Tweet, retweetedUser:User? = null):this(
             tweet.id, tweet.createdAt, tweet.favoriteCount, tweet.favorited, tweet.retweeted,
             tweet.retweetCount, User(tweet.user), tweet.text, tweet.source, tweet.inReplyToStatusId,
-            tweet.inReplyToUserId, tweet.inReplyToScreenName, tweet.entities.hashtags , tweet.entities.urls, tweet.entities.userMentions,
-            tweet.entities.media, null, retweetedUser
+            tweet.inReplyToUserId, tweet.inReplyToScreenName, tweet.extendedEntities.hashtags , tweet.extendedEntities.urls,
+            tweet.extendedEntities.userMentions, tweet.extendedEntities.media, null, retweetedUser
     )
 
     constructor(status:Status, retweetedUser: User? = null):this(

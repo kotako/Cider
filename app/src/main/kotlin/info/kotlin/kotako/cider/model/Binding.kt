@@ -14,12 +14,21 @@ import info.kotlin.kotako.cider.model.entity.Account
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import rx.schedulers.Schedulers
 
+@BindingAdapter("loadCircleImage")
+fun ImageView.loadCircleImage(url: String?) {
+    url?.let {
+        Glide.with(context)
+                .load(it)
+                .apply(RequestOptions().circleCrop())
+                .into(this)
+    }
+}
+
 @BindingAdapter("loadImage")
 fun ImageView.loadImage(url: String?) {
     url?.let {
         Glide.with(context)
                 .load(it)
-                .apply(RequestOptions().circleCrop())
                 .into(this)
     }
 }
@@ -34,7 +43,7 @@ fun ImageButton.loadImageFromSession(account: Account) {
             .subscribeOn(Schedulers.newThread())
             .subscribe(DefaultObserver(
                     next = { profileImageUrl = it.profileImageUrl },
-                    completed = { this.post { loadImage(profileImageUrl) } }))
+                    completed = { this.post { loadCircleImage(profileImageUrl) } }))
 }
 
 @BindingAdapter("onRefresh")
