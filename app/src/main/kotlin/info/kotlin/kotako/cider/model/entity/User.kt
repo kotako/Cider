@@ -17,7 +17,7 @@ class User(val contributorsEnabled: Boolean?, val createdAt: String, val default
             user.defaultProfileImage, user.description, user.favouritesCount, user.followersCount,
             user.friendsCount, user.followRequestSent, user.geoEnabled, user.id, user.lang, user.listedCount,
             user.location, user.name, user.profileBackgroundColor, user.profileBackgroundImageUrl,
-            user.profileBackgroundTile, user.profileImageUrl, user.profileLinkColor, user.profileSidebarBorderColor,
+            user.profileBackgroundTile, user.profileImageUrl.replace("_normal.jpg", "_bigger.jpg"), user.profileLinkColor, user.profileSidebarBorderColor,
             user.profileSidebarFillColor, user.profileBannerUrl, user.profileTextColor, user.protectedUser,
             user.screenName, user.statusesCount, user.url, user.verified)
 
@@ -26,7 +26,7 @@ class User(val contributorsEnabled: Boolean?, val createdAt: String, val default
             user.favouritesCount, user.followersCount, user.friendsCount, user.isFollowRequestSent,
             user.isGeoEnabled, user.id, user.lang, user.listedCount, user.location, user.name,
             user.profileBackgroundColor, user.profileBackgroundImageURL, user.isProfileBackgroundTiled,
-            user.profileImageURL, user.profileLinkColor, user.profileSidebarBorderColor, user.profileSidebarFillColor,
+            user.biggerProfileImageURL, user.profileLinkColor, user.profileSidebarBorderColor, user.profileSidebarFillColor,
             user.profileBannerURL, user.profileTextColor, user.isProtected, user.screenName, user.statusesCount,
             user.url, user.isVerified)
 }
