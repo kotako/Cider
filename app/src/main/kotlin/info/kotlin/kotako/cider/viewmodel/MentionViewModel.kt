@@ -65,10 +65,8 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
     }
 
     override fun start() {
-        if (!subscription.hasSubscriptions()) {
-            setTimeline()
-            startStream()
-        }
+        if (!subscription.hasSubscriptions()) startStream()
+        if (timelineView.tweetListSize() < 1) setTimeline()
     }
 
     override fun stop() = subscription.unsubscribe()

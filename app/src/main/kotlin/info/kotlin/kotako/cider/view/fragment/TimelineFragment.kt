@@ -98,6 +98,8 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
         activity.runOnUiThread { binding?.recyclerViewTimeline?.adapter?.notifyItemRangeChanged(tweetList.size - tweet.size, tweet.size) }
     }
 
+    override fun tweetListSize(): Int = tweetList.size
+
     override fun clearTweetList() {
         binding?.layoutRefresh?.isRefreshing = false
         tweetList.clear()

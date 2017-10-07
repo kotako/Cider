@@ -29,10 +29,8 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
     }
 
     override fun start() {
-        if (!subscription.hasSubscriptions()) {
-            setTimeline()
-            startStream()
-        }
+        if (!subscription.hasSubscriptions()) startStream()
+        if (timelineView.tweetListSize() < 1) setTimeline()
     }
 
     override fun stop() = subscription.unsubscribe()
