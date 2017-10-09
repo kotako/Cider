@@ -7,9 +7,12 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.MainActivityContract
 import info.kotlin.kotako.cider.databinding.ActivityMainBinding
+import info.kotlin.kotako.cider.databinding.HeaderDrawerNavigationBinding
+import info.kotlin.kotako.cider.model.AccountManager
 import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.viewmodel.MainViewModel
 
@@ -38,7 +41,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
                 setNavigationOnClickListener { openDrawer() }
             }
 
-            navigation?.setNavigationItemSelectedListener { viewModel.navigationOnClick(it); false }
+            navigation?.run {
+                setNavigationItemSelectedListener { viewModel.navigationOnClick(it);false }
+                DataBindingUtil.bind<HeaderDrawerNavigationBinding>(getHeaderView(0))
+                DataBindingUtil.getBinding<HeaderDrawerNavigationBinding>(getHeaderView(0)).account = AccountManager.currentAccount()
+            }
 
             pager?.adapter = PagerAdapter(supportFragmentManager)
 

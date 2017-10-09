@@ -25,7 +25,37 @@
         android:onClick="@{() -> viewModel.onTweetClicked(tweet)}">
 
         <RelativeLayout
-            android:id="@+id/layout_cell_caption"
+            android:id="@+id/layout_cell_caption_favorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-4dp"
+            android:layout_marginTop="4dp"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/imageview_cell_tweet_relation_favorite"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="40dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/favorite_grey"
+                android:tint="#E74C3C" />
+
+            <TextView
+                android:id="@+id/textview_cell_tweet_relation_favorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_toRightOf="@id/imageview_cell_tweet_relation_favorite"
+                android:text=''
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_cell_caption_retweet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="-4dp"
@@ -58,7 +88,7 @@
             android:id="@+id/layout_cell_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/layout_cell_caption"
+            android:layout_below="@id/layout_cell_caption_retweet"
             android:padding="8dp">
 
             <ImageButton

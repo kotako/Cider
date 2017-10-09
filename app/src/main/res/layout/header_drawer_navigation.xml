@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp">
+<layout>
 
-    <TextView
+    <data>
+        <variable
+            name="account"
+            type="info.kotlin.kotako.cider.model.entity.Account" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:text="test header"/>
+        android:layout_height="104dp">
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hogehoge" />
+
+        <ImageButton
+            android:id="@+id/imageview_navigation_header_account"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="#00000000"
+            app:loadImageFromSession="@{account}"/>
+
+        <TextView
+            android:id="@+id/textview_header_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/imageview_navigation_header_account"
+            android:layout_margin="16dp"
+            android:text=''
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/colorTextPrimary" />
+
+    </RelativeLayout>
+</layout>
