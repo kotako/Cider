@@ -25,19 +25,20 @@
                 android:id="@+id/appBarLayout_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:elevation="0dp"
                 android:theme="@style/AppTheme.AppBarOverlay">
 
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#4D000000">
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/imageView_profile_header"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="136dp"
                         android:layout_gravity="top"
                         android:fitsSystemWindows="true"
+                        android:tint="#8a000000"
                         android:scaleType="centerCrop"
                         app:loadImage="@{user.profileBannerUrl}"/>
 
@@ -56,7 +57,7 @@
                 android:layout_height="64dp"
                 android:layout_below="@id/appBarLayout_profile"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="-48dp"
+                android:layout_marginTop="-80dp"
                 android:background="@drawable/shape_profile_image"
                 android:elevation="5dp"
                 android:scaleType="centerCrop"
@@ -69,12 +70,11 @@
                 android:layout_below="@id/appBarLayout_profile"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="-48dp"
+                android:layout_marginTop="-72dp"
                 android:layout_toRightOf="@id/imageView_profile_photo"
-                android:elevation="5dp"
                 android:text="@{user.name}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="#f9f9f9" />
+                android:textColor="#ffffff" />
 
             <TextView
                 android:id="@+id/textView_profile_screen_name"
@@ -83,22 +83,21 @@
                 android:layout_below="@id/textView_profile_name"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/imageView_profile_photo"
-                android:elevation="5dp"
                 android:text='@{"@"+user.screenName}'
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                android:textColor="#f9f9f9" />
+                android:textColor="#ffffff" />
 
             <Button
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:id="@+id/button_profile_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textView_profile_screen_name"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="-40dp"
+                android:layout_marginTop="-48dp"
                 android:layout_alignParentRight="true"
                 android:background="#3498db"
                 android:textColor="#ffffff"
@@ -110,7 +109,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageView_profile_photo"
-                android:layout_margin="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:text="@{user.description}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 

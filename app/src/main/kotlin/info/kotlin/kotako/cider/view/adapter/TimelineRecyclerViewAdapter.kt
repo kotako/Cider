@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import info.kotlin.kotako.cider.BR
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.entity.Tweet

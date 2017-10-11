@@ -60,6 +60,16 @@ class APIClient(session: TwitterSession) {
                          @Query("exclude_replies") exclude_replies: Boolean?,
                          @Query("include_entities") include_entities: Boolean?): Observable<List<Tweet>>
 
+        @GET("/1.1/statuses/user_timeline.json")
+        fun userTimeline(@Query("user_id") user_id:Long?,
+                         @Query("screen_name") screen_name: String?,
+                         @Query("since_id") since_id: Long?,
+                         @Query("count") count: Int?,
+                         @Query("max_id") max_id: Long?,
+                         @Query("trim_user") trim_user: Boolean?,
+                         @Query("exclude_replies") exclude_replies: Boolean?,
+                         @Query("include_rts") include_rts: Boolean?) :Observable<List<Tweet>>
+
         @GET("/1.1/statuses/mentions_timeline.json")
         fun mentionTimeline(@Query("count") count: Int?,
                             @Query("since_id") since_id: Long?,

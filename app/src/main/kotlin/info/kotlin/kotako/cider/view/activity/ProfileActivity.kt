@@ -38,16 +38,22 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
     }
 
     private fun setUpView() {
-        binding?.toolbarProfile?.setNavigationIcon(R.mipmap.arrow_back_white)
-        binding?.toolbarProfile?.setNavigationOnClickListener { finish() }
+        binding?.apply {
+            toolbarProfile?.apply {
+                setNavigationIcon(R.mipmap.arrow_back_white)
+                setNavigationOnClickListener { finish() }
+            }
 
-        // viewpager, tablayout setup
-        intent.extras.getSerializable("userId")?.let { binding?.pagerProfile?.adapter = ProfilePagerAdapter(supportFragmentManager, it as Long) }
-        binding?.tabsProfile?.setupWithViewPager(binding?.pagerProfile)
+            // viewpager, tablayout setup
+            intent.extras.getSerializable("userId")?.let { pagerProfile?.adapter = ProfilePagerAdapter(supportFragmentManager, it as Long) }
 
-        binding?.tabsProfile?.getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_tweet, null)
-        binding?.tabsProfile?.getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_photo, null)
-        binding?.tabsProfile?.getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null)
+            tabsProfile?.apply {
+                setupWithViewPager(pagerProfile)
+                getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_tweet, null)
+                getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_photo, null)
+                getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null)
+            }
+        }
     }
 
     override fun setUser(user: User) = runOnUiThread { binding?.user = user }
