@@ -17,10 +17,12 @@ import info.kotlin.kotako.cider.databinding.FragmentTimelineBinding
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.view.activity.ProfileActivity
+import info.kotlin.kotako.cider.view.adapter.ProfilePagerAdapter
 import info.kotlin.kotako.cider.view.adapter.TimelineRecyclerViewAdapter
 import info.kotlin.kotako.cider.view.listener.RecyclerScrollListener
 import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
 import info.kotlin.kotako.cider.viewmodel.MentionViewModel
+import info.kotlin.kotako.cider.viewmodel.ProfileTimelineViewModel
 
 class TimelineFragment : Fragment(), TimelineFragmentContract {
 
@@ -38,6 +40,8 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_timeline, container, false)
             binding?.viewModel = when {
                 arguments == null -> TimelineViewModel(this)
+                arguments.containsKey(PagerAdapter.PAGE_TAG) -> MentionViewModel(this)
+                arguments.containsKey(ProfilePagerAdapter.USER_ID) -> ProfileTimelineViewModel(this, arguments[ProfilePagerAdapter.USER_ID] as Long)
                 arguments[PagerAdapter.PAGE_TAG] == PagerAdapter.MENTION -> MentionViewModel(this)
                 else -> TimelineViewModel(this)
             }
