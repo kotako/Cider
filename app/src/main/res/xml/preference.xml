@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="preference_task_setting"
+        android:title="Account">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="test_switch"
+            android:summary="キャプション"
+            android:title="スイッチ買ってくれ" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

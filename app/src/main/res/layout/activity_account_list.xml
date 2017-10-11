@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_account_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/layout_account_list_current"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textview_account_list_current"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="current"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+        <RelativeLayout
+            android:id="@+id/layout_container_account_current"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_account_list_current">
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_account_list_others"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_account_list_current">
+
+        <TextView
+            android:id="@+id/textview_account_list_others"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:text="others"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+        <LinearLayout
+            android:id="@+id/layout_container_account_others"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_account_list_others"
+            android:orientation="vertical">
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/button_login_with_twitter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp" />
+</RelativeLayout>

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorTextPrimary">#ffffff</color>
-    <color name="colorTextAccent">#898989</color>
+    <color name="colorPrimary">#102B3F</color>
+    <color name="colorPrimaryDark">#0A122A</color>
+    <color name="colorAccent">#4ECDC4</color>
+    <color name="colorFab">#3C78BC</color>
+    <color name="colorTextPrimary">#FDFFFC</color>
+    <color name="colorTextAccent">#01161E</color>
+    <color name="colorTweetExpand">#2E5077</color>
+    <color name="dividerColor">#49000000</color>
 </resources>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <!--ViewModelにバインド-->
+        <variable
+            name="viewModel"
+            type="info.kotlin.kotako.cider.viewmodel.PostViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include android:id="@+id/layout_author_account_cell"
+            layout="@layout/view_account_cell" />
+
+        <!--<include layout="@layout/divider" />-->
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/progressbar_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            android:layout_centerInParent="true"
+            android:background="#00000000"
+            style="?android:progressBarStyle"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/text_input_tweet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@id/layout_author_account_cell"
+            android:gravity="top"
+            android:hint="@string/hint_tweet"
+            android:layout_above="@+id/layout_post_tools" />
+
+        <RelativeLayout
+            android:id="@+id/layout_post_tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary">
+
+            <ImageButton
+                android:id="@+id/bbn_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="@{viewModel::onCameraClicked}"
+                android:src="@mipmap/photo_camera_white"
+                android:theme="@style/ButtonHighLight" />
+
+            <ImageButton
+                android:id="@+id/bbn_media"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/bbn_camera"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="@{viewModel::onMediaClicked}"
+                android:src="@mipmap/insert_photo_white"
+                android:theme="@style/ButtonHighLight"/>
+
+            <ImageButton
+                android:id="@+id/bbn_music"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/bbn_media"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="@{viewModel::onMusnoteClicked}"
+                android:src="@mipmap/musnote_white"
+                android:theme="@style/ButtonHighLight"/>
+
+            <ImageButton
+                android:id="@+id/bbn_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/bbn_music"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="@{viewModel::onLocationClicked}"
+                android:src="@mipmap/room_white"
+                android:theme="@style/ButtonHighLight"/>
+
+            <ImageButton
+                android:id="@+id/bbn_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="@color/colorPrimary"
+                android:onClick="@{() -> viewModel.post()}"
+                android:src="@mipmap/send_white"
+                android:theme="@style/ButtonHighLight"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>
