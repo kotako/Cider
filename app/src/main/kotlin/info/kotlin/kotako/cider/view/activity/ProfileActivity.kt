@@ -5,10 +5,12 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -49,9 +51,9 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
 
             tabsProfile?.apply {
                 setupWithViewPager(pagerProfile)
-                getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_tweet, null)
-                getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_photo, null)
-                getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null)
+                getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_tweet, null).apply { (findViewById(R.id.imageview_tab_tweet) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_photo, null).apply { (findViewById(R.id.imageview_tab_photo) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null).apply { (findViewById(R.id.imageview_tab_list) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
             }
         }
     }
