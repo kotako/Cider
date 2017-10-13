@@ -4,8 +4,10 @@ import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.TwitterSession
 import info.kotlin.kotako.cider.contract.AccountListActivityContract
+import info.kotlin.kotako.cider.model.AccountManager
 import info.kotlin.kotako.cider.model.entity.Account
 import io.realm.Realm
+import java.security.AccessControlContext
 
 class AccountListViewModel(private val accountListActivity: AccountListActivityContract ) {
 
@@ -23,6 +25,12 @@ class AccountListViewModel(private val accountListActivity: AccountListActivityC
             accountListActivity.setAccountView(activeAccount)
             allAccount.forEach { accountListActivity.setAccountView(it) }
         }
+    }
+
+    fun onItemClicked(account:Account) {
+        if (account.userId == AccountManager.currentAccount()?.userId) return
+        AccountManager.changeCurrentAccount(account)
+        setAccountView()
     }
 
     fun onTokenReceived(result: Result<TwitterSession>) {

@@ -77,6 +77,7 @@ class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
     override fun setAccountView(account: Account) {
         val view = AccountCellView(this)
         view.setAccount(account)
+        viewModel?.let { view.setViewModel(it) }
         if ((findViewById(R.id.layout_container_account_current) as RelativeLayout).childCount == 0) {
             (findViewById(R.id.layout_container_account_current) as RelativeLayout).addView(view)
             return

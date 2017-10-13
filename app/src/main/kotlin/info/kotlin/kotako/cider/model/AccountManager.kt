@@ -1,6 +1,6 @@
 package info.kotlin.kotako.cider.model
 
-import com.twitter.sdk.android.core.TwitterCore
+import com.twitter.sdk.android.core.*
 import info.kotlin.kotako.cider.model.entity.Account
 import io.realm.Realm
 import twitter4j.conf.Configuration
@@ -26,5 +26,11 @@ class AccountManager {
                         .setOAuthAccessToken(currentAccount()?.token)
                         .setOAuthAccessTokenSecret(currentAccount()?.tokenSecret)
                         .build()
+
+        fun changeCurrentAccount(account:Account)  {
+            TwitterCore.getInstance().sessionManager.clearActiveSession()
+            TwitterCore.getInstance().sessionManager.activeSession =
+                    TwitterSession(TwitterAuthToken(account.token, account.tokenSecret), account.userId, account.userName)
+        }
     }
 }
