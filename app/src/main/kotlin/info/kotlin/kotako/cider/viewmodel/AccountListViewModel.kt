@@ -31,6 +31,7 @@ class AccountListViewModel(private val accountListActivity: AccountListActivityC
         if (account.userId == AccountManager.currentAccount()?.userId) return
         AccountManager.changeCurrentAccount(account)
         setAccountView()
+        accountListActivity.accountChanged = true
     }
 
     fun onTokenReceived(result: Result<TwitterSession>) {

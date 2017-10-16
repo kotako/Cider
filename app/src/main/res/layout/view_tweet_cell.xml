@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_cell_name"
                 android:layout_toRightOf="@id/imageview_cell_author_icon"
-                android:text="@{tweet.text}"
+                app:markupUser="@{tweet}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
             <LinearLayout
