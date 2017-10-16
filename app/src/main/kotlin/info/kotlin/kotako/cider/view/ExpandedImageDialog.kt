@@ -6,6 +6,7 @@ import android.app.DialogFragment
 import android.os.Bundle
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import info.kotlin.kotako.cider.R
 
 class ExpandedImageDialog : DialogFragment() {
@@ -19,6 +20,7 @@ class ExpandedImageDialog : DialogFragment() {
         arguments?.let {
             Glide.with(activity)
                     .load(it.get("url"))
+                    .apply(RequestOptions().fitCenter())
                     .into(view.findViewById(R.id.imageview_expanded_media) as ImageView)
         }
         return AlertDialog.Builder(activity).run {
