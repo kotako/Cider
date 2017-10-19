@@ -23,10 +23,7 @@ import java.util.*
 
 class TweetViewModel(val context: Context) {
 
-    fun onIconClicked(tweet: Tweet) {
-        //Log.d("hoge", user.screenName)
-        ProfileActivity.start(context, tweet.user.id)
-    }
+    fun onIconClicked(tweet: Tweet) = ProfileActivity.start(context, tweet.user.id)
 
     fun createdAtJpn(createdAt: String): String = DateManager.createdAt(createdAt, Locale.JAPAN)
 

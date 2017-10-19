@@ -20,7 +20,7 @@ import rx.Observable
 class APIClient(session: TwitterSession) {
 
 //  Retrofit2の返す値は全てCall<T>でラップされてしまう
-//  TwitterApiClientのObservableでラップさせる版
+//  TwitterCore.TwitterApiClientのObservableでラップさせる版
 
     private val retrofit = Retrofit.Builder()
             .client(OkHttpClientHelper.getOkHttpClient(session, TwitterCore.getInstance().authConfig))
