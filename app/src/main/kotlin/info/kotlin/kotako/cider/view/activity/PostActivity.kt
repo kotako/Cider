@@ -31,7 +31,7 @@ class PostActivity : AppCompatActivity(), PostActivityContract {
         binding?.viewModel = intent.extras?.getSerializable("replyTo")?.let { PostViewModel(this, it as Tweet) } ?: PostViewModel(this)
         setUpView()
 
-//      リプの時はidをセットしる
+//      リプライの時はscreenNameを入力しておく
         intent.extras?.getSerializable("replyTo")?.let {
             var tmp = "@" + (it as Tweet).user.screenName + " "
             if (it.inReplyToScreenName !in listOf(null, AccountManager.currentAccount()?.userName)) tmp += "@" + it.inReplyToScreenName + " "
@@ -52,13 +52,15 @@ class PostActivity : AppCompatActivity(), PostActivityContract {
     }
 
     //  ----implements PostActivityContract----
-    override fun makeToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    override fun makeToast(msg: String) = runOnUiThread{ Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }
 
     override fun inputText(): String = binding?.textInputTweet?.text.toString()
 
     override fun showProgressbar() {
-        binding?.progressbarPost?.visibility = View.VISIBLE
-        binding?.progressbarPost?.show()
+        runOnUiThread {
+            binding?.progressbarPost?.visibility = View.VISIBLE
+            binding?.progressbarPost?.show()
+        }
     }
 
     override fun hideProgressbar() {

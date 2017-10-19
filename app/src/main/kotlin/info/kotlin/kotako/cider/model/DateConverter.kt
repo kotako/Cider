@@ -3,7 +3,7 @@ package info.kotlin.kotako.cider.model
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DateManager {
+class DateConverter {
 
     companion object {
         fun createdAt(createdAt: String, locale: Locale): String {

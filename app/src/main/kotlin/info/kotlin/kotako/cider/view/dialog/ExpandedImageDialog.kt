@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.view.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog

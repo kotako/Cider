@@ -10,6 +10,8 @@ import info.kotlin.kotako.cider.BR
 import twitter4j.*
 import java.io.Serializable
 
+//TODO: 動画付きのExtendedMediaへの対応
+
 class Tweet(val id: Long, val createdAt: String, favoriteCount: Int, favorited: Boolean, retweeted: Boolean,
             retweetCount: Int, val user: User, val text: String, val source: String, val inReplyToStatusId: Long?,
             val inReplyToUserId: Long?, val inReplyToScreenName: String?, val hashtagEntity: List<HashtagEntity>?,

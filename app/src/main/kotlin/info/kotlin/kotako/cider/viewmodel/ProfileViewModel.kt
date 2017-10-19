@@ -10,7 +10,8 @@ import rx.schedulers.Schedulers
 
 class ProfileViewModel(val profileView: ProfileActivityContract) {
 
-    fun showProfileImage(view: View) {}
+    fun showProfileImage(url: String) = profileView.showImage(url)
+
     fun onFollowButtonPressed(view: View) {}
 
     fun loadUser(userId: Long) {

@@ -8,6 +8,6 @@ interface ProfileActivityContract {
     fun finish()
     fun getContext():Context
     fun makeToast(msg: String)
-    fun showImage()
+    fun showImage(url:String)
     fun setUser(user: User)
 }

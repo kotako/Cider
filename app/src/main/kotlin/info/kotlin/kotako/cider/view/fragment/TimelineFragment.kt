@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +37,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_timeline, container, false)
+//          Bundleの値によってセットするviewModelを変更する
             binding?.viewModel = when {
                 arguments == null -> TimelineViewModel(this)
                 arguments.containsKey(PagerAdapter.PAGE_TAG) -> MentionViewModel(this)
@@ -47,7 +47,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
             }
         }
 
-//      RecyclerViewにAdapter, LayoutManager, ScrollListener, 仕切り線をセット
+//      RecyclerViewにAdapter, LayoutManager, ScrollListener, 仕切り線をセットする
         binding?.recyclerViewTimeline?.apply {
             adapter = TimelineRecyclerViewAdapter(context, tweetList)
             layoutManager = LinearLayoutManager(context)
@@ -67,11 +67,6 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
         super.onViewStateRestored(savedInstanceState)
         savedInstanceState?.let { tweetList.addAll(it.getSerializable(SAVED_TWEET_LIST_KEY) as ArrayList<Tweet>) }
         binding?.recyclerViewTimeline?.adapter?.notifyDataSetChanged()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("fragment", "stopped")
     }
 
     override fun onDestroy() {
@@ -115,9 +110,11 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     }
 
     override fun showProgressBar() {
-        binding?.progressBar?.apply {
-            visibility = View.VISIBLE
-            show()
+        activity.runOnUiThread {
+            binding?.progressBar?.apply {
+                visibility = View.VISIBLE
+                show()
+            }
         }
     }
 

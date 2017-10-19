@@ -1,4 +1,4 @@
-package info.kotlin.kotako.cider.view
+package info.kotlin.kotako.cider.view.customView
 
 import android.content.Context
 import android.databinding.DataBindingUtil

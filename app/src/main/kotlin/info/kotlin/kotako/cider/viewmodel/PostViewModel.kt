@@ -28,22 +28,22 @@ class PostViewModel(private val postView: PostActivityContract, private val repl
     }
 
     fun onCameraClicked(view: View) {
-//      写真をとる
+//      TODO:写真をとる
         postView.makeToast("camera icon clicked")
     }
 
     fun onMediaClicked(view: View) {
-//      写真を選択して追加
+//      TODO:写真を選択して追加
         postView.makeToast("media icon clicked")
     }
 
     fun onMusnoteClicked(view: View) {
-//      nowPlayingをする
+//      TODO:nowPlayingをする
         postView.makeToast("musnonte icon clicked")
     }
 
     fun onLocationClicked(view: View) {
-//      現在位置を送信
+//      TODO:現在位置を送信
         postView.makeToast("location icon clicked")
     }
 }
