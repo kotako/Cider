@@ -1,17 +1,10 @@
 package info.kotlin.kotako.cider.viewmodel
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import android.text.style.UnderlineSpan
 import com.twitter.sdk.android.core.TwitterCore
-import info.kotlin.kotako.cider.model.APIClient
+import info.kotlin.kotako.cider.model.RestAPIClient
 import info.kotlin.kotako.cider.model.DateManager
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
@@ -45,7 +38,7 @@ class TweetViewModel(val context: Context) {
 
     fun onFavoriteClicked(tweet: Tweet) {
         if (tweet.favorited) {
-            APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+            RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                     .FavoriteObservable()
                     .unFavorite(tweet.id)
                     .subscribeOn(Schedulers.newThread())
@@ -55,7 +48,7 @@ class TweetViewModel(val context: Context) {
                                 tweet.favoriteCount--
                             }))
         } else {
-            APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+            RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                     .FavoriteObservable()
                     .favorite(tweet.id)
                     .subscribeOn(Schedulers.newThread())
@@ -69,7 +62,7 @@ class TweetViewModel(val context: Context) {
 
     fun onRetweetClicked(tweet: Tweet) {
         if (tweet.retweeted) {
-            APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+            RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                     .RetweetObservable()
                     .unRetweet(tweet.id)
                     .subscribeOn(Schedulers.newThread())
@@ -79,7 +72,7 @@ class TweetViewModel(val context: Context) {
                                 tweet.retweetCount--
                             }))
         } else {
-            APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+            RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                     .RetweetObservable()
                     .retweet(tweet.id)
                     .subscribeOn(Schedulers.newThread())

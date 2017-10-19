@@ -4,7 +4,7 @@ import android.util.Log
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
-import info.kotlin.kotako.cider.model.APIClient
+import info.kotlin.kotako.cider.model.RestAPIClient
 import info.kotlin.kotako.cider.model.AccountManager
 import info.kotlin.kotako.cider.model.StreamApiClient
 import info.kotlin.kotako.cider.model.entity.Tweet
@@ -32,7 +32,7 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
     override fun setTimeline() {
         if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
         timelineView.showProgressBar()
-        subscription.add(APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+        subscription.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .mentionTimeline(20, null, null, null, null)
                 .map { t -> t.map { tweet -> Tweet(tweet) } }
@@ -49,7 +49,7 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
     override fun loadMore(maxId: Long) {
         if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
         timelineView.showProgressBar()
-        subscription.add(APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+        subscription.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .mentionTimeline(20, null, maxId, null, null)
                 .map { t -> t.drop(1) }

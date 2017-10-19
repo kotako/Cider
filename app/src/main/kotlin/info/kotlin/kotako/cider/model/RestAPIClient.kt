@@ -17,7 +17,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import rx.Observable
 
-class APIClient(session: TwitterSession) {
+class RestAPIClient(session: TwitterSession) {
 
 //  Retrofit2の返す値は全てCall<T>でラップされてしまう
 //  TwitterCore.TwitterApiClientのObservableでラップさせる版

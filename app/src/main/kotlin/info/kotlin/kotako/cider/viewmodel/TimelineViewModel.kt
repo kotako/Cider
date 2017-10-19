@@ -4,7 +4,7 @@ import android.util.Log
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
-import info.kotlin.kotako.cider.model.APIClient
+import info.kotlin.kotako.cider.model.RestAPIClient
 import info.kotlin.kotako.cider.model.StreamApiClient
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.model.entity.User
@@ -38,7 +38,7 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
     override fun setTimeline() {
         if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
         timelineView.showProgressBar()
-        subscription.add(APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+        subscription.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .homeTimeline(50, null, null, null, null, null)
                 .map { t -> t.map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) } }
@@ -55,7 +55,7 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
     override fun loadMore(maxId: Long) {
         if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
         timelineView.showProgressBar()
-        subscription.add(APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+        subscription.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .homeTimeline(50, null, maxId, null, null, null)
                 .map { t -> t.drop(1) }

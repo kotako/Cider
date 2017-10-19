@@ -1,14 +1,10 @@
 package info.kotlin.kotako.cider.model
 
 import android.databinding.BindingAdapter
-import android.graphics.Color
 import android.support.v4.widget.SwipeRefreshLayout
 import android.text.SpannableStringBuilder
 import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
-import android.util.Log
-import android.util.Patterns
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -47,7 +43,7 @@ fun ImageButton.loadImageFromSession(account: Account) {
     var profileImageUrl: String? = null
     val session = TwitterSession(TwitterAuthToken(account.token, account.tokenSecret), account.userId, account.userName)
 
-    APIClient(session).UsersObservable()
+    RestAPIClient(session).UsersObservable()
             .showUser(session.userId, null, null)
             .subscribeOn(Schedulers.newThread())
             .subscribe(DefaultObserver(

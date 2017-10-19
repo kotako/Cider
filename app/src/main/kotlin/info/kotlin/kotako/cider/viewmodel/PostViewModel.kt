@@ -3,7 +3,7 @@ package info.kotlin.kotako.cider.viewmodel
 import android.view.View
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.PostActivityContract
-import info.kotlin.kotako.cider.model.APIClient
+import info.kotlin.kotako.cider.model.RestAPIClient
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import rx.schedulers.Schedulers
@@ -12,7 +12,7 @@ class PostViewModel(private val postView: PostActivityContract, private val repl
 
     fun post() {
         postView.showProgressbar()
-        APIClient(TwitterCore.getInstance().sessionManager.activeSession)
+        RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .PostObservable()
                 .post(postView.inputText(), replyTo?.id, null, null)
                 .subscribeOn(Schedulers.newThread())
