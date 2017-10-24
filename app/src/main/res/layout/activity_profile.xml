@@ -4,6 +4,8 @@
 
     <data>
         <!-- bind viewmodel -->
+        <import type="android.graphics.Color" />
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="info.kotlin.kotako.cider.viewmodel.ProfileViewModel" />
@@ -11,6 +13,10 @@
         <variable
             name="user"
             type="info.kotlin.kotako.cider.model.entity.User" />
+
+        <variable
+            name="friendShips"
+            type="info.kotlin.kotako.cider.model.entity.Friendships" />
     </data>
 
     <LinearLayout
@@ -101,11 +107,12 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="-48dp"
-                android:background="#3498db"
-                android:text="Following"
-                android:textColor="#ffffff"
+                android:onClick="@{() -> friendShips.following ? viewModel.unFollow(user.id) : viewModel.follow(user.id) }"
+                android:backgroundTint='@{friendShips.following ? Color.parseColor("#3498db") : Color.parseColor("#ffffff") }'
+                android:text='@{friendShips.following ? "Following" : "Follow"}'
+                android:textColor='@{Color.parseColor(friendShips.following ? "#ffffff" : "#3498db") }'
                 android:theme="?attr/borderlessButtonStyle"
-                android:visibility="visible" />
+                android:visibility="@{friendShips != null ? View.VISIBLE : View.GONE}" />
 
             <TextView
                 android:id="@+id/textVIew_profile_bio"
