@@ -1,6 +1,6 @@
 package info.kotlin.kotako.cider.model
 
-import com.twitter.sdk.android.core.TwitterCore
+import com.twitter.sdk.android.core.*
 import info.kotlin.kotako.cider.model.entity.Account
 import io.realm.Realm
 import twitter4j.conf.Configuration
@@ -18,13 +18,18 @@ class AccountManager {
             }
         }
 
-//      !!TODO どうにかする
         fun currentConfig(): Configuration =
                 ConfigurationBuilder()
-                        .setOAuthConsumerKey("A9AtDIV3s44p4N3QV0Sqe0UfP")
-                        .setOAuthConsumerSecret("F3R4k8EQTTYmcfaNADKwnBMP5nl5PWMKFK2E8ESFbnoe3Z5Yqq")
+                        .setOAuthConsumerKey(TwitterCore.getInstance().authConfig.consumerKey)
+                        .setOAuthConsumerSecret(TwitterCore.getInstance().authConfig.consumerSecret)
                         .setOAuthAccessToken(currentAccount()?.token)
                         .setOAuthAccessTokenSecret(currentAccount()?.tokenSecret)
                         .build()
+
+        fun changeCurrentAccount(account: Account) {
+            TwitterCore.getInstance().sessionManager.clearActiveSession()
+            TwitterCore.getInstance().sessionManager.activeSession =
+                    TwitterSession(TwitterAuthToken(account.token, account.tokenSecret), account.userId, account.userName)
+        }
     }
 }

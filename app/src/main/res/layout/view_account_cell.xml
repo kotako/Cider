@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="info.kotlin.kotako.cider.viewmodel.AccountListViewModel" />
+
+        <variable
             name="account"
             type="info.kotlin.kotako.cider.model.entity.Account" />
     </data>
@@ -22,6 +26,7 @@
             android:id="@+id/imageview_cellaccount_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:onClick="@{() -> viewModel.onItemClicked(account)}"
             android:background="@drawable/shape_profile_image"
             app:loadImageFromSession="@{account}"/>
 

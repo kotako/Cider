@@ -1,11 +1,11 @@
 package info.kotlin.kotako.cider.rx
 
-import rx.Observer
+import io.reactivex.observers.DisposableObserver
 
 class DefaultObserver<T>(private val next: (T) -> Unit = {},
                          private val error: (Throwable) -> Unit = {},
-                         private val completed: () -> Unit = {}) : Observer<T> {
-    override fun onNext(t: T): Unit = next(t)
-    override fun onError(e: Throwable): Unit = error(e)
-    override fun onCompleted(): Unit = completed()
+                         private val completed: () -> Unit = {}) : DisposableObserver<T>() {
+    override fun onNext(t: T) = next(t)
+    override fun onError(e: Throwable) = error(e)
+    override fun onComplete() = completed()
 }

@@ -13,7 +13,7 @@ class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         val MENTION = "Mention"
     }
 
-    // Realmとかに保存しといてカスタムできるようにしたい
+    //TODO: カスタムできるようにしたい
     override fun getItem(position: Int): Fragment =
             when (position) {
                 0 -> TimelineFragment.newInstance()
@@ -23,7 +23,5 @@ class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getCount(): Int = 4
 
-    override fun getPageTitle(position: Int): CharSequence {
-        return "tab" + (position + 1)
-    }
+    override fun getPageTitle(position: Int): CharSequence = "tab" + (position + 1)
 }

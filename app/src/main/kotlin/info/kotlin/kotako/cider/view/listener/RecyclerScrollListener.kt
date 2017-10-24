@@ -3,6 +3,8 @@ package info.kotlin.kotako.cider.view.listener
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 
+// 一定量スクロールするとツイートを更にロード
+
 class RecyclerScrollListener(private val onLoadMore: () -> Unit = {}) : RecyclerView.OnScrollListener() {
 
     var loading = false
@@ -17,8 +19,6 @@ class RecyclerScrollListener(private val onLoadMore: () -> Unit = {}) : Recycler
         visibleItemCount = recyclerView.childCount
         totalItemCount = recyclerView.layoutManager.itemCount
         firstVisibleItem = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-
-        //Log.d("scrollcount", visibleItemCount.toString()+" "+totalItemCount.toString()+ " "+firstVisibleItem.toString())
 
         if (loading) {
             if (totalItemCount > previousTotalItemCount) {

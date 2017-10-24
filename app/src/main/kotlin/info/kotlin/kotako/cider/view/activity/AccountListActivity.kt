@@ -1,12 +1,10 @@
 package info.kotlin.kotako.cider.view.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -18,9 +16,8 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.AccountListActivityContract
 import info.kotlin.kotako.cider.model.entity.Account
-import info.kotlin.kotako.cider.view.AccountCellView
+import info.kotlin.kotako.cider.view.customView.AccountCellView
 import info.kotlin.kotako.cider.viewmodel.AccountListViewModel
-import io.realm.Realm
 
 class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
 
@@ -77,6 +74,7 @@ class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
     override fun setAccountView(account: Account) {
         val view = AccountCellView(this)
         view.setAccount(account)
+        viewModel?.let { view.setViewModel(it) }
         if ((findViewById(R.id.layout_container_account_current) as RelativeLayout).childCount == 0) {
             (findViewById(R.id.layout_container_account_current) as RelativeLayout).addView(view)
             return

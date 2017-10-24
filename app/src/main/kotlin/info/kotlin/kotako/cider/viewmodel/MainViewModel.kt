@@ -12,9 +12,7 @@ class MainViewModel(private val mainView: MainActivityContract) {
         if (TwitterCore.getInstance().sessionManager?.activeSession == null) mainView.startAccountListActivity()
     }
 
-    fun onFabClicked(view: View) {
-        mainView.startPostActivity()
-    }
+    fun onFabClicked(view: View) = mainView.startPostActivity()
 
     fun navigationOnClick(item: MenuItem) {
         mainView.closeDrawer()

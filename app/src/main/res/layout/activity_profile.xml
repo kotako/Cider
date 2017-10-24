@@ -4,12 +4,19 @@
 
     <data>
         <!-- bind viewmodel -->
+        <import type="android.graphics.Color" />
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="info.kotlin.kotako.cider.viewmodel.ProfileViewModel" />
+
         <variable
             name="user"
             type="info.kotlin.kotako.cider.model.entity.User" />
+
+        <variable
+            name="friendShips"
+            type="info.kotlin.kotako.cider.model.entity.Friendships" />
     </data>
 
     <LinearLayout
@@ -25,8 +32,8 @@
                 android:id="@+id/appBarLayout_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:elevation="0dp"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:elevation="0dp">
 
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:layout_width="match_parent"
@@ -38,9 +45,9 @@
                         android:layout_height="136dp"
                         android:layout_gravity="top"
                         android:fitsSystemWindows="true"
-                        android:tint="#8a000000"
                         android:scaleType="centerCrop"
-                        app:loadImage="@{user.profileBannerUrl}"/>
+                        android:tint="#8a000000"
+                        app:loadImage="@{user.profileBannerUrl}" />
 
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar_profile"
@@ -60,8 +67,9 @@
                 android:layout_marginTop="-80dp"
                 android:background="@drawable/shape_profile_image"
                 android:elevation="5dp"
+                android:onClick="@{() -> viewModel.showProfileImage(user.profileImageUrl)}"
                 android:scaleType="centerCrop"
-                app:loadCircleImage="@{user.profileImageUrl}"/>
+                app:loadCircleImage="@{user.profileImageUrl}" />
 
             <TextView
                 android:id="@+id/textView_profile_name"
@@ -72,6 +80,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="-72dp"
                 android:layout_toRightOf="@id/imageView_profile_photo"
+                android:maxLines="1"
                 android:text="@{user.name}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="#ffffff" />
@@ -90,29 +99,30 @@
                 android:textColor="#ffffff" />
 
             <Button
-                android:visibility="visible"
                 android:id="@+id/button_profile_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_below="@id/textView_profile_screen_name"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="-48dp"
-                android:layout_alignParentRight="true"
-                android:background="#3498db"
-                android:textColor="#ffffff"
+                android:onClick="@{() ->viewModel.onFollowButtonPressed(friendShips)}"
+                android:backgroundTint='@{friendShips.following ? Color.parseColor("#3498db") : Color.parseColor("#ffffff") }'
+                android:text='@{friendShips.following ? "Following" : "Follow"}'
+                android:textColor='@{Color.parseColor(friendShips.following ? "#ffffff" : "#3498db") }'
                 android:theme="?attr/borderlessButtonStyle"
-                android:text="Following" />
+                android:visibility="@{friendShips != null ? View.VISIBLE : View.GONE}" />
 
             <TextView
                 android:id="@+id/textVIew_profile_bio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageView_profile_photo"
-                android:layout_marginTop="32dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginTop="32dp"
                 android:text="@{user.description}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -120,9 +130,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textVIew_profile_bio"
+                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -175,7 +185,8 @@
             android:id="@+id/tabs_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"/>
+            android:background="?android:colorBackground"
+            android:elevation="2dp" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager_profile"
