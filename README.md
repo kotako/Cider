@@ -1,21 +1,23 @@
-# Cider
+# Cider for Android
 [![CircleCI](https://circleci.com/gh/Takorras/Cider/tree/master.svg?style=svg)](https://circleci.com/gh/Takorras/Cider/tree/master)
 
-すっきりさっぱりTwitterクライアント（にしたい）
+すっきりさっぱりTwitterクライアント
 
 ## Description
-Cider is a Twitter client for Android. Real-time stream, tweet, favorite, retweet, and so on.
-There is a Kotlin library.
+Cider is a Twitter client for Android.
+Real-time stream, tweet, favorite, retweet, and so on!
+Written in Kotlin.
 If you have a question, please contact [@Takorras_](https://twitter.com/Takorras_)
 
-***DEMO***
+***Screen Shots***
 
-some pictures
+![Imgur](https://i.imgur.com/AA5wV4Sl.png)
+![Imgur](https://i.imgur.com/MXeBhqBl.png)
 
 ## Features
 - Twitter kit for Android
 - Twitter4j
-- RxJava
+- RxJava2
 - Glide
 - Realm
 - DataBinding
@@ -25,6 +27,7 @@ some pictures
 - Android 4.4 or more
 
 ## Usage
+
 ***Login***
 
 1. Install Application
@@ -36,6 +39,14 @@ some pictures
 ***Tweet***
 
 1. At Main page, push floating button to tweet.
+
+***Favorite, Retweet, Send Reply***
+
+1. Tap tweet.
+
+***Others***
+
+Sometimes add... sorry.
 
 ## Installation
 Here, or clone and build apk.
