@@ -5,7 +5,6 @@ import twitter4j.*
 import java.lang.Exception
 
 object StreamApiClient {
-
     val statusObservable = Observable.create<Status> { subscriber ->
         TwitterStreamFactory(AccountManager.currentConfig()).instance
                 .apply {

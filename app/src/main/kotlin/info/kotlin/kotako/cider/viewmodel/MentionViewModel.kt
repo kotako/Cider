@@ -14,10 +14,10 @@ import io.reactivex.schedulers.Schedulers
 
 class MentionViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
-    private var disposable = CompositeDisposable()
+    private var disposable = CompositeDisposable().apply { dispose() }
 
     override fun startStream() {
-        if (!disposable.isDisposed) disposable = CompositeDisposable()
+        if (disposable.isDisposed) disposable = CompositeDisposable()
         disposable.add(
                 StreamApiClient.statusObservable
                         .filter { status -> status.inReplyToUserId == AccountManager.currentAccount()?.userId }
@@ -30,7 +30,7 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
     }
 
     override fun setTimeline() {
-        if (!disposable.isDisposed) disposable = CompositeDisposable()
+        if (disposable.isDisposed) disposable = CompositeDisposable()
         timelineView.showProgressBar()
         disposable.add(
                 RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
@@ -48,7 +48,7 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
     }
 
     override fun loadMore(maxId: Long) {
-        if (!disposable.isDisposed) disposable = CompositeDisposable()
+        if (disposable.isDisposed) disposable = CompositeDisposable()
         timelineView.showProgressBar()
         disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
@@ -66,7 +66,7 @@ class MentionViewModel(private val timelineView: TimelineFragmentContract) : Tim
     }
 
     override fun start() {
-        if (!disposable.isDisposed) startStream()
+        if (disposable.isDisposed) startStream()
         if (timelineView.tweetListSize() < 1) setTimeline()
     }
 

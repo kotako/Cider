@@ -28,9 +28,9 @@ class Tweet(val id: Long, val createdAt: String, favoriteCount: Int, favorited: 
     constructor(status:Status, retweetedUser: User? = null):this(
             status.id, status.createdAt.toString(), status.favoriteCount, status.isFavorited, status.isRetweeted,
             status.retweetCount, User(status.user), status.text, status.source, status.inReplyToStatusId,
-            status.inReplyToUserId,status.inReplyToScreenName, TweetExtended.toHashTagEntityList(status.hashtagEntities.toList()),
-            TweetExtended.toUrlEntityList(status.urlEntities.toList()),TweetExtended.toMentionEntityList(status.userMentionEntities.toList()),
-            TweetExtended.toMediaEntityList(status.mediaEntities.toList()), status.extendedMediaEntities.toList(), retweetedUser
+            status.inReplyToUserId,status.inReplyToScreenName, TweetExtended.toHashTagEntityList(status.hashtagEntities),
+            TweetExtended.toUrlEntityList(status.urlEntities),TweetExtended.toMentionEntityList(status.userMentionEntities),
+            TweetExtended.toMediaEntityList(status.extendedMediaEntities), status.extendedMediaEntities.toList(), retweetedUser
     )
 
     @get:Bindable

@@ -1,5 +1,6 @@
 package info.kotlin.kotako.cider.model.entity
 
+import android.util.Log
 import com.twitter.sdk.android.core.models.HashtagEntity
 import com.twitter.sdk.android.core.models.MediaEntity
 import com.twitter.sdk.android.core.models.MentionEntity
@@ -10,21 +11,23 @@ import java.io.Serializable
 
 class TweetExtended() : Serializable {
     companion object {
-        fun toHashTagEntityList(entities: List<twitter4j.HashtagEntity>): List<HashtagEntity> =
+        fun toHashTagEntityList(entities: Array<twitter4j.HashtagEntity>): List<HashtagEntity> =
                 (0 until entities.size).mapTo(ArrayList()) { HashtagEntity(entities[it].text, entities[it].start, entities[it].end) }
 
-        fun toUrlEntityList(entities: List<twitter4j.URLEntity>): List<UrlEntity> =
+        fun toUrlEntityList(entities: Array<twitter4j.URLEntity>): List<UrlEntity> =
                 (0 until entities.size).mapTo(ArrayList()) { UrlEntity(entities[it].url, entities[it].expandedURL, entities[it].displayURL, entities[it].start, entities[it].end) }
 
-        fun toMentionEntityList(entities: List<UserMentionEntity>): List<MentionEntity> =
+        fun toMentionEntityList(entities: Array<UserMentionEntity>): List<MentionEntity> =
                 (0 until entities.size).mapTo(ArrayList()) { MentionEntity(entities[it].id, entities[it].id.toString(), entities[it].name, entities[it].screenName, entities[it].start, entities[it].end) }
 
-        fun toMediaEntityList(entities: List<twitter4j.MediaEntity>): List<MediaEntity> =
-                (0 until entities.size).mapTo(ArrayList()) {
-                    MediaEntity(
-                            entities[it].url, entities[it].expandedURL, entities[it].displayURL, entities[it].start, entities[it].end,
-                            entities[it].id, entities[it].id.toString(), entities[it].mediaURL, entities[it].mediaURLHttps, null,
-                            entities[it].id, entities[it].id.toString(), entities[it].type, null, null)
-                }
+        fun toMediaEntityList(entities: Array<twitter4j.ExtendedMediaEntity>): List<MediaEntity> {
+            Log.d("media", entities.size.toString())
+            return (0 until entities.size).mapTo(ArrayList()) {
+                MediaEntity(
+                        entities[it].url, entities[it].expandedURL, entities[it].displayURL, entities[it].start, entities[it].end,
+                        entities[it].id, entities[it].id.toString(), entities[it].mediaURL, entities[it].mediaURLHttps, null,
+                        entities[it].id, entities[it].id.toString(), entities[it].type, null, null)
+            }
+        }
     }
 }
