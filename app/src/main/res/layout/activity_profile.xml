@@ -107,7 +107,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="-48dp"
-                android:onClick="@{() -> friendShips.following ? viewModel.unFollow(user.id) : viewModel.follow(user.id) }"
+                android:onClick="@{() ->viewModel.onFollowButtonPressed(friendShips)}"
                 android:backgroundTint='@{friendShips.following ? Color.parseColor("#3498db") : Color.parseColor("#ffffff") }'
                 android:text='@{friendShips.following ? "Following" : "Follow"}'
                 android:textColor='@{Color.parseColor(friendShips.following ? "#ffffff" : "#3498db") }'

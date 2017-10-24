@@ -1,20 +1,21 @@
 package info.kotlin.kotako.cider.viewmodel
 
-import android.util.Log
-import android.view.View
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.ProfileActivityContract
 import info.kotlin.kotako.cider.model.RestAPIClient
 import info.kotlin.kotako.cider.model.entity.Friendships
 import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.rx.DefaultObserver
-import rx.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers
 
-class ProfileViewModel(val profileView: ProfileActivityContract) {
+class ProfileViewModel(private val profileView: ProfileActivityContract) {
 
     fun showProfileImage(url: String) = profileView.showImage(url)
 
-    fun onFollowButtonPressed(view: View) {}
+    fun onFollowButtonPressed(friendships: Friendships) {
+        if (friendships.following) friendships.id?.let { unFollow(it) }
+        else friendships.id?.let { follow(it) }
+    }
 
     fun loadUser(userId: Long) {
         RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
@@ -39,7 +40,7 @@ class ProfileViewModel(val profileView: ProfileActivityContract) {
                 ))
     }
 
-    fun follow(userId: Long) {
+    private fun follow(userId: Long) {
         RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .FriendShipObservable()
                 .follow(null, userId, null)
@@ -50,7 +51,7 @@ class ProfileViewModel(val profileView: ProfileActivityContract) {
                 ))
     }
 
-    fun unFollow(userId: Long) {
+    private fun unFollow(userId: Long) {
         RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .FriendShipObservable()
                 .unFollow(null, userId)

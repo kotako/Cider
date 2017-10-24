@@ -6,7 +6,7 @@ import info.kotlin.kotako.cider.contract.PostActivityContract
 import info.kotlin.kotako.cider.model.RestAPIClient
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
-import rx.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers
 
 class PostViewModel(private val postView: PostActivityContract, private val replyTo: Tweet? = null) {
 

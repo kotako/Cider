@@ -9,14 +9,15 @@ import com.twitter.sdk.android.core.internal.network.OkHttpClientHelper
 import com.twitter.sdk.android.core.models.*
 import com.twitter.sdk.android.core.models.Tweet
 import info.kotlin.kotako.cider.model.entity.Friendships
+import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import rx.Observable
 
 class RestAPIClient(session: TwitterSession) {
 
@@ -27,7 +28,7 @@ class RestAPIClient(session: TwitterSession) {
             .client(OkHttpClientHelper.getOkHttpClient(session, TwitterCore.getInstance().authConfig))
             .baseUrl(TwitterApi().baseHostUrl)
             .addConverterFactory(GsonConverterFactory.create(buildGson()))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
     private fun buildGson(): Gson {

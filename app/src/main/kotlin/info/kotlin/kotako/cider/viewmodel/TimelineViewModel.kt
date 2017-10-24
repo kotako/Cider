@@ -9,41 +9,41 @@ import info.kotlin.kotako.cider.model.StreamApiClient
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.rx.DefaultObserver
-import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class TimelineViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
-    private var subscription = CompositeSubscription()
+    private var subscription = CompositeDisposable()
 
     override fun startStream() {
-        if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
+        if (!subscription.isDisposed) subscription = CompositeDisposable()
         subscription.add(
                 StreamApiClient.statusObservable
                         .map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) }
                         .subscribeOn(Schedulers.newThread())
-                        .subscribe(DefaultObserver<Tweet>(
+                        .subscribeWith(DefaultObserver<Tweet>(
                                 next = { timelineView.addTweet(it) },
                                 error = { Log.d("TimelineViewModel", it.localizedMessage) }
                         )))
     }
 
     override fun start() {
-        if (!subscription.hasSubscriptions()) startStream()
+        if (!subscription.isDisposed) startStream()
         if (timelineView.tweetListSize() < 1) setTimeline()
     }
 
-    override fun stop() = subscription.unsubscribe()
+    override fun stop() = subscription.dispose()
 
     override fun setTimeline() {
-        if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
+        if (!subscription.isDisposed) subscription = CompositeDisposable()
         timelineView.showProgressBar()
         subscription.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .homeTimeline(50, null, null, null, null, null)
                 .map { t -> t.map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) } }
                 .subscribeOn(Schedulers.newThread())
-                .subscribe(DefaultObserver<List<Tweet>>(
+                .subscribeWith(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it) },
                         error = { throwable ->
                             timelineView.hideProgressBar()
@@ -53,7 +53,7 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
     }
 
     override fun loadMore(maxId: Long) {
-        if (!subscription.hasSubscriptions()) subscription = CompositeSubscription()
+        if (!subscription.isDisposed) subscription = CompositeDisposable()
         timelineView.showProgressBar()
         subscription.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
@@ -61,7 +61,7 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
                 .map { t -> t.drop(1) }
                 .map { t -> t.map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) } }
                 .subscribeOn(Schedulers.newThread())
-                .subscribe(DefaultObserver<List<Tweet>>(
+                .subscribeWith(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it) },
                         error = { throwable ->
                             timelineView.hideProgressBar()

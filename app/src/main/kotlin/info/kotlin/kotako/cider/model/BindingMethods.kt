@@ -16,7 +16,7 @@ import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.entity.Account
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
-import rx.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.regex.Pattern
 
 @BindingAdapter("loadCircleImage")
