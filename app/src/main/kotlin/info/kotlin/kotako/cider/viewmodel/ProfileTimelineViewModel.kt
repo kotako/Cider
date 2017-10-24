@@ -12,10 +12,10 @@ import io.reactivex.schedulers.Schedulers
 
 class ProfileTimelineViewModel(val timelineView: TimelineFragmentContract, val userId: Long) : TimelineViewModelContract {
 
-    private var subscription = CompositeDisposable()
+    private var disposable = CompositeDisposable()
 
     override fun setTimeline() {
-        if (!subscription.isDisposed) subscription = CompositeDisposable()
+        if (disposable.isDisposed) disposable = CompositeDisposable()
         timelineView.showProgressBar()
         RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
@@ -30,9 +30,9 @@ class ProfileTimelineViewModel(val timelineView: TimelineFragmentContract, val u
     }
 
     override fun loadMore(maxId: Long) {
-        if (!subscription.isDisposed) subscription = CompositeDisposable()
+        if (disposable.isDisposed) disposable = CompositeDisposable()
         timelineView.showProgressBar()
-        subscription.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
+        disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .userTimeline(userId, null, null, 50, maxId, null, null, null)
                 .map { t -> t.drop(1) }
@@ -51,7 +51,7 @@ class ProfileTimelineViewModel(val timelineView: TimelineFragmentContract, val u
 
     override fun start() =  if (timelineView.tweetListSize() < 1) setTimeline() else {}
 
-    override fun stop() = subscription.dispose()
+    override fun stop() = disposable.dispose()
 
     override fun startStream() {}
 }

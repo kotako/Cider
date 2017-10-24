@@ -14,11 +14,11 @@ import io.reactivex.schedulers.Schedulers
 
 class TimelineViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
-    private var subscription = CompositeDisposable()
+    private var disposable = CompositeDisposable().apply { dispose() }
 
     override fun startStream() {
-        if (!subscription.isDisposed) subscription = CompositeDisposable()
-        subscription.add(
+        if (disposable.isDisposed) disposable = CompositeDisposable()
+        disposable.add(
                 StreamApiClient.statusObservable
                         .map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) }
                         .subscribeOn(Schedulers.newThread())
@@ -29,16 +29,16 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
     }
 
     override fun start() {
-        if (!subscription.isDisposed) startStream()
+        if (disposable.isDisposed) startStream()
         if (timelineView.tweetListSize() < 1) setTimeline()
     }
 
-    override fun stop() = subscription.dispose()
+    override fun stop() = disposable.dispose()
 
     override fun setTimeline() {
-        if (!subscription.isDisposed) subscription = CompositeDisposable()
+        if (disposable.isDisposed) disposable = CompositeDisposable()
         timelineView.showProgressBar()
-        subscription.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
+        disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .homeTimeline(50, null, null, null, null, null)
                 .map { t -> t.map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) } }
@@ -53,9 +53,9 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
     }
 
     override fun loadMore(maxId: Long) {
-        if (!subscription.isDisposed) subscription = CompositeDisposable()
+        if (disposable.isDisposed) disposable = CompositeDisposable()
         timelineView.showProgressBar()
-        subscription.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
+        disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .homeTimeline(50, null, maxId, null, null, null)
                 .map { t -> t.drop(1) }
