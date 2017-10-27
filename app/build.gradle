@@ -42,7 +42,7 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.1.5'
     compile 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:2.0.1-rc1'
     compile 'com.twitter.sdk.android:twitter-core:3.1.1'
-    compile 'com.github.bumptech.glide:glide:4.1.1'
+    compile 'com.github.bumptech.glide:glide:4.2.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
     compile 'org.twitter4j:twitter4j-stream:4.0.4'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'

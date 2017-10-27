@@ -1,6 +1,5 @@
 package info.kotlin.kotako.cider.model.entity
 
-import android.util.Log
 import com.twitter.sdk.android.core.models.HashtagEntity
 import com.twitter.sdk.android.core.models.MediaEntity
 import com.twitter.sdk.android.core.models.MentionEntity
@@ -20,14 +19,11 @@ class TweetExtended() : Serializable {
         fun toMentionEntityList(entities: Array<UserMentionEntity>): List<MentionEntity> =
                 (0 until entities.size).mapTo(ArrayList()) { MentionEntity(entities[it].id, entities[it].id.toString(), entities[it].name, entities[it].screenName, entities[it].start, entities[it].end) }
 
-        fun toMediaEntityList(entities: Array<twitter4j.ExtendedMediaEntity>): List<MediaEntity> {
-            Log.d("media", entities.size.toString())
-            return (0 until entities.size).mapTo(ArrayList()) {
-                MediaEntity(
-                        entities[it].url, entities[it].expandedURL, entities[it].displayURL, entities[it].start, entities[it].end,
-                        entities[it].id, entities[it].id.toString(), entities[it].mediaURL, entities[it].mediaURLHttps, null,
-                        entities[it].id, entities[it].id.toString(), entities[it].type, null, null)
-            }
+        fun toMediaEntityList(entities: Array<twitter4j.ExtendedMediaEntity>): List<MediaEntity> =
+                (0 until entities.size).mapTo(ArrayList()) { MediaEntity(
+                    entities[it].url, entities[it].expandedURL, entities[it].displayURL, entities[it].start, entities[it].end,
+                    entities[it].id, entities[it].id.toString(), entities[it].mediaURL, entities[it].mediaURLHttps, null,
+                    entities[it].id, entities[it].id.toString(), entities[it].type, null, null)
         }
     }
 }

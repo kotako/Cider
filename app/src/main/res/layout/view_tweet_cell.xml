@@ -20,7 +20,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:onClick="@{() -> viewModel.onTweetClicked(tweet)}">
 
@@ -230,8 +230,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
-                    android:background="#00000000"
                     android:onClick="@{() -> viewModel.onReplyClicked(tweet)}"
+                    android:background="?attr/selectableItemBackground"
                     android:scaleType="centerInside"
                     android:src="@mipmap/reply_white"
                     android:tint="#ffffff" />
@@ -260,8 +260,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
-                    android:background="#00000000"
                     android:onClick="@{() -> viewModel.onRetweetClicked(tweet)}"
+                    android:background="?attr/selectableItemBackground"
                     android:scaleType="centerInside"
                     android:src="@mipmap/ic_twitter_retweet_grey"
                     android:tint='@{Color.parseColor(tweet.retweeted ? "#2ecc71" : "#FFFFFF")}' />
@@ -292,7 +292,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_centerVertical="true"
-                    android:background="#00000000"
+                    android:background="?attr/selectableItemBackground"
                     android:onClick="@{() -> viewModel.onFavoriteClicked(tweet)}"
                     android:scaleType="centerInside"
                     android:src="@mipmap/favorite_grey"
@@ -317,7 +317,7 @@
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/layout_tweet_fav"
-                android:background="#00000000"
+                android:background="?attr/selectableItemBackground"
                 android:src="@mipmap/list_grey"
                 android:tint="#ffffff" />
         </RelativeLayout>
