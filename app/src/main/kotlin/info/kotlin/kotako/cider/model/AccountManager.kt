@@ -11,7 +11,7 @@ class AccountManager {
     companion object {
         fun currentAccount(): Account? {
             Realm.getDefaultInstance().use {
-                val currentId = TwitterCore.getInstance().sessionManager.activeSession.userId
+                val currentId = TwitterCore.getInstance().sessionManager.activeSession?.userId ?: return null
                 it.where(Account::class.java).equalTo("userId", currentId).findFirst().let { account ->
                     return Account(account.userId, account.userName, account.token, account.tokenSecret)
                 }
