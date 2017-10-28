@@ -35,21 +35,21 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
     private fun setUpView() {
         binding?.apply {
 
-            toolbar?.apply {
+            toolbar.apply {
                 title = "Cider"
-                navigationIcon = getDrawable(R.mipmap.menu_white)
+                setNavigationIcon(R.mipmap.menu_white)
                 setNavigationOnClickListener { openDrawer() }
             }
 
-            navigation?.run {
-                setNavigationItemSelectedListener { viewModel.navigationOnClick(it);false }
+            navigation.run {
+                setNavigationItemSelectedListener { viewModel?.navigationOnClick(it);false }
                 DataBindingUtil.bind<HeaderDrawerNavigationBinding>(getHeaderView(0))
                 DataBindingUtil.getBinding<HeaderDrawerNavigationBinding>(getHeaderView(0)).account = AccountManager.currentAccount()
             }
 
-            pager?.adapter = PagerAdapter(supportFragmentManager)
+            pager.adapter = PagerAdapter(supportFragmentManager)
 
-            tabs?.apply {
+            tabs.apply {
                 setupWithViewPager(pager)
                 getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_home, null)
                 getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_mention, null)

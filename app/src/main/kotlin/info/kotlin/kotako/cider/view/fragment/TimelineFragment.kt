@@ -53,6 +53,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
             adapter = TimelineRecyclerViewAdapter(context, tweetList)
             layoutManager = LinearLayoutManager(context)
             addOnScrollListener(RecyclerScrollListener({ binding?.viewModel?.loadMore(tweetList.last().id) }))
+            invalidateItemDecorations()
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager(context).orientation))
         }
         return binding!!.root
