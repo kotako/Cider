@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="user"
+            type="info.kotlin.kotako.cider.model.entity.User" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp">
+
+        <ImageButton
+            android:id="@+id/imageview_cell_user_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_profile_image"
+            app:onImageClick="@{user.id}"
+            app:loadCircleImage="@{user.profileImageUrl}" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/imageview_cell_user_icon">
+
+            <TextView
+                android:id="@+id/textview_cell_user_screen_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@{user.name}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            <TextView
+                android:id="@+id/textview_cell_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_cell_user_screen_name"
+                android:singleLine="true"
+                android:text='@{"@" + user.screenName}'
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

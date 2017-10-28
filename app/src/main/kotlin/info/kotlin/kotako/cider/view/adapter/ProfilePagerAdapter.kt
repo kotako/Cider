@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import info.kotlin.kotako.cider.view.fragment.TimelineFragment
+import info.kotlin.kotako.cider.view.fragment.UsersListFragment
 
 class ProfilePagerAdapter(fm: FragmentManager, val userId:Long) : FragmentPagerAdapter(fm) {
 
@@ -19,6 +20,8 @@ class ProfilePagerAdapter(fm: FragmentManager, val userId:Long) : FragmentPagerA
     override fun getItem(position: Int): Fragment =
             when (position) {
                 0 -> TimelineFragment.newInstance(Bundle().apply { putLong(USER_ID, userId) })
+                2 -> UsersListFragment.newInstance(Bundle().apply { putLong(USER_ID, userId) ; putBoolean("friend", true) })
+                3 -> UsersListFragment.newInstance(Bundle().apply { putLong(USER_ID, userId) ; putBoolean("follower", true) })
                 else -> Fragment()
             }
 }

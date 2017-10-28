@@ -9,6 +9,7 @@ import com.twitter.sdk.android.core.internal.network.OkHttpClientHelper
 import com.twitter.sdk.android.core.models.*
 import com.twitter.sdk.android.core.models.Tweet
 import info.kotlin.kotako.cider.model.entity.Friendships
+import info.kotlin.kotako.cider.model.entity.Users
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
@@ -120,7 +121,7 @@ class RestAPIClient(session: TwitterSession) {
                       @Query("cursor") cursor: Long?,
                       @Query("count") count: Int?,
                       @Query("skip_status") skip_status: Boolean?,
-                      @Query("include_user_entities") include_user_entities: Boolean?): Observable<List<User>>
+                      @Query("include_user_entities") include_user_entities: Boolean?): Observable<Users>
 
         @GET("/1.1/friends/list.json")
         fun friends(@Query("user_id") user_id: Long?,
@@ -128,7 +129,7 @@ class RestAPIClient(session: TwitterSession) {
                     @Query("cursor") cursor: Long?,
                     @Query("count") count: Int?,
                     @Query("skip_status") skip_status: Boolean?,
-                    @Query("include_user_entities") include_user_entities: Boolean?): Observable<List<User>>
+                    @Query("include_user_entities") include_user_entities: Boolean?): Observable<Users>
 
         @POST("/1.1/friendships/create.json")
         fun follow(@Query("screen_name") screen_name: String?,

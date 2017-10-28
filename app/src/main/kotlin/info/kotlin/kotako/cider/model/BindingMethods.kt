@@ -1,6 +1,7 @@
 package info.kotlin.kotako.cider.model
 
 import android.databinding.BindingAdapter
+import android.databinding.BindingMethod
 import android.support.v4.widget.SwipeRefreshLayout
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -16,8 +17,11 @@ import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.entity.Account
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
+import info.kotlin.kotako.cider.view.activity.ProfileActivity
 import io.reactivex.schedulers.Schedulers
 import java.util.regex.Pattern
+
+// TODO: できるだけ減らしていきたい
 
 @BindingAdapter("loadCircleImage")
 fun ImageView.loadCircleImage(url: String?) {
@@ -49,6 +53,11 @@ fun ImageButton.loadImageFromSession(account: Account) {
             .subscribe(DefaultObserver(
                     next = { profileImageUrl = it.profileImageUrl },
                     completed = { this.post { loadCircleImage(profileImageUrl) } }))
+}
+
+@BindingAdapter("onImageClick")
+fun ImageButton.onImageClicked(userId:Long){
+    this.setOnClickListener { ProfileActivity.start(this.context, userId) }
 }
 
 @BindingAdapter("onRefresh")

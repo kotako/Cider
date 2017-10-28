@@ -161,7 +161,7 @@
                     app:loadImage="@{tweet.mediaEntity[0].mediaUrl}" />
 
                 <ImageView
-                    android:layout_width="4dp"
+                    android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
@@ -194,7 +194,7 @@
                     app:loadImage="@{tweet.mediaEntity[2].mediaUrl}" />
 
                 <ImageView
-                    android:layout_width="4dp"
+                    android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
