@@ -33,16 +33,17 @@ class ExpandedImageDialog : DialogFragment() {
                     .into(view.findViewById(R.id.imageview_expanded_media) as ImageView)
 
             (view.findViewById(R.id.imageview_expanded_media) as ImageView).setOnLongClickListener {
-
+//              ストレージ書き込み権限の確認
                 if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
                     }
                 } else {
+//                  ストレージ書き込み可能な場合はオリジナルの画像を保存
                     Glide.with(activity)
                             .asBitmap()
                             .load(arg.get("url"))
-                            .into(object : SimpleTarget<Bitmap>(view.findViewById(R.id.imageview_expanded_media).width, view.findViewById(R.id.imageview_expanded_media).height) {
+                            .into(object : SimpleTarget<Bitmap>(arg.getInt("w"), arg.getInt("h")) {
                                 override fun onResourceReady(resource: Bitmap?, transition: Transition<in Bitmap>?) {
                                     resource?.let {
                                         ImageManager.run {

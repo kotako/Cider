@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import com.twitter.sdk.android.core.TwitterCore
+import com.twitter.sdk.android.core.models.MediaEntity
 import info.kotlin.kotako.cider.model.RestAPIClient
 import info.kotlin.kotako.cider.model.DateConverter
 import info.kotlin.kotako.cider.model.entity.Tweet
@@ -22,9 +23,13 @@ class TweetViewModel(val context: Context) {
 
     fun createdInterval(createdAt: String): String = DateConverter.intervalFromCreated(createdAt)
 
-    fun onImageClicked(url:String) {
+    fun onImageClicked(media: MediaEntity) {
         ExpandedImageDialog
-                .newInstance(Bundle().apply { putString("url", url) })
+                .newInstance(Bundle().apply {
+                    putString("url", media.mediaUrl)
+                    putInt("w", media.sizes.large.w)
+                    putInt("h", media.sizes.large.h)
+                })
                 .show((context as Activity).fragmentManager, "expandedImage")
     }
 

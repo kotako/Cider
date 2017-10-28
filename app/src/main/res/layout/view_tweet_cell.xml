@@ -155,7 +155,7 @@
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
-                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[0].mediaUrl)}"
+                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[0])}"
                     android:scaleType="centerCrop"
                     android:visibility="@{tweet.mediaEntity.empty ? View.GONE : View.VISIBLE}"
                     app:loadImage="@{tweet.mediaEntity[0].mediaUrl}" />
@@ -165,7 +165,7 @@
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[1].mediaUrl)}"
+                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[1])}"
                     android:scaleType="centerCrop"
                     android:visibility="@{tweet.mediaEntity[1]==null ? View.GONE : View.VISIBLE}"
                     app:loadImage="@{tweet.mediaEntity[1].mediaUrl}" />
@@ -188,7 +188,7 @@
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
-                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[2].mediaUrl)}"
+                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[2])}"
                     android:scaleType="centerCrop"
                     android:visibility="@{tweet.mediaEntity[2]==null ? View.GONE : View.VISIBLE}"
                     app:loadImage="@{tweet.mediaEntity[2].mediaUrl}" />
@@ -198,7 +198,7 @@
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[3].mediaUrl)}"
+                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[3])}"
                     android:scaleType="centerCrop"
                     android:visibility="@{tweet.mediaEntity[3]==null ? View.GONE : View.VISIBLE}"
                     app:loadImage="@{tweet.mediaEntity[3].mediaUrl}" />
