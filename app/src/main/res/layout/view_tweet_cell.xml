@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
-        android:onClick="@{() -> viewModel.onTweetClicked(tweet)}">
+        android:onClick="@{() -> viewModel.onTweetClicked(tweet)}"
+        android:focusable="true">
 
         <RelativeLayout
             android:id="@+id/layout_cell_caption_favorite"
@@ -97,7 +98,7 @@
                 android:layout_height="48dp"
                 android:layout_marginRight="8dp"
                 android:background="@drawable/shape_profile_image"
-                android:onClick="@{() -> viewModel.onIconClicked(tweet)}"
+                android:onClick="@{(view) -> viewModel.onIconClicked(view, tweet)}"
                 android:scaleType="centerCrop"
                 app:loadCircleImage="@{tweet.user.profileImageUrl}" />
 
@@ -155,7 +156,7 @@
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
-                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[0])}"
+                    android:onClick="@{(view) -> viewModel.onImageClicked(view, tweet.mediaEntity[0])}"
                     android:scaleType="centerCrop"
                     android:visibility="@{tweet.mediaEntity.empty ? View.GONE : View.VISIBLE}"
                     app:loadImage="@{tweet.mediaEntity[0].mediaUrl}" />
@@ -165,7 +166,7 @@
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[1])}"
+                    android:onClick="@{(view) -> viewModel.onImageClicked(view, tweet.mediaEntity[1])}"
                     android:scaleType="centerCrop"
                     android:visibility="@{tweet.mediaEntity[1]==null ? View.GONE : View.VISIBLE}"
                     app:loadImage="@{tweet.mediaEntity[1].mediaUrl}" />
@@ -188,7 +189,7 @@
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
-                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[2])}"
+                    android:onClick="@{(view) -> viewModel.onImageClicked(view, tweet.mediaEntity[2])}"
                     android:scaleType="centerCrop"
                     android:visibility="@{tweet.mediaEntity[2]==null ? View.GONE : View.VISIBLE}"
                     app:loadImage="@{tweet.mediaEntity[2].mediaUrl}" />
@@ -198,7 +199,7 @@
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:onClick="@{() -> viewModel.onImageClicked(tweet.mediaEntity[3])}"
+                    android:onClick="@{(view) -> viewModel.onImageClicked(view, tweet.mediaEntity[3])}"
                     android:scaleType="centerCrop"
                     android:visibility="@{tweet.mediaEntity[3]==null ? View.GONE : View.VISIBLE}"
                     app:loadImage="@{tweet.mediaEntity[3].mediaUrl}" />
@@ -230,7 +231,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
-                    android:onClick="@{() -> viewModel.onReplyClicked(tweet)}"
+                    android:onClick="@{(view) -> viewModel.onReplyClicked(view, tweet)}"
                     android:background="?attr/selectableItemBackground"
                     android:scaleType="centerInside"
                     android:src="@mipmap/reply_white"

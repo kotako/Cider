@@ -47,6 +47,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
             }
         }
 
+        binding?.layoutRefresh?.setOnRefreshListener { binding?.viewModel?.onRefresh() }
 //      RecyclerViewにAdapter, LayoutManager, ScrollListener, 仕切り線をセットする
         binding?.recyclerViewTimeline?.apply {
             adapter = TimelineRecyclerViewAdapter(context, tweetList)
@@ -100,7 +101,6 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun tweetListSize(): Int = tweetList.size
 
     override fun clearTweetList() {
-        binding?.layoutRefresh?.isRefreshing = false
         tweetList.clear()
         binding?.recyclerViewTimeline?.adapter?.notifyDataSetChanged()
     }
@@ -110,20 +110,10 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     }
 
     override fun showProgressBar() {
-        activity.runOnUiThread {
-            binding?.progressBar?.apply {
-                visibility = View.VISIBLE
-                show()
-            }
-        }
+        activity.runOnUiThread { binding?.layoutRefresh?.isRefreshing = true }
     }
 
     override fun hideProgressBar() {
-        activity.runOnUiThread {
-            binding?.progressBar?.apply {
-                hide()
-                visibility = View.INVISIBLE
-            }
-        }
+        activity.runOnUiThread { binding?.layoutRefresh?.isRefreshing = false }
     }
 }

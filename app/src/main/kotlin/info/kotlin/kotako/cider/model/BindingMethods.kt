@@ -1,8 +1,6 @@
 package info.kotlin.kotako.cider.model
 
 import android.databinding.BindingAdapter
-import android.databinding.BindingMethod
-import android.support.v4.widget.SwipeRefreshLayout
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.UnderlineSpan
@@ -13,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.twitter.sdk.android.core.TwitterAuthToken
 import com.twitter.sdk.android.core.TwitterSession
-import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.entity.Account
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
@@ -58,12 +55,6 @@ fun ImageButton.loadImageFromSession(account: Account) {
 @BindingAdapter("onImageClick")
 fun ImageButton.onImageClicked(userId:Long){
     this.setOnClickListener { ProfileActivity.start(this.context, userId) }
-}
-
-@BindingAdapter("onRefresh")
-fun SwipeRefreshLayout.onRefresh(listener: SwipeRefreshLayout.OnRefreshListener) {
-    this.setColorSchemeResources(R.color.colorAccent)
-    this.setOnRefreshListener(listener)
 }
 
 @BindingAdapter("markupUser")

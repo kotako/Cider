@@ -19,7 +19,7 @@ class TimelineRecyclerViewAdapter(val context :Context,val tweetList: ArrayList<
     //  データのセット
     override fun onBindViewHolder(holder: TweetViewHolder?, position: Int) {
         holder?.binding?.setVariable(BR.tweet, tweetList[position])
-        holder?.binding?.setVariable(BR.viewModel, TweetViewModel(context))
+        holder?.binding?.setVariable(BR.viewModel, TweetViewModel())
     }
 
     override fun getItemCount(): Int = tweetList.size

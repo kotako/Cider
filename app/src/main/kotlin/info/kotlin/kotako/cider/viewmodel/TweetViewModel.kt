@@ -3,6 +3,7 @@ package info.kotlin.kotako.cider.viewmodel
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.models.MediaEntity
 import info.kotlin.kotako.cider.model.RestAPIClient
@@ -15,29 +16,29 @@ import info.kotlin.kotako.cider.view.activity.ProfileActivity
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class TweetViewModel(val context: Context) {
+class TweetViewModel {
 
-    fun onIconClicked(tweet: Tweet) = ProfileActivity.start(context, tweet.user.id)
+    fun onIconClicked(view: View, tweet: Tweet) = ProfileActivity.start(view.context, tweet.user.id)
 
     fun createdAtJpn(createdAt: String): String = DateConverter.createdAt(createdAt, Locale.JAPAN)
 
     fun createdInterval(createdAt: String): String = DateConverter.intervalFromCreated(createdAt)
 
-    fun onImageClicked(media: MediaEntity) {
+    fun onImageClicked(view: View, media: MediaEntity) {
         ExpandedImageDialog
                 .newInstance(Bundle().apply {
                     putString("url", media.mediaUrl)
                     putInt("w", media.sizes.large.w)
                     putInt("h", media.sizes.large.h)
                 })
-                .show((context as Activity).fragmentManager, "expandedImage")
+                .show((view.context as Activity).fragmentManager, "expandedImage")
     }
 
     fun onTweetClicked(tweet: Tweet) {
         tweet.expanded = tweet.expanded.not()
     }
 
-    fun onReplyClicked(tweet: Tweet) = PostActivity.start(context, tweet)
+    fun onReplyClicked(view: View, tweet: Tweet) = PostActivity.start(view.context, tweet)
 
     fun onFavoriteClicked(tweet: Tweet) {
         if (tweet.favorited) {
