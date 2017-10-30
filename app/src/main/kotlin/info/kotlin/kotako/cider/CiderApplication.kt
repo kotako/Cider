@@ -4,7 +4,9 @@ import android.app.Application
 import com.twitter.sdk.android.core.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
+import info.kotlin.kotako.cider.model.InitializeTransaction
 import io.realm.Realm
+import io.realm.RealmConfiguration
 
 class CiderApplication : Application() {
 
@@ -15,5 +17,11 @@ class CiderApplication : Application() {
                 .build()
         Twitter.initialize(config)
         Realm.init(this)
+
+//      realmの初期化
+        val realmConfig = RealmConfiguration.Builder().name("cider.realm")
+                .initialData(InitializeTransaction())
+                .build()
+        Realm.setDefaultConfiguration(realmConfig)
     }
 }

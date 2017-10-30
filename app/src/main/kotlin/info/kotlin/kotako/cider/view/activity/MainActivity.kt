@@ -3,16 +3,19 @@ package info.kotlin.kotako.cider.view.activity
 import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.ImageView
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.MainActivityContract
 import info.kotlin.kotako.cider.databinding.ActivityMainBinding
 import info.kotlin.kotako.cider.databinding.HeaderDrawerNavigationBinding
 import info.kotlin.kotako.cider.model.AccountManager
+import info.kotlin.kotako.cider.model.TabManager
 import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.viewmodel.MainViewModel
 
@@ -51,10 +54,14 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
 
             tabs.apply {
                 setupWithViewPager(pager)
-                getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_home, null)
-                getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_mention, null)
-                getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null)
-                getTabAt(3)?.customView = layoutInflater.inflate(R.layout.tab_mail, null)
+                val list = TabManager.tabList()
+                for (i in 0 until list.size) {
+                    getTabAt(i)?.customView = layoutInflater.inflate(R.layout.tab_default, null)
+                            .apply {
+                                (findViewById(R.id.imageview_tab) as ImageView).setImageResource(list[i].icon)
+                                (findViewById(R.id.imageview_tab) as ImageView).setColorFilter(Color.WHITE)
+                            }
+                }
             }
         }
     }

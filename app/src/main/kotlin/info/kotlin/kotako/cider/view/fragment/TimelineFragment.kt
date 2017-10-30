@@ -13,6 +13,7 @@ import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.databinding.FragmentTimelineBinding
+import info.kotlin.kotako.cider.model.TabManager
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.view.activity.ProfileActivity
@@ -31,7 +32,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     companion object {
         val SAVED_TWEET_LIST_KEY = "tweetList"
         fun newInstance(): Fragment = TimelineFragment()
-        fun newInstance(bundle: Bundle): Fragment = TimelineFragment().apply { arguments = bundle }
+        fun newInstance(bundle: Bundle?): Fragment = TimelineFragment().apply { bundle?.let { arguments = it } }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -40,9 +41,9 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
 //          Bundleの値によってセットするviewModelを変更する
             binding?.viewModel = when {
                 arguments == null -> TimelineViewModel(this)
-                arguments.containsKey(PagerAdapter.PAGE_TAG) -> MentionViewModel(this)
+                arguments.containsKey(TabManager.TARGET) -> MentionViewModel(this)
                 arguments.containsKey(ProfilePagerAdapter.USER_ID) -> ProfileTimelineViewModel(this, arguments[ProfilePagerAdapter.USER_ID] as Long)
-                arguments[PagerAdapter.PAGE_TAG] == PagerAdapter.MENTION -> MentionViewModel(this)
+                arguments[TabManager.TARGET] == TabManager.MENTION -> MentionViewModel(this)
                 else -> TimelineViewModel(this)
             }
         }
