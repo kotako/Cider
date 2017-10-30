@@ -17,7 +17,7 @@ class FollowersListViewModel(private val listView: UsersListFragmentContract,
     private var disposable = CompositeDisposable()
 
     override fun start() {
-        setUsers()
+        if (listView.usersListSize() < 1) setUsers()
     }
 
     override fun stop() {
@@ -31,7 +31,7 @@ class FollowersListViewModel(private val listView: UsersListFragmentContract,
         listView.showProgressBar()
         disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .FriendShipObservable()
-                .friends(userId, null, null, 50, null, null)
+                .followers(userId, null, null, 50, null, null)
                 .map { users -> cursor = users.next_cursor; users }
                 .map { users -> users.users.map { User(it) } }
                 .subscribeOn(Schedulers.newThread())
@@ -54,7 +54,7 @@ class FollowersListViewModel(private val listView: UsersListFragmentContract,
         listView.showProgressBar()
         disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .FriendShipObservable()
-                .friends(userId, null, cursor, 50, null, null)
+                .followers(userId, null, cursor, 50, null, null)
                 .map { users -> cursor = users.next_cursor; users }
                 .map { users -> users.users.map { User(it) } }
                 .subscribeOn(Schedulers.newThread())

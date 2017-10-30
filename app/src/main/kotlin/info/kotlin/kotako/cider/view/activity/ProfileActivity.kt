@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import info.kotlin.kotako.cider.BR
 import info.kotlin.kotako.cider.R
@@ -39,18 +40,19 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
 
     private fun setUpView() {
         binding?.apply {
-            toolbarProfile?.apply {
+            toolbarProfile.apply {
                 setNavigationIcon(R.mipmap.arrow_back_white)
                 setNavigationOnClickListener { finish() }
             }
 
             // viewPager, tabLayoutをせっと
             intent.extras.getSerializable("userId")?.let { pagerProfile?.adapter = ProfilePagerAdapter(supportFragmentManager, it as Long) }
-            tabsProfile?.apply {
+            tabsProfile.apply {
                 setupWithViewPager(pagerProfile)
                 getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_tweet, null).apply { (findViewById(R.id.imageview_tab_tweet) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
                 getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_photo, null).apply { (findViewById(R.id.imageview_tab_photo) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
-                getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_list, null).apply { (findViewById(R.id.imageview_tab_list) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_friends, null).apply { (findViewById(R.id.imageview_tab_friends) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                getTabAt(3)?.customView = layoutInflater.inflate(R.layout.tab_followers, null).apply { (findViewById(R.id.imageview_tab_followers) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
             }
         }
     }

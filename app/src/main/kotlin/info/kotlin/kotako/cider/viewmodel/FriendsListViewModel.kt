@@ -11,13 +11,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class FriendsListViewModel(private val listView: UsersListFragmentContract,
-                         private val userId: Long) : UsersListViewModelContract {
+                           private val userId: Long) : UsersListViewModelContract {
 
     private var cursor = 0L
     private var disposable = CompositeDisposable()
 
     override fun start() {
-        setUsers()
+        if (listView.usersListSize() < 1) setUsers()
     }
 
     override fun stop() {
@@ -31,7 +31,7 @@ class FriendsListViewModel(private val listView: UsersListFragmentContract,
         listView.showProgressBar()
         disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .FriendShipObservable()
-                .followers(userId, null, null, 50, null, null)
+                .friends(userId, null, null, 50, null, null)
                 .map { users -> cursor = users.next_cursor; users }
                 .map { users -> users.users.map { User(it) } }
                 .subscribeOn(Schedulers.newThread())
@@ -54,13 +54,13 @@ class FriendsListViewModel(private val listView: UsersListFragmentContract,
         listView.showProgressBar()
         disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .FriendShipObservable()
-                .followers(userId, null, cursor, 50, null, null)
+                .friends(userId, null, cursor, 50, null, null)
                 .map { users -> cursor = users.next_cursor; users }
                 .map { users -> users.users.map { User(it) } }
                 .subscribeOn(Schedulers.newThread())
                 .subscribeWith(DefaultObserver<List<User>>(
                         next = { listView.addUserList(it); listView.hideProgressBar() },
-                        error = { listView.hideProgressBar() ; Log.d("dev", it.localizedMessage) }
+                        error = { listView.hideProgressBar(); Log.d("dev", it.localizedMessage) }
                 )))
     }
 }

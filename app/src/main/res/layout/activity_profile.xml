@@ -78,7 +78,7 @@
                 android:layout_below="@id/appBarLayout_profile"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="-72dp"
+                android:layout_marginTop="-80dp"
                 android:layout_toRightOf="@id/imageView_profile_photo"
                 android:maxLines="1"
                 android:text="@{user.name}"
@@ -106,7 +106,7 @@
                 android:layout_below="@id/textView_profile_screen_name"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="-48dp"
+                android:layout_marginTop="-32dp"
                 android:onClick="@{() ->viewModel.onFollowButtonPressed(friendShips)}"
                 android:backgroundTint='@{friendShips.following ? Color.parseColor("#3498db") : Color.parseColor("#ffffff") }'
                 android:text='@{friendShips.following ? "Following" : "Follow"}'

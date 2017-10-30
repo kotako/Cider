@@ -4,9 +4,7 @@ import android.databinding.BindingAdapter
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.UnderlineSpan
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.twitter.sdk.android.core.TwitterAuthToken
@@ -40,7 +38,8 @@ fun ImageView.loadImage(url: String?) {
 }
 
 @BindingAdapter("loadImageFromSession")
-fun ImageButton.loadImageFromSession(account: Account) {
+fun ImageButton.loadImageFromSession(account: Account?) {
+    if (account == null) return
     var profileImageUrl: String? = null
     val session = TwitterSession(TwitterAuthToken(account.token, account.tokenSecret), account.userId, account.userName)
 
@@ -54,6 +53,11 @@ fun ImageButton.loadImageFromSession(account: Account) {
 
 @BindingAdapter("onImageClick")
 fun ImageButton.onImageClicked(userId:Long){
+    this.setOnClickListener { ProfileActivity.start(this.context, userId) }
+}
+
+@BindingAdapter("onUserLayoutClick")
+fun RelativeLayout.onImageClicked(userId:Long){
     this.setOnClickListener { ProfileActivity.start(this.context, userId) }
 }
 
