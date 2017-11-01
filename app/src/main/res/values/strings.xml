@@ -13,4 +13,6 @@
     <string name="CONSUMER_SECRET">F3R4k8EQTTYmcfaNADKwnBMP5nl5PWMKFK2E8ESFbnoe3Z5Yqq</string>
     <string name="following">Following</string>
     <string name="followers">Followers</string>
+    <string name="preview">Preview</string>
+    <string name="current">Current</string>
 </resources>

@@ -20,7 +20,7 @@ class SettingsActivity : AppCompatActivity() {
         setUpView()
     }
 
-    fun setUpView() {
+    private fun setUpView() {
         supportActionBar?.title = "Settings"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         fragmentManager.beginTransaction()

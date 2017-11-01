@@ -2,6 +2,7 @@ package info.kotlin.kotako.cider.model
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.entity.Tab
 import info.kotlin.kotako.cider.model.entity.TabList
 import info.kotlin.kotako.cider.view.fragment.TimelineFragment
@@ -15,13 +16,19 @@ class TabManager {
         val TARGET = "Target"
         val MENTION = "Mention"
 
-        fun getFragment(tab: Tab): Fragment = when (tab.id) {
-                TIMELINE ->
-                    if (tab.target == null) TimelineFragment.newInstance() else TimelineFragment.newInstance(Bundle().apply { putString(TARGET, tab.target) })
-                DIRECT_MESSAGES -> Fragment()
-                TAG_COLLECTIONS -> Fragment()
-                else -> Fragment()
-            }
+        val timelineTabDefault = Tab(TIMELINE, null, R.mipmap.home_grey)
+        val mentionTabDefault = Tab(TIMELINE, MENTION, R.mipmap.notifications_grey)
+        val dmTabDefault = Tab(DIRECT_MESSAGES, null, R.mipmap.email_grey)
+        val favoriteTabDefault: Tab = Tab(TIMELINE, null, R.mipmap.favorite_grey)
+        fun listTabDefault(listId: Long): Tab = Tab(TIMELINE, listId.toString(), R.mipmap.view_list_grey)
+
+        fun getFragmentByTab(tab: Tab): Fragment = when (tab.id) {
+            TIMELINE ->
+                if (tab.target == null) TimelineFragment.newInstance() else TimelineFragment.newInstance(Bundle().apply { putString(TARGET, tab.target) })
+            DIRECT_MESSAGES -> Fragment()
+            TAG_COLLECTIONS -> Fragment()
+            else -> Fragment()
+        }
 
         fun tabList(): ArrayList<Tab> {
             val result = ArrayList<Tab>()
@@ -31,6 +38,16 @@ class TabManager {
                 }
             }
             return result
+        }
+
+        fun updateTabList(tabList:ArrayList<Tab>): ArrayList<Tab> {
+            Realm.getDefaultInstance().use { realm ->
+                realm.where(TabList::class.java).findFirst()?.let {
+                    it.tabList.clear()
+                    it.tabList.addAll(tabList)
+                }
+            }
+            return Companion.tabList()
         }
     }
 }

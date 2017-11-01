@@ -19,6 +19,7 @@ class MainViewModel(private val mainView: MainActivityContract) {
         when (item.itemId) {
             R.id.nav_settings -> mainView.startSettingsActivity()
             R.id.nav_account -> mainView.startAccountListActivity()
+            R.id.nav_tabs -> mainView.startTabsSettingsActivity()
         }
     }
 }

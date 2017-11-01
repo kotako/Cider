@@ -13,6 +13,11 @@
                 android:checkable="true"
                 android:icon="@mipmap/account_box_grey"
                 android:title="Account" />
+            <item
+                android:id="@+id/nav_tabs"
+                android:checkable="true"
+                android:icon="@mipmap/settings_grey"
+                android:title="Tab" />
         </menu>
     </item>
 

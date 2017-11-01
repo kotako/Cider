@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.ImageView
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.MainActivityContract
@@ -48,6 +47,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
                 setNavigationItemSelectedListener { viewModel?.navigationOnClick(it);false }
                 DataBindingUtil.bind<HeaderDrawerNavigationBinding>(getHeaderView(0))
                 DataBindingUtil.getBinding<HeaderDrawerNavigationBinding>(getHeaderView(0)).account = AccountManager.currentAccount()
+                setCheckedItem(R.id.nav_home)
             }
 
             pager.adapter = PagerAdapter(supportFragmentManager)
@@ -74,7 +74,13 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
 
     override fun startSettingsActivity() = SettingsActivity.start(this)
 
+    override fun startTabsSettingsActivity() = TabSettingsActivity.start(this)
+
     override fun getContext() = this
+
+    override fun checkNavigationItem(id: Int) {
+        binding?.navigation?.setCheckedItem(id)
+    }
 
     override fun openDrawer() = binding?.drawer?.openDrawer(GravityCompat.START)
 

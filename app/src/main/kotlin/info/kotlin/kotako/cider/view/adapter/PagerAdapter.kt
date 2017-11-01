@@ -8,7 +8,7 @@ import info.kotlin.kotako.cider.model.entity.Tab
 
 class PagerAdapter(fm: FragmentManager, val list: ArrayList<Tab> = TabManager.tabList()) : FragmentPagerAdapter(fm) {
 
-    override fun getItem(position: Int): Fragment = TabManager.getFragment(list[position])
+    override fun getItem(position: Int): Fragment = TabManager.getFragmentByTab(list[position])
 
     override fun getCount(): Int = list.size
 
