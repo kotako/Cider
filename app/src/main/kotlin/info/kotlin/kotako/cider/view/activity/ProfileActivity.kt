@@ -46,13 +46,16 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
             }
 
             // viewPager, tabLayoutをせっと
-            intent.extras.getSerializable("userId")?.let { pagerProfile?.adapter = ProfilePagerAdapter(supportFragmentManager, it as Long) }
+            intent.extras.getSerializable("userId")?.let { pagerProfile.adapter = ProfilePagerAdapter(supportFragmentManager, it as Long) }
             tabsProfile.apply {
                 setupWithViewPager(pagerProfile)
-                getTabAt(0)?.customView = layoutInflater.inflate(R.layout.tab_tweet, null).apply { (findViewById(R.id.imageview_tab_tweet) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
-                getTabAt(1)?.customView = layoutInflater.inflate(R.layout.tab_photo, null).apply { (findViewById(R.id.imageview_tab_photo) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
-                getTabAt(2)?.customView = layoutInflater.inflate(R.layout.tab_friends, null).apply { (findViewById(R.id.imageview_tab_friends) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
-                getTabAt(3)?.customView = layoutInflater.inflate(R.layout.tab_followers, null).apply { (findViewById(R.id.imageview_tab_followers) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                val tabList = listOf(R.mipmap.ic_twitter_grey, R.mipmap.insert_photo_grey, R.mipmap.friend_grey, R.mipmap.follower_grey)
+                for (i in 0 until tabCount) {
+                    getTabAt(i)?.customView = layoutInflater.inflate(R.layout.tab_default, null).apply {
+                        (findViewById(R.id.imageview_tab) as ImageView).setImageResource(tabList[i])
+                        (findViewById(R.id.imageview_tab) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary))
+                    }
+                }
             }
         }
     }
