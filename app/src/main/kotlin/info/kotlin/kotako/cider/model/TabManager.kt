@@ -16,11 +16,11 @@ class TabManager {
         val TARGET = "Target"
         val MENTION = "Mention"
 
-        val timelineTabDefault = Tab(TIMELINE, null, R.mipmap.home_grey)
-        val mentionTabDefault = Tab(TIMELINE, MENTION, R.mipmap.notifications_grey)
-        val dmTabDefault = Tab(DIRECT_MESSAGES, null, R.mipmap.email_grey)
-        val favoriteTabDefault: Tab = Tab(TIMELINE, null, R.mipmap.favorite_grey)
-        fun listTabDefault(listId: Long): Tab = Tab(TIMELINE, listId.toString(), R.mipmap.view_list_grey)
+        val timelineTabDefault = Tab(TIMELINE, "Home",null, R.mipmap.home_grey)
+        val mentionTabDefault = Tab(TIMELINE, "Mention", MENTION, R.mipmap.notifications_grey)
+        val dmTabDefault = Tab(DIRECT_MESSAGES, "Direct Messages",null, R.mipmap.email_grey)
+        val favoriteTabDefault: Tab = Tab(TIMELINE, "Favorite",null, R.mipmap.favorite_grey)
+        fun listTabDefault(listId: Long, listName:String): Tab = Tab(TIMELINE, listName, listId.toString(), R.mipmap.view_list_grey)
 
         fun getFragmentByTab(tab: Tab): Fragment = when (tab.id) {
             TIMELINE ->
@@ -34,7 +34,7 @@ class TabManager {
             val result = ArrayList<Tab>()
             Realm.getDefaultInstance().use { realm ->
                 realm.where(TabList::class.java).findFirst()?.tabList?.forEach {
-                    result.add(Tab(it.id, it.target, it.icon))
+                    result.add(Tab(it.id, it.name, it.target, it.icon))
                 }
             }
             return result

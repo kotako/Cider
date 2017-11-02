@@ -31,6 +31,15 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == TabSettingsActivity.TAB_SET_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                binding?.apply {
+                    (pager.adapter as PagerAdapter).refresh()
+                    pager.adapter = PagerAdapter(supportFragmentManager)
+                    tabs.apply { setupWithViewPager(pager) }
+                }
+            }
+        }
         if (resultCode == Activity.RESULT_OK) setUpView()
     }
 

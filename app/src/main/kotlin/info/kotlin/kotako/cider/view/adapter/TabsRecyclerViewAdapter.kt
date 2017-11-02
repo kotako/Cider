@@ -17,6 +17,6 @@ class TabsRecyclerViewAdapter(val context: Context, private val tabList: ArrayLi
 
     override fun onBindViewHolder(holder: TabViewHolder, position: Int) {
         holder.iconView.setImageResource(tabList[position].icon)
-        holder.nameView.text = "ほうむ"
+        holder.nameView.text = tabList[position].name
     }
 }

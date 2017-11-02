@@ -8,8 +8,7 @@
         android:id="@+id/imageview_tab_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/home_grey" />
+        android:layout_centerVertical="true" />
 
     <TextView
         android:id="@+id/textview_tab_name"
@@ -18,8 +17,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="8dp"
         android:layout_toRightOf="@id/imageview_tab_icon"
-        android:text="Home"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     <ImageView
         android:layout_width="wrap_content"

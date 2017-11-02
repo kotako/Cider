@@ -7,5 +7,6 @@ import java.io.Serializable
 @RealmClass
 open class Tab(
         open var id: String = "",
+        open var name: String = "",
         open var target:String? = null,
         open var icon: Int = 0) : Serializable, RealmObject()
