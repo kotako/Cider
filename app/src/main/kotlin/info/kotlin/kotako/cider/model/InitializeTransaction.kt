@@ -21,11 +21,6 @@ class InitializeTransaction : Realm.Transaction {
             tabMention.target = TabManager.MENTION
             tabMention.icon = R.mipmap.notifications_grey
 
-//          リスト
-            //val tabUserlist = realm.createObject(Tab::class.java)
-            //tabUserlist.id = TabManager.TIMELINE
-            //tabUserlist.icon = R.mipmap.view_list_grey
-
 //          ダイレクトメール
             val tabDm = realm.createObject(Tab::class.java)
             tabDm.id = TabManager.DIRECT_MESSAGES

@@ -55,7 +55,10 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
             navigation.run {
                 setNavigationItemSelectedListener { viewModel?.navigationOnClick(it);false }
                 DataBindingUtil.bind<HeaderDrawerNavigationBinding>(getHeaderView(0))
-                DataBindingUtil.getBinding<HeaderDrawerNavigationBinding>(getHeaderView(0)).account = AccountManager.currentAccount()
+                DataBindingUtil.getBinding<HeaderDrawerNavigationBinding>(getHeaderView(0)).apply {
+                    account = AccountManager.currentAccount()
+                    imageviewNavigationHeaderAccount.setOnClickListener { ProfileActivity.start(this@MainActivity, account?.userId) }
+                }
                 setCheckedItem(R.id.nav_home)
             }
 

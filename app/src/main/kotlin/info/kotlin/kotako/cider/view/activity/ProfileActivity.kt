@@ -6,11 +6,8 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import info.kotlin.kotako.cider.BR
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.ProfileActivityContract
 import info.kotlin.kotako.cider.databinding.ActivityProfileBinding
@@ -26,7 +23,7 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
 
     companion object {
         fun start(context: Context) = context.startActivity(Intent(context, ProfileActivity::class.java))
-        fun start(context: Context, userId: Long) = context.startActivity(Intent(context, ProfileActivity::class.java).putExtra("userId", userId))
+        fun start(context: Context, userId: Long?) = context.startActivity(Intent(context, ProfileActivity::class.java).putExtra("userId", userId))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
