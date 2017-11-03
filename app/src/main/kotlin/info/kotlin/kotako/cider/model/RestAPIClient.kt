@@ -9,6 +9,7 @@ import com.twitter.sdk.android.core.internal.network.OkHttpClientHelper
 import com.twitter.sdk.android.core.models.*
 import com.twitter.sdk.android.core.models.Tweet
 import info.kotlin.kotako.cider.model.entity.Friendships
+import info.kotlin.kotako.cider.model.entity.SearchResponse
 import info.kotlin.kotako.cider.model.entity.TweetCollection
 import info.kotlin.kotako.cider.model.entity.Users
 import io.reactivex.Observable
@@ -87,6 +88,18 @@ class RestAPIClient(session: TwitterSession) {
                                 @Query("count") count: Int?,
                                 @Query("max_position") max_position: Long?,
                                 @Query("min_position") min_position: Long?): Observable<TweetCollection>
+
+        @GET("/1.1/search/tweets.json")
+        fun searchTimeline(@Query("q") query: String,
+                           @Query("geocode") geocode:String?,
+                           @Query("lang") lang:String?,
+                           @Query("local") local:String?,
+                           @Query("result_type") result_type: String?,
+                           @Query("count") count: Int?,
+                           @Query("until") until: String?,
+                           @Query("since_id") since_id:Long?,
+                           @Query("max_id") max_id: Long?,
+                           @Query("include_entities") include_entities: Boolean?): Observable<SearchResponse>
     }
 
     interface UsersObservable {

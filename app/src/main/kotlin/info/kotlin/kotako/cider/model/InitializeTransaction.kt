@@ -8,6 +8,7 @@ import io.realm.Realm
 class InitializeTransaction : Realm.Transaction {
     override fun execute(realm: Realm?) {
         realm?.run {
+
 //          ホームタイムライン
             val tabHome = realm.createObject(Tab::class.java)
             tabHome.target = TabManager.TIMELINE
@@ -27,15 +28,14 @@ class InitializeTransaction : Realm.Transaction {
             tabDm.icon = R.mipmap.email_grey
 
             val userlist = realm.createObject(Tab::class.java)
-            userlist.target = TabManager.USERLIST
-            userlist.targetId = "custom-539487832448843776"
-            userlist.name = "リスト"
+            userlist.target = TabManager.SEARCH
+            userlist.targetId = "旭祭"
+            userlist.name = "旭祭"
             userlist.icon = R.mipmap.view_list_grey
 
 //          リストを作成
             val tabList = realm.createObject(TabList::class.java)
             tabList.tabList.add(tabHome)
-            tabList.tabList.add(tabMention)
             tabList.tabList.add(userlist)
             tabList.tabList.add(tabDm)
         }
