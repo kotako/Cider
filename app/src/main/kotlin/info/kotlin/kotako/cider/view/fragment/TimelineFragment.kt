@@ -20,6 +20,7 @@ import info.kotlin.kotako.cider.view.activity.ProfileActivity
 import info.kotlin.kotako.cider.view.adapter.ProfilePagerAdapter
 import info.kotlin.kotako.cider.view.adapter.TimelineRecyclerViewAdapter
 import info.kotlin.kotako.cider.view.listener.RecyclerScrollListener
+import info.kotlin.kotako.cider.viewmodel.ListTimelineViewModel
 import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
 import info.kotlin.kotako.cider.viewmodel.MentionViewModel
 import info.kotlin.kotako.cider.viewmodel.ProfileTimelineViewModel
@@ -38,12 +39,19 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         if (binding == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_timeline, container, false)
+
 //          Bundleの値によってセットするviewModelを変更する
             binding?.viewModel = when {
                 arguments == null -> TimelineViewModel(this)
-                arguments.containsKey(TabManager.TARGET) -> MentionViewModel(this)
+                arguments.containsKey(TabManager.TARGET) -> {
+                    when (arguments.getString(TabManager.TARGET)) {
+                        TabManager.TIMELINE -> TimelineViewModel(this)
+                        TabManager.MENTION -> MentionViewModel(this)
+                        TabManager.USERLIST -> ListTimelineViewModel(this, arguments.getString(TabManager.TARGET_ID))
+                        else -> TimelineViewModel(this)
+                    }
+                }
                 arguments.containsKey(ProfilePagerAdapter.USER_ID) -> ProfileTimelineViewModel(this, arguments[ProfilePagerAdapter.USER_ID] as Long)
-                arguments[TabManager.TARGET] == TabManager.MENTION -> MentionViewModel(this)
                 else -> TimelineViewModel(this)
             }
         }
@@ -90,7 +98,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
         activity.runOnUiThread {
             binding?.recyclerViewTimeline?.apply {
                 adapter.notifyItemInserted(0)
-                if((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0) smoothScrollToPosition(0)
+                if ((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0) smoothScrollToPosition(0)
             }
         }
     }

@@ -10,27 +10,33 @@ class InitializeTransaction : Realm.Transaction {
         realm?.run {
 //          ホームタイムライン
             val tabHome = realm.createObject(Tab::class.java)
-            tabHome.id = TabManager.TIMELINE
+            tabHome.target = TabManager.TIMELINE
             tabHome.name = TabManager.timelineTabDefault.name
             tabHome.icon = R.mipmap.home_grey
 
 //          メンション
             val tabMention = realm.createObject(Tab::class.java)
-            tabMention.id = TabManager.TIMELINE
-            tabMention.name = TabManager.mentionTabDefault.name
             tabMention.target = TabManager.MENTION
+            tabMention.name = TabManager.mentionTabDefault.name
             tabMention.icon = R.mipmap.notifications_grey
 
 //          ダイレクトメール
             val tabDm = realm.createObject(Tab::class.java)
-            tabDm.id = TabManager.DIRECT_MESSAGES
+            tabDm.target = TabManager.DIRECT_MESSAGES
             tabDm.name = TabManager.dmTabDefault.name
             tabDm.icon = R.mipmap.email_grey
+
+            val userlist = realm.createObject(Tab::class.java)
+            userlist.target = TabManager.USERLIST
+            userlist.targetId = "custom-539487832448843776"
+            userlist.name = "リスト"
+            userlist.icon = R.mipmap.view_list_grey
 
 //          リストを作成
             val tabList = realm.createObject(TabList::class.java)
             tabList.tabList.add(tabHome)
             tabList.tabList.add(tabMention)
+            tabList.tabList.add(userlist)
             tabList.tabList.add(tabDm)
         }
     }

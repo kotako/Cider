@@ -9,6 +9,7 @@ import com.twitter.sdk.android.core.internal.network.OkHttpClientHelper
 import com.twitter.sdk.android.core.models.*
 import com.twitter.sdk.android.core.models.Tweet
 import info.kotlin.kotako.cider.model.entity.Friendships
+import info.kotlin.kotako.cider.model.entity.TweetCollection
 import info.kotlin.kotako.cider.model.entity.Users
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -80,6 +81,12 @@ class RestAPIClient(session: TwitterSession) {
                             @Query("max_id") max_id: Long?,
                             @Query("trim_user") trim_user: Boolean?,
                             @Query("include_entities") include_entities: Boolean?): Observable<List<Tweet>>
+
+        @GET("/1.1/collections/entries.json")
+        fun collectionsTimeline(@Query("id") collectionId: String,
+                                @Query("count") count: Int?,
+                                @Query("max_position") max_position: Long?,
+                                @Query("min_position") min_position: Long?): Observable<TweetCollection>
     }
 
     interface UsersObservable {
