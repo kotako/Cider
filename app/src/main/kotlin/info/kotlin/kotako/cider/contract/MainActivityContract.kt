@@ -12,4 +12,5 @@ interface MainActivityContract {
     fun openDrawer(): Unit?
     fun closeDrawer(): Unit?
     fun checkNavigationItem(id: Int)
+    fun setTitle(title: String)
 }

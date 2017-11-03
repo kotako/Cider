@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import info.kotlin.kotako.cider.R
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
         binding?.apply {
 
             toolbar.apply {
-                title = "Cider"
+                title = "Home"
                 setNavigationIcon(R.mipmap.menu_white)
                 setNavigationOnClickListener { openDrawer() }
             }
@@ -63,6 +64,13 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
             }
 
             pager.adapter = PagerAdapter(supportFragmentManager)
+            pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageSelected(position: Int) {}
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+                override fun onPageScrollStateChanged(state: Int) {
+                    if (state == ViewPager.SCROLL_STATE_SETTLING) toolbar.title = pager.adapter.getPageTitle(pager.currentItem)
+                }
+            })
 
             tabs.apply {
                 setupWithViewPager(pager)
@@ -102,5 +110,9 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
         binding?.let {
             Snackbar.make(it.root, msg, Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    override fun setTitle(title: String) {
+        binding?.toolbar?.title = title
     }
 }
