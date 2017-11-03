@@ -19,6 +19,7 @@ class TabManager {
         val TARGET_ID = "TargetId"
         val MENTION = "Mention"
         val USERLIST = "Userlist"
+        val SEARCH = "Search"
 
         //      タブ
         val timelineTabDefault = Tab("Home", TIMELINE, null, R.mipmap.home_grey)
@@ -32,6 +33,10 @@ class TabManager {
             MENTION -> TimelineFragment.newInstance(Bundle().apply { putString(TARGET, MENTION) })
             USERLIST -> TimelineFragment.newInstance(Bundle().apply {
                 putString(TARGET, USERLIST)
+                putString(TARGET_ID, tab.targetId)
+            })
+            SEARCH -> TimelineFragment.newInstance(Bundle().apply {
+                putString(TARGET, SEARCH)
                 putString(TARGET_ID, tab.targetId)
             })
             DIRECT_MESSAGES -> Fragment()

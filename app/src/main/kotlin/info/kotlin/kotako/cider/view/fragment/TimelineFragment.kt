@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.R
+import info.kotlin.kotako.cider.contract.MainActivityContract
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.databinding.FragmentTimelineBinding
 import info.kotlin.kotako.cider.model.TabManager
@@ -20,10 +21,7 @@ import info.kotlin.kotako.cider.view.activity.ProfileActivity
 import info.kotlin.kotako.cider.view.adapter.ProfilePagerAdapter
 import info.kotlin.kotako.cider.view.adapter.TimelineRecyclerViewAdapter
 import info.kotlin.kotako.cider.view.listener.RecyclerScrollListener
-import info.kotlin.kotako.cider.viewmodel.ListTimelineViewModel
-import info.kotlin.kotako.cider.viewmodel.TimelineViewModel
-import info.kotlin.kotako.cider.viewmodel.MentionViewModel
-import info.kotlin.kotako.cider.viewmodel.ProfileTimelineViewModel
+import info.kotlin.kotako.cider.viewmodel.*
 
 class TimelineFragment : Fragment(), TimelineFragmentContract {
 
@@ -48,6 +46,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
                         TabManager.TIMELINE -> TimelineViewModel(this)
                         TabManager.MENTION -> MentionViewModel(this)
                         TabManager.USERLIST -> ListTimelineViewModel(this, arguments.getString(TabManager.TARGET_ID))
+                        TabManager.SEARCH -> SearchTimelineViewModel(this, arguments.getString(TabManager.TARGET_ID))
                         else -> TimelineViewModel(this)
                     }
                 }
