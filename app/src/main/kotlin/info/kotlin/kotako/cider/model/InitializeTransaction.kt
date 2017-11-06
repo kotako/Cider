@@ -27,16 +27,10 @@ class InitializeTransaction : Realm.Transaction {
             tabDm.name = TabManager.dmTabDefault.name
             tabDm.icon = R.mipmap.email_grey
 
-            val userlist = realm.createObject(Tab::class.java)
-            userlist.target = TabManager.SEARCH
-            userlist.targetId = "旭祭"
-            userlist.name = "旭祭"
-            userlist.icon = R.mipmap.view_list_grey
-
 //          リストを作成
             val tabList = realm.createObject(TabList::class.java)
             tabList.tabList.add(tabHome)
-            tabList.tabList.add(userlist)
+            tabList.tabList.add(tabMention)
             tabList.tabList.add(tabDm)
         }
     }

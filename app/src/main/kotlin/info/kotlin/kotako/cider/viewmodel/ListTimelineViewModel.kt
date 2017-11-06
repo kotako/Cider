@@ -1,7 +1,5 @@
 package info.kotlin.kotako.cider.viewmodel
 
-import android.util.Log
-import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
 import info.kotlin.kotako.cider.model.RestAPIClient

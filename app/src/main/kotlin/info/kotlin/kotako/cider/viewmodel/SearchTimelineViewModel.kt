@@ -12,13 +12,13 @@ import info.kotlin.kotako.cider.rx.DefaultObserver
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class SearchTimelineViewModel(val timelineView: TimelineFragmentContract, val query: String) : TimelineViewModelContract {
+class SearchTimelineViewModel(private val timelineView: TimelineFragmentContract, private val query: String) : TimelineViewModelContract {
 
     private var disposable = CompositeDisposable().apply { dispose() }
     private var position = 0L
 
     override fun start() {
-        if (disposable.isDisposed) startStream()
+        // if (disposable.isDisposed) startStream()
         if (timelineView.tweetListSize() < 1) setTimeline()
     }
 
