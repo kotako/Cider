@@ -8,7 +8,7 @@ android {
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "info.kotlin.kotako.cider"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
