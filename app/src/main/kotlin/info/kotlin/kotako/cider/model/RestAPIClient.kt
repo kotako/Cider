@@ -8,10 +8,8 @@ import com.twitter.sdk.android.core.internal.TwitterApi
 import com.twitter.sdk.android.core.internal.network.OkHttpClientHelper
 import com.twitter.sdk.android.core.models.*
 import com.twitter.sdk.android.core.models.Tweet
-import info.kotlin.kotako.cider.model.entity.Friendships
-import info.kotlin.kotako.cider.model.entity.SearchResponse
-import info.kotlin.kotako.cider.model.entity.TweetCollection
-import info.kotlin.kotako.cider.model.entity.Users
+import com.twitter.sdk.android.core.models.User
+import info.kotlin.kotako.cider.model.entity.*
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -46,6 +44,8 @@ class RestAPIClient(session: TwitterSession) {
 
     //  独自に定義するAPI
     fun TimelineObservable(): TimelineObservable = getService(TimelineObservable::class.java)
+
+    fun DirectMessagesObservable(): DirectMessagesObservable = getService(DirectMessagesObservable::class.java)
 
     fun UsersObservable(): UsersObservable = getService(UsersObservable::class.java)
 
@@ -100,6 +100,27 @@ class RestAPIClient(session: TwitterSession) {
                            @Query("since_id") since_id:Long?,
                            @Query("max_id") max_id: Long?,
                            @Query("include_entities") include_entities: Boolean?): Observable<SearchResponse>
+    }
+
+    interface DirectMessagesObservable {
+        @GET("/1.1/direct_messages.json")
+        fun directMessages(@Query("since_id") since_id: Long?,
+                           @Query("max_id") max_id: Long?,
+                           @Query("count") count: Int?,
+                           @Query("include_entities") include_entities: Boolean?,
+                           @Query("skip_status") skip_status: Boolean?): Observable<List<DirectMessage>>
+
+        @GET("/1.1/direct_messages/sent.json")
+        fun sentDirectMessages(@Query("since_id") since_id: Long?,
+                               @Query("max_id") max_id: Long?,
+                               @Query("count") count: Int?,
+                               @Query("page") page: Int?,
+                               @Query("include_entities") include_entities: Boolean?): Observable<List<DirectMessage>>
+
+        @POST("/1.1/direct_messages/new.json")
+        fun sendDirectMessage(@Query("user_id") user_id: Long?,
+                              @Query("screen_name") screen_name: String?,
+                              @Query("text") text:String) : Observable<DirectMessage>
     }
 
     interface UsersObservable {
