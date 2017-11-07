@@ -19,7 +19,7 @@ import info.kotlin.kotako.cider.viewmodel.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
 
-    var binding: ActivityProfileBinding? = null
+    lateinit var binding: ActivityProfileBinding
 
     companion object {
         fun start(context: Context) = context.startActivity(Intent(context, ProfileActivity::class.java))
@@ -31,12 +31,12 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
         val viewModel = ProfileViewModel(this)
         intent.extras.getSerializable("userId")?.let { viewModel.loadUser(it as Long);viewModel.loadFriendships(it) }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
-        binding?.viewModel = viewModel
+        binding.viewModel = viewModel
         setUpView()
     }
 
     private fun setUpView() {
-        binding?.apply {
+        binding.apply {
             toolbarProfile.apply {
                 setNavigationIcon(R.mipmap.arrow_back_white)
                 setNavigationOnClickListener { finish() }
@@ -57,9 +57,9 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
         }
     }
 
-    override fun setUser(user: User) = runOnUiThread { binding?.user = user }
+    override fun setUser(user: User) = runOnUiThread { binding.user = user }
 
-    override fun setFriendships(friendships: Friendships) = runOnUiThread { binding?.friendShips = friendships }
+    override fun setFriendships(friendships: Friendships) = runOnUiThread { binding.friendShips = friendships }
 
     override fun getContext() = this
     override fun showImage(url: String) {
@@ -69,15 +69,15 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
     }
 
     override fun successFollow() {
-        binding?.friendShips?.none = false
-        binding?.friendShips?.blocking = false
-        binding?.friendShips?.following = true
-        makeToast("成功したよ")
+        binding.friendShips?.none = false
+        binding.friendShips?.blocking = false
+        binding.friendShips?.following = true
+        makeToast("フォローに成功したよ")
     }
 
     override fun successUnFollow() {
-        binding?.friendShips?.following = false
-        makeToast("成功したよ")
+        binding.friendShips?.following = false
+        makeToast("フォロー解除に成功したよ")
     }
 
     override fun makeToast(msg: String) = runOnUiThread { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }

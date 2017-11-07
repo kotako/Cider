@@ -21,12 +21,12 @@ import info.kotlin.kotako.cider.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity(), MainActivityContract {
 
-    var binding: ActivityMainBinding? = null
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding?.viewModel = MainViewModel(this)
+        binding.viewModel = MainViewModel(this)
         setUpView()
     }
 
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == TabSettingsActivity.TAB_SET_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                binding?.apply {
+                binding.apply {
                     (pager.adapter as PagerAdapter).refresh()
                     pager.adapter = PagerAdapter(supportFragmentManager)
                     tabs.apply { setupWithViewPager(pager) }
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
     }
 
     private fun setUpView() {
-        binding?.apply {
+        binding.apply {
 
             toolbar.apply {
                 title = "Home"
@@ -99,20 +99,18 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
     override fun getContext() = this
 
     override fun checkNavigationItem(id: Int) {
-        binding?.navigation?.setCheckedItem(id)
+        binding.navigation.setCheckedItem(id)
     }
 
-    override fun openDrawer() = binding?.drawer?.openDrawer(GravityCompat.START)
+    override fun openDrawer() = binding.drawer.openDrawer(GravityCompat.START)
 
-    override fun closeDrawer() = binding?.drawer?.closeDrawer(GravityCompat.START)
+    override fun closeDrawer() = binding.drawer.closeDrawer(GravityCompat.START)
 
     override fun showSnackBar(msg: String) {
-        binding?.let {
-            Snackbar.make(it.root, msg, Snackbar.LENGTH_SHORT).show()
-        }
+            Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun setTitle(title: String) {
-        binding?.toolbar?.title = title
+        binding.toolbar.title = title
     }
 }

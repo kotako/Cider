@@ -21,7 +21,7 @@ import info.kotlin.kotako.cider.viewmodel.FriendsListViewModel
 class UsersListFragment : Fragment(), UsersListFragmentContract {
 
     private var usersList = ArrayList<User>()
-    private var binding: FragmentUsersListBinding? = null
+    private lateinit var binding: FragmentUsersListBinding
 
     companion object {
         fun newInstance(): Fragment = UsersListFragment()
@@ -29,28 +29,29 @@ class UsersListFragment : Fragment(), UsersListFragmentContract {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (binding == null) binding = DataBindingUtil.inflate(inflater, R.layout.fragment_users_list, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_users_list, container, false)
+
         when {
             arguments == null || !arguments.containsKey("UserId") -> false
-            arguments.containsKey("follower") -> binding?.viewModel = FollowersListViewModel(this, arguments.getLong("UserId"))
-            arguments.containsKey("friend") -> binding?.viewModel = FriendsListViewModel(this, arguments.getLong("UserId"))
+            arguments.containsKey("follower") -> binding.viewModel = FollowersListViewModel(this, arguments.getLong("UserId"))
+            arguments.containsKey("friend") -> binding.viewModel = FriendsListViewModel(this, arguments.getLong("UserId"))
         }
 
-        binding?.layoutRefreshUsersList?.setOnRefreshListener { binding?.viewModel?.onRefresh() }
-        binding?.recyclerViewUsersList?.apply {
+        binding.layoutRefreshUsersList.setOnRefreshListener { binding.viewModel?.onRefresh() }
+        binding.recyclerViewUsersList.apply {
             adapter = FriendsRecyclerViewAdapter(context, usersList)
             layoutManager = LinearLayoutManager(context)
-            addOnScrollListener(RecyclerScrollListener({ binding?.viewModel?.loadMore(usersList.last().id) }))
+            addOnScrollListener(RecyclerScrollListener({ binding.viewModel?.loadMore(usersList.last().id) }))
             invalidateItemDecorations()
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager(context).orientation))
         }
-        binding?.viewModel?.start()
-        return binding?.root
+        binding.viewModel?.start()
+        return binding.root
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding?.viewModel?.stop()
+        binding.viewModel?.stop()
     }
 
     override fun addUser(user: User) {
@@ -59,20 +60,20 @@ class UsersListFragment : Fragment(), UsersListFragmentContract {
 
     override fun addUserList(users: List<User>) {
         usersList.addAll(users)
-        activity.runOnUiThread { binding?.recyclerViewUsersList?.adapter?.notifyItemRangeChanged(usersList.size - users.size, users.size) }
+        activity.runOnUiThread { binding.recyclerViewUsersList.adapter?.notifyItemRangeChanged(usersList.size - users.size, users.size) }
     }
 
     override fun clearUsersList() {
         usersList.clear()
-        activity.runOnUiThread { binding?.recyclerViewUsersList?.adapter?.notifyDataSetChanged() }
+        activity.runOnUiThread { binding.recyclerViewUsersList.adapter?.notifyDataSetChanged() }
     }
 
     override fun showProgressBar() {
-        activity.runOnUiThread { binding?.layoutRefreshUsersList?.isRefreshing = true }
+        activity.runOnUiThread { binding.layoutRefreshUsersList.isRefreshing = true }
     }
 
     override fun hideProgressBar() {
-        activity.runOnUiThread { binding?.layoutRefreshUsersList?.isRefreshing = false }
+        activity.runOnUiThread { binding.layoutRefreshUsersList.isRefreshing = false }
     }
 
     override fun startProfileActivity(userId: Long) {

@@ -24,7 +24,7 @@ import io.realm.Realm
 class TabSettingsActivity : AppCompatActivity() {
 
     private val tabList: ArrayList<Tab> = ArrayList()
-    var binding: ActivityTabSettingsBinding? = null
+    lateinit var binding: ActivityTabSettingsBinding
     var changed = false
 
     companion object {
@@ -44,7 +44,7 @@ class TabSettingsActivity : AppCompatActivity() {
         supportActionBar?.title = "Tab Settings"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding?.run {
+        binding.run {
             pagerTabsSettings.adapter = PagerAdapter(supportFragmentManager)
             tabRefresh()
             recyclerViewTabsSettings.apply {
@@ -73,9 +73,9 @@ class TabSettingsActivity : AppCompatActivity() {
     }
 
     private fun tabRefresh() {
-        binding?.tabsPreview?.apply {
+        binding.tabsPreview.apply {
             removeAllTabs()
-            setupWithViewPager(binding?.pagerTabsSettings)
+            setupWithViewPager(binding.pagerTabsSettings)
             for (i in 0 until tabList.size) {
                 getTabAt(i)?.customView = layoutInflater.inflate(R.layout.tab_default, null).apply {
                     (findViewById(R.id.imageview_tab) as ImageView).setImageResource(tabList[i].icon)

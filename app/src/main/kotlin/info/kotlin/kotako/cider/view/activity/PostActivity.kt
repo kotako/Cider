@@ -18,7 +18,7 @@ import info.kotlin.kotako.cider.viewmodel.PostViewModel
 
 class PostActivity : AppCompatActivity(), PostActivityContract {
 
-    var binding: ActivityPostBinding? = null
+    lateinit var binding: ActivityPostBinding
 
     companion object {
         fun start(context: Context) = context.startActivity(Intent(context, PostActivity::class.java))
@@ -28,22 +28,24 @@ class PostActivity : AppCompatActivity(), PostActivityContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_post)
-        binding?.viewModel = intent.extras?.getSerializable("replyTo")?.let { PostViewModel(this, it as Tweet) } ?: PostViewModel(this)
+        binding.viewModel = intent.extras?.getSerializable("replyTo")?.let { PostViewModel(this, it as Tweet) } ?: PostViewModel(this)
         setUpView()
 
 //      リプライの時はscreenNameを入力しておく
         intent.extras?.getSerializable("replyTo")?.let {
             var tmp = "@" + (it as Tweet).user.screenName + " "
             if (it.inReplyToScreenName !in listOf(null, AccountManager.currentAccount()?.userName)) tmp += "@" + it.inReplyToScreenName + " "
-            binding?.textInputTweet?.text = Editable.Factory.getInstance().newEditable(tmp)
-            binding?.textInputTweet?.setSelection(binding?.textInputTweet?.text?.length ?: 0)
+            binding.textInputTweet.apply {
+                text = Editable.Factory.getInstance().newEditable(tmp)
+                setSelection(text.length)
+            }
         }
     }
 
     private fun setUpView() {
         supportActionBar?.title = "Tweet"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding?.layoutAuthorAccountCell?.account = AccountManager.currentAccount()
+        binding.layoutAuthorAccountCell?.account = AccountManager.currentAccount()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -54,19 +56,19 @@ class PostActivity : AppCompatActivity(), PostActivityContract {
     //  ----implements PostActivityContract----
     override fun makeToast(msg: String) = runOnUiThread{ Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }
 
-    override fun inputText(): String = binding?.textInputTweet?.text.toString()
+    override fun inputText(): String = binding.textInputTweet.text.toString()
 
     override fun showProgressbar() {
         runOnUiThread {
-            binding?.progressbarPost?.visibility = View.VISIBLE
-            binding?.progressbarPost?.show()
+            binding.progressbarPost.visibility = View.VISIBLE
+            binding.progressbarPost.show()
         }
     }
 
     override fun hideProgressbar() {
         runOnUiThread {
-            binding?.progressbarPost?.visibility = View.INVISIBLE
-            binding?.progressbarPost?.hide()
+            binding.progressbarPost.visibility = View.INVISIBLE
+            binding.progressbarPost.hide()
         }
     }
 }
