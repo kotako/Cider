@@ -30,12 +30,12 @@ class DMFragmentViewModel(private val dmView: DMFragmentContract) : DMViewModelC
         dmView.showProgressBar()
         disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .DirectMessagesObservable()
-                .directMessages(null, null, 100, null, null)
+                .directMessages(null, null, 50, null, null)
                 .map { maxId = it.last().id ; it }
                 .map { dmList ->
                     val resultMap = mutableMapOf<User, ArrayList<DirectMessage>>()
                     dmList.forEach { dm ->
-                        resultMap[resultMap.keys.find { it.id == dm.sender_id }]?.apply { add(dm); return@forEach }
+                        resultMap[resultMap.keys.find { it.id == dm.sender.id }]?.apply { add(dm); return@forEach }
                         resultMap.put(dm.sender, arrayListOf(dm))
                     }
                     resultMap
@@ -61,7 +61,7 @@ class DMFragmentViewModel(private val dmView: DMFragmentContract) : DMViewModelC
                 .map { dmList ->
                     val resultMap = mutableMapOf<User, ArrayList<DirectMessage>>()
                     dmList.forEach { dm ->
-                        resultMap[resultMap.keys.find { it.id == dm.sender_id }]?.apply { add(dm); return@forEach }
+                        resultMap[resultMap.keys.find { it.id == dm.sender.id }]?.apply { add(dm); return@forEach }
                         resultMap.put(dm.sender, arrayListOf(dm))
                     }
                     resultMap

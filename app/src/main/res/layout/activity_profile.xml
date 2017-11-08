@@ -67,9 +67,9 @@
                 android:layout_marginTop="-80dp"
                 android:background="@drawable/shape_profile_image"
                 android:elevation="5dp"
-                android:onClick="@{() -> viewModel.showProfileImage(user.profileImageUrl)}"
+                android:onClick="@{() -> viewModel.showProfileImage(user.profile_image_url )}"
                 android:scaleType="centerCrop"
-                app:loadCircleImage="@{user.profileImageUrl}" />
+                app:loadCircleImage="@{user.profile_image_url}" />
 
             <TextView
                 android:id="@+id/textView_profile_name"
@@ -94,7 +94,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/imageView_profile_photo"
-                android:text='@{"@"+user.screenName}'
+                android:text='@{"@"+user.screen_name}'
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                 android:textColor="#ffffff" />
 

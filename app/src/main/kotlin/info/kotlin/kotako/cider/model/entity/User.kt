@@ -8,10 +8,10 @@ class User(val contributorsEnabled: Boolean?, val createdAt: String, val default
            val followersCount: Int, val followingCount: Int, val followRequestSent: Boolean,
            val geoEnabled: Boolean, val id: Long, val lang: String, val listedCount: Int, val location: String?,
            val name: String, val profileBackgroundColor: String?, val profileBackgroundImageUrl: String?,
-           val profileBackgroundTile: Boolean?, val profileImageUrl: String, val profileLinkColor: String?,
+           val profileBackgroundTile: Boolean?, val profile_image_url: String, val profileLinkColor: String?,
            val profileSidebarBorderColor: String?, val profileSidebarFillColor: String?,
            val profileBannerUrl: String?, val profileTextColor: String?, val protectedUser: Boolean,
-           val screenName: String, val statusCount: Int, val url: String?, val verified: Boolean) : Serializable {
+           val screen_name: String, val statusCount: Int, val url: String?, val verified: Boolean) : Serializable {
 
     constructor(user: User) : this(user.contributorsEnabled, user.createdAt, user.defaultProfile,
             user.defaultProfileImage, user.description, user.favouritesCount, user.followersCount,

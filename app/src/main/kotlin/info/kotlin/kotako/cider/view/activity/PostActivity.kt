@@ -33,7 +33,7 @@ class PostActivity : AppCompatActivity(), PostActivityContract {
 
 //      リプライの時はscreenNameを入力しておく
         intent.extras?.getSerializable("replyTo")?.let {
-            var tmp = "@" + (it as Tweet).user.screenName + " "
+            var tmp = "@" + (it as Tweet).user.screen_name + " "
             if (it.inReplyToScreenName !in listOf(null, AccountManager.currentAccount()?.userName)) tmp += "@" + it.inReplyToScreenName + " "
             binding.textInputTweet.apply {
                 text = Editable.Factory.getInstance().newEditable(tmp)

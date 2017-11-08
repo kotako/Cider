@@ -27,7 +27,7 @@
             android:layout_height="40dp"
             android:background="@drawable/shape_profile_image"
             app:onImageClick="@{user.id}"
-            app:loadCircleImage="@{user.profileImageUrl}" />
+            app:loadCircleImage="@{user.profile_image_url}" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textview_cell_user_screen_name"
                 android:singleLine="true"
-                android:text='@{"@" + user.screenName}'
+                android:text='@{"@" + user.screen_name}'
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         </RelativeLayout>

@@ -100,7 +100,7 @@
                 android:background="@drawable/shape_profile_image"
                 android:onClick="@{(view) -> viewModel.onIconClicked(view, tweet)}"
                 android:scaleType="centerCrop"
-                app:loadCircleImage="@{tweet.user.profileImageUrl}" />
+                app:loadCircleImage="@{tweet.user.profile_image_url}" />
 
             <TextView
                 android:id="@+id/textview_cell_name"
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/textview_cell_name"
                 android:gravity="center"
-                android:text='@{"@"+tweet.user.screenName}' />
+                android:text='@{"@"+tweet.user.screen_name}' />
 
             <TextView
                 android:id="@+id/textview_cell_time"
