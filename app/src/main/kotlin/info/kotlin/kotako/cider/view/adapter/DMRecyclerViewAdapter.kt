@@ -7,17 +7,16 @@ import android.view.ViewGroup
 import info.kotlin.kotako.cider.BR
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.entity.DirectMessage
-import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.view.viewHolder.DMViewHolder
 
-class DMRecyclerViewAdapter(val context: Context, private val dmList: Map<User, List<DirectMessage>>) : RecyclerView.Adapter<DMViewHolder>() {
+class DMRecyclerViewAdapter(val context: Context, private val dmList: Map<Long, List<DirectMessage>>) : RecyclerView.Adapter<DMViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): DMViewHolder =
             DMViewHolder(LayoutInflater.from(context).inflate(R.layout.view_dm_cell, parent, false))
 
     override fun onBindViewHolder(holder: DMViewHolder?, position: Int) {
         val key = dmList.map { it.key }[position]
-        holder?.binding?.setVariable(BR.user, key)
+        holder?.binding?.setVariable(BR.user, dmList[key]?.first()?.sender)
         holder?.binding?.setVariable(BR.dm, dmList[key]?.first())
     }
 

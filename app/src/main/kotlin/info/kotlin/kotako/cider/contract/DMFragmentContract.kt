@@ -1,10 +1,10 @@
 package info.kotlin.kotako.cider.contract
 
 import info.kotlin.kotako.cider.model.entity.DirectMessage
-import info.kotlin.kotako.cider.model.entity.User
 
 interface DMFragmentContract {
-    fun addDMCollection(newDmMap: Map<User, List<DirectMessage>>)
+    fun addDm(dm: DirectMessage)
+    fun addDMCollection(newDmMap: Map<Long, ArrayList<DirectMessage>>)
     fun clearDMList()
     fun dMMapSize(): Int
     fun isEmpty(): Boolean

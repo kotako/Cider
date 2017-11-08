@@ -11,6 +11,8 @@ import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import twitter4j.DirectMessage
+import twitter4j.Status
 
 class TimelineViewModel(private val timelineView: TimelineFragmentContract) : TimelineViewModelContract {
 
@@ -20,6 +22,8 @@ class TimelineViewModel(private val timelineView: TimelineFragmentContract) : Ti
         if (disposable.isDisposed) disposable = CompositeDisposable()
         disposable.add(
                 StreamApiClient.statusObservable
+                        .filter({ it is Status })
+                        .map { it as Status }
                         .map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) }
                         .subscribeOn(Schedulers.newThread())
                         .subscribeWith(DefaultObserver<Tweet>(

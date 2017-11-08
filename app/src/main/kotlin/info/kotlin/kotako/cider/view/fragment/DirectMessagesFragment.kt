@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +15,12 @@ import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.DMFragmentContract
 import info.kotlin.kotako.cider.databinding.FragmentDirectMessagesBinding
 import info.kotlin.kotako.cider.model.entity.DirectMessage
-import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.view.adapter.DMRecyclerViewAdapter
 import info.kotlin.kotako.cider.viewmodel.DMFragmentViewModel
 
 class DirectMessagesFragment : Fragment(), DMFragmentContract {
 
-    private var dmMap = linkedMapOf<User, List<DirectMessage>>()
+    private var dmMap = linkedMapOf<Long, ArrayList<DirectMessage>>()
     private lateinit var binding: FragmentDirectMessagesBinding
 
     companion object {
@@ -57,7 +57,7 @@ class DirectMessagesFragment : Fragment(), DMFragmentContract {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.let { dmMap.putAll(it.getSerializable(SAVED_DM_MAP_KEY) as Map<out User, List<DirectMessage>>) }
+        savedInstanceState?.let { dmMap.putAll(it.getSerializable(SAVED_DM_MAP_KEY) as Map<Long, ArrayList<DirectMessage>>) }
         binding.recyclerViewDm.adapter.notifyDataSetChanged()
     }
 
@@ -68,11 +68,15 @@ class DirectMessagesFragment : Fragment(), DMFragmentContract {
 
 //  override DMFragmentContract
 
-    override fun addDMCollection(newDmMap: Map<User, List<DirectMessage>>) {
+    override fun addDm(dm: DirectMessage) {
+        dmMap.put(dm.sender.id, dmMap[dm.sender.id]?.apply { add(0, dm) } ?: arrayListOf(dm))
+        Log.d("dev", dmMap.keys.indexOf(dm.sender.id).toString())
+        activity.runOnUiThread { binding.recyclerViewDm.adapter.notifyItemChanged(dmMap.keys.indexOf(dm.sender.id)) }
+    }
+
+    override fun addDMCollection(newDmMap: Map<Long, ArrayList<DirectMessage>>) {
         dmMap.putAll(newDmMap)
-        activity.runOnUiThread {
-            binding.recyclerViewDm.adapter.notifyDataSetChanged()
-        }
+        activity.runOnUiThread { binding.recyclerViewDm.adapter.notifyDataSetChanged() }
     }
 
     override fun clearDMList() {
