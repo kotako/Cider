@@ -52,13 +52,18 @@ fun ImageButton.loadImageFromSession(account: Account?) {
 }
 
 @BindingAdapter("onImageClick")
-fun ImageButton.onImageClicked(userId:Long){
+fun ImageButton.onImageClicked(userId: Long) {
     this.setOnClickListener { ProfileActivity.start(this.context, userId) }
 }
 
 @BindingAdapter("onUserLayoutClick")
-fun RelativeLayout.onImageClicked(userId:Long){
+fun RelativeLayout.onImageClicked(userId: Long) {
     this.setOnClickListener { ProfileActivity.start(this.context, userId) }
+}
+
+@BindingAdapter("interval")
+fun TextView.interval(createdAt: String?) {
+    createdAt?.let{ this.text = DateConverter.intervalFromCreated(it) }
 }
 
 @BindingAdapter("markupUser")

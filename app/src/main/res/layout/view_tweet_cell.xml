@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:text="@{viewModel.createdInterval(tweet.createdAt)}"
+                app:interval="@{tweet.createdAt}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
             <TextView
