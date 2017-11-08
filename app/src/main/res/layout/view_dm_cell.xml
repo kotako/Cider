@@ -5,8 +5,14 @@
     <data>
 
         <variable
+            name="user"
+            type="info.kotlin.kotako.cider.model.entity.User" />
+
+        <variable
             name="dm"
             type="info.kotlin.kotako.cider.model.entity.DirectMessage" />
+
+        <import type="info.kotlin.kotako.cider.model.DateConverter" />
 
     </data>
 
@@ -15,62 +21,56 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="8dp">
 
-        <RelativeLayout
-            android:id="@+id/layout_dm_cell_main"
+        <ImageButton
+            android:id="@+id/imageview_dm_cell_author_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/shape_profile_image"
+            android:scaleType="centerCrop"
+            app:loadCircleImage="@{user.profileImageUrl}" />
+
+        <TextView
+            android:id="@+id/textview_dm_cell_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="8dp"
+            android:layout_toRightOf="@id/imageview_dm_cell_author_icon"
+            android:text="@{user.name}"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:id="@+id/textview_dm_cell_screen_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/textview_dm_cell_name"
+            android:gravity="center"
+            android:text="@{user.screenName}" />
+
+        <TextView
+            android:id="@+id/textview_dm_cell_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:gravity="right"
+            android:text="10m"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
-            <ImageButton
-                android:id="@+id/imageview_dm_cell_author_icon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/shape_profile_image"
-                android:scaleType="centerCrop"
-                app:loadCircleImage="@{dm.sender.profileImageUrl}" />
+        <TextView
+            android:id="@+id/textview_dm_cell_centent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_dm_cell_name"
+            android:layout_toRightOf="@id/imageview_dm_cell_author_icon"
+            android:maxLines="2"
+            android:text="@{dm.text}"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
-            <TextView
-                android:id="@+id/textview_dm_cell_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginRight="8dp"
-                android:layout_toRightOf="@id/imageview_dm_cell_author_icon"
-                android:text="@{dm.sender.name}"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
-                android:textStyle="bold"
-                android:typeface="normal" />
-
-            <TextView
-                android:id="@+id/textview_dm_cell_screen_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/textview_dm_cell_name"
-                android:gravity="center"
-                android:text="@{dm.sender.screenName}" />
-
-            <TextView
-                android:id="@+id/textview_dm_cell_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="10m"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
-
-            <TextView
-                android:id="@+id/textview_dm_cell_centent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textview_cell_name"
-                android:layout_toRightOf="@id/imageview_dm_cell_author_icon"
-                android:maxLines="2"
-                android:text="@{dm.text}"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
-
-        </RelativeLayout>
     </RelativeLayout>
 
 </layout>

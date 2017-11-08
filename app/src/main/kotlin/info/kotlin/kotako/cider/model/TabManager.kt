@@ -6,6 +6,7 @@ import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.entity.Tab
 import info.kotlin.kotako.cider.model.entity.TabList
 import info.kotlin.kotako.cider.model.entity.User
+import info.kotlin.kotako.cider.view.fragment.DirectMessagesFragment
 import info.kotlin.kotako.cider.view.fragment.TimelineFragment
 import io.realm.Realm
 
@@ -39,7 +40,7 @@ class TabManager {
                 putString(TARGET, SEARCH)
                 putString(TARGET_ID, tab.targetId)
             })
-            DIRECT_MESSAGES -> Fragment()
+            DIRECT_MESSAGES -> DirectMessagesFragment.newInstance()
             TAG_COLLECTIONS -> Fragment()
             else -> Fragment()
         }

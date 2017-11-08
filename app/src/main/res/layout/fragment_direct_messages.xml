@@ -3,6 +3,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="info.kotlin.kotako.cider.contract.DMViewModelContract" />
     </data>
 
     <android.support.v4.widget.SwipeRefreshLayout
