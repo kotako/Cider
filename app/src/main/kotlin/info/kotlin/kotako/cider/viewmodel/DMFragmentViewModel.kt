@@ -17,7 +17,7 @@ class DMFragmentViewModel(private val dmView: DMFragmentContract) : DMViewModelC
     private var maxId = 0L
 
     override fun start() {
-        if (dmView.dMMapSize() < 1) loadDirectMessages()
+        if (dmView.isEmpty()) loadDirectMessages()
     }
 
     override fun stop() {

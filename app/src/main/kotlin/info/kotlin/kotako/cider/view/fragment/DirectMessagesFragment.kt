@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.DMFragmentContract
 import info.kotlin.kotako.cider.databinding.FragmentDirectMessagesBinding
@@ -19,10 +20,11 @@ import info.kotlin.kotako.cider.viewmodel.DMFragmentViewModel
 
 class DirectMessagesFragment : Fragment(), DMFragmentContract {
 
-    private var dmMap = mutableMapOf<User, List<DirectMessage>>()
+    private var dmMap = linkedMapOf<User, List<DirectMessage>>()
     private lateinit var binding: FragmentDirectMessagesBinding
 
     companion object {
+        val SAVED_DM_MAP_KEY = "savedDmMapKey"
         fun newInstance(): Fragment = DirectMessagesFragment()
     }
 
@@ -43,13 +45,25 @@ class DirectMessagesFragment : Fragment(), DMFragmentContract {
     }
 
     override fun onStart() {
-        binding.viewModel?.start()
         super.onStart()
+        if (TwitterCore.getInstance().sessionManager?.activeSession == null) return
+        binding.viewModel?.start()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putSerializable(SAVED_DM_MAP_KEY, dmMap)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.let { dmMap.putAll(it.getSerializable(SAVED_DM_MAP_KEY) as Map<out User, List<DirectMessage>>) }
+        binding.recyclerViewDm.adapter.notifyDataSetChanged()
     }
 
     override fun onDestroy() {
-        binding.viewModel?.stop()
         super.onDestroy()
+        binding.viewModel?.stop()
     }
 
 //  override DMFragmentContract
@@ -69,6 +83,8 @@ class DirectMessagesFragment : Fragment(), DMFragmentContract {
     }
 
     override fun dMMapSize(): Int = dmMap.keys.size
+
+    override fun isEmpty(): Boolean = dmMap.isEmpty()
 
     override fun showProgressBar() {
         activity.runOnUiThread { binding.layoutDmRefresh.isRefreshing = true }
