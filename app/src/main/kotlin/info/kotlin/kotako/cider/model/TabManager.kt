@@ -27,7 +27,7 @@ class TabManager {
         val mentionTabDefault = Tab("Mention", MENTION, null, R.mipmap.notifications_grey)
         val dmTabDefault = Tab("Direct Messages", DIRECT_MESSAGES, null, R.mipmap.email_grey)
         val favoriteTabDefault: Tab = Tab("Favorite", null, null, R.mipmap.favorite_grey)
-        fun listTabDefault(listId: String, listName: String): Tab = Tab(listName, USERLIST, listId, R.mipmap.view_list_grey)
+        fun listTabDefault(listId: Long, listName: String): Tab = Tab(listName, USERLIST, listId.toString(), R.mipmap.view_list_grey)
 
         fun getFragmentByTab(tab: Tab): Fragment = when (tab.target) {
             TIMELINE -> TimelineFragment.newInstance()

@@ -1,42 +1,76 @@
 package info.kotlin.kotako.cider.viewmodel
 
+import android.util.Log
+import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
 import info.kotlin.kotako.cider.model.RestAPIClient
+import info.kotlin.kotako.cider.model.StreamApiClient
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import twitter4j.Status
 
-class ListTimelineViewModel(val timelineView: TimelineFragmentContract, val listIdStr: String) : TimelineViewModelContract {
+class ListTimelineViewModel(private val timelineView: TimelineFragmentContract, private val listId: Long) : TimelineViewModelContract {
 
     private var disposable = CompositeDisposable()
-    private var position = 0L
 
     override fun start() {
         if (timelineView.tweetListSize() < 1) setTimeline()
+        startStream()
     }
 
     override fun stop() {
-        position = 0L
         disposable.dispose()
     }
 
     override fun setTimeline() {
         if (disposable.isDisposed) disposable = CompositeDisposable()
+        timelineView.showProgressBar()
+        disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
+                .TimelineObservable()
+                .listTimeline(listId, null, null, null, null, null, 50, null, null)
+                .map { it.map { Tweet(it) } }
+                .subscribeOn(Schedulers.newThread())
+                .subscribeWith(DefaultObserver<List<Tweet>>(
+                        next = { timelineView.addTweetList(it); timelineView.hideProgressBar() },
+                        error = { Log.d("dev_list_viewmodel", it.localizedMessage); timelineView.hideProgressBar() }
+                )))
     }
 
     override fun startStream() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (disposable.isDisposed) disposable = CompositeDisposable()
+//      TODO: リストに入っているメンバーを取得
+        val idList = arrayListOf<Long>()
+        disposable.add(StreamApiClient
+                .statusObservable
+                .filter({ it is Status })
+                .filter({ idList.contains((it as Status).user.id) })
+                .map { Tweet(it as Status) }
+                .subscribeWith(DefaultObserver<Tweet>(
+                        next = { timelineView.addTweet(it) },
+                        error = { Log.d("dev_list_streaming", it.localizedMessage) }
+                )))
     }
 
     override fun loadMore(maxId: Long) {
         if (disposable.isDisposed) disposable = CompositeDisposable()
+        timelineView.showProgressBar()
+        disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
+                .TimelineObservable()
+                .listTimeline(listId, null, null, null, null, maxId, 50, null, null)
+                .map { it.map { Tweet(it) } }
+                .map { it.drop(1) }
+                .subscribeOn(Schedulers.newThread())
+                .subscribeWith(DefaultObserver<List<Tweet>>(
+                        next = { timelineView.addTweetList(it); timelineView.hideProgressBar() },
+                        error = { Log.d("dev_list_viewmodel", it.localizedMessage); timelineView.hideProgressBar() }
+                )))
     }
 
     override fun onRefresh() {
         timelineView.clearTweetList()
-        position = 0L
         setTimeline()
     }
 }

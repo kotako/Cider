@@ -42,7 +42,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
                 when (arguments.getString(TabManager.TARGET)) {
                     TabManager.TIMELINE -> TimelineViewModel(this)
                     TabManager.MENTION -> MentionViewModel(this)
-                    TabManager.USERLIST -> ListTimelineViewModel(this, arguments.getString(TabManager.TARGET_ID))
+                    TabManager.USERLIST -> ListTimelineViewModel(this, arguments.getLong(TabManager.TARGET_ID))
                     TabManager.SEARCH -> SearchTimelineViewModel(this, arguments.getString(TabManager.TARGET_ID))
                     else -> TimelineViewModel(this)
                 }

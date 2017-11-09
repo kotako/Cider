@@ -91,15 +91,26 @@ class RestAPIClient(session: TwitterSession) {
 
         @GET("/1.1/search/tweets.json")
         fun searchTimeline(@Query("q") query: String,
-                           @Query("geocode") geocode:String?,
-                           @Query("lang") lang:String?,
-                           @Query("local") local:String?,
+                           @Query("geocode") geocode: String?,
+                           @Query("lang") lang: String?,
+                           @Query("local") local: String?,
                            @Query("result_type") result_type: String?,
                            @Query("count") count: Int?,
                            @Query("until") until: String?,
-                           @Query("since_id") since_id:Long?,
+                           @Query("since_id") since_id: Long?,
                            @Query("max_id") max_id: Long?,
                            @Query("include_entities") include_entities: Boolean?): Observable<SearchResponse>
+
+        @GET("/1.1/lists/statuses.json")
+        fun listTimeline(@Query("list_id") list_id: Long,
+                         @Query("slug") slug: Long?,
+                         @Query("owner_screen_name") owner_screen_name: String?,
+                         @Query("owner_id") owner_id: Long?,
+                         @Query("since_id") since_id: Long?,
+                         @Query("max_id") max_id: Long?,
+                         @Query("count") count: Int?,
+                         @Query("include_entities") include_entities: Boolean?,
+                         @Query("include_rts") include_rts: Boolean?): Observable<List<Tweet>>
     }
 
     interface DirectMessagesObservable {
@@ -120,7 +131,7 @@ class RestAPIClient(session: TwitterSession) {
         @POST("/1.1/direct_messages/new.json")
         fun sendDirectMessage(@Query("user_id") user_id: Long?,
                               @Query("screen_name") screen_name: String?,
-                              @Query("text") text:String) : Observable<DirectMessage>
+                              @Query("text") text: String): Observable<DirectMessage>
     }
 
     interface UsersObservable {
