@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -12,17 +13,19 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.Toast
 import info.kotlin.kotako.cider.R
+import info.kotlin.kotako.cider.contract.TabSettingsActivityContract
 import info.kotlin.kotako.cider.databinding.ActivityTabSettingsBinding
 import info.kotlin.kotako.cider.model.TabManager
 import info.kotlin.kotako.cider.model.entity.Tab
 import info.kotlin.kotako.cider.model.entity.TabList
 import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.view.adapter.TabsRecyclerViewAdapter
-import info.kotlin.kotako.cider.view.dialog.TabSelectDialog
+import info.kotlin.kotako.cider.viewmodel.TabSettingsViewModel
 import io.realm.Realm
 
-class TabSettingsActivity : AppCompatActivity() {
+class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
 
     private val tabList: ArrayList<Tab> = ArrayList()
     lateinit var binding: ActivityTabSettingsBinding
@@ -38,6 +41,7 @@ class TabSettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         tabList.addAll(TabManager.tabList())
         binding = DataBindingUtil.setContentView(this, R.layout.activity_tab_settings)
+        binding.viewModel = TabSettingsViewModel(this)
         setUpView()
     }
 
@@ -52,7 +56,8 @@ class TabSettingsActivity : AppCompatActivity() {
                 adapter = TabsRecyclerViewAdapter(this@TabSettingsActivity, tabList)
                 layoutManager = LinearLayoutManager(this@TabSettingsActivity)
                 addItemDecoration(DividerItemDecoration(this@TabSettingsActivity, LinearLayoutManager.VERTICAL))
-                buttonAddTab.setOnClickListener { TabSelectDialog.newInstance().show(supportFragmentManager, "tab") }
+
+//              ドラッグイベントの処理
                 ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT) {
                     override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                         val tab = tabList[viewHolder.adapterPosition]
@@ -99,5 +104,27 @@ class TabSettingsActivity : AppCompatActivity() {
         }
         finish()
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun showTabSelectDialog() {
+        val tabs = arrayOf(TabManager.timelineTabDefault, TabManager.mentionTabDefault, TabManager.listTabDefault(0, "List"), TabManager.dmTabDefault)
+        AlertDialog.Builder(this)
+                .setItems(tabs.map { it.name }.toTypedArray(),
+                        { dialog, which ->
+                            addTab(tabs[which])
+                            dialog.dismiss()
+                        })
+                .create()
+                .show()
+    }
+
+    override fun addTab(tab: Tab) {
+        if (tabList.size > 4) {
+            Toast.makeText(this, "これ以上追加できないよ", Toast.LENGTH_SHORT).show()
+            return
+        }
+        tabList.add(tab)
+        binding.recyclerViewTabsSettings.adapter.notifyItemInserted(tabList.size)
+        tabRefresh()
     }
 }
