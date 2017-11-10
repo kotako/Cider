@@ -1,7 +1,6 @@
 package info.kotlin.kotako.cider.viewmodel
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.twitter.sdk.android.core.TwitterCore
@@ -13,6 +12,7 @@ import info.kotlin.kotako.cider.rx.DefaultObserver
 import info.kotlin.kotako.cider.view.dialog.ExpandedImageDialog
 import info.kotlin.kotako.cider.view.activity.PostActivity
 import info.kotlin.kotako.cider.view.activity.ProfileActivity
+import info.kotlin.kotako.cider.view.dialog.LinkNavigationDialog
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
@@ -86,5 +86,11 @@ class TweetViewModel {
                                 tweet.retweetCount++
                             }))
         }
+    }
+
+    fun onLinkClicked(view: View, tweet: Tweet) {
+        if (tweet.urlEntity.isEmpty()) return
+        LinkNavigationDialog.newInstance(Bundle().apply { putStringArray(LinkNavigationDialog.ARGUMENT_KEY, tweet.urlEntity.map { it.url }.toTypedArray()) })
+                .show((view.context as Activity).fragmentManager, "link")
     }
 }

@@ -20,10 +20,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
-        android:onClick="@{() -> viewModel.onTweetClicked(tweet)}"
-        android:focusable="true">
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="@{() -> viewModel.onTweetClicked(tweet)}">
 
         <RelativeLayout
             android:id="@+id/layout_cell_caption_favorite"
@@ -127,8 +127,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                app:interval="@{tweet.createdAt}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                app:interval="@{tweet.createdAt}" />
 
             <TextView
                 android:id="@+id/textview_cell_centent"
@@ -231,8 +231,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
-                    android:onClick="@{(view) -> viewModel.onReplyClicked(view, tweet)}"
                     android:background="?attr/selectableItemBackground"
+                    android:onClick="@{(view) -> viewModel.onReplyClicked(view, tweet)}"
                     android:scaleType="centerInside"
                     android:src="@mipmap/reply_white"
                     android:tint="#ffffff" />
@@ -261,8 +261,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
-                    android:onClick="@{() -> viewModel.onRetweetClicked(tweet)}"
                     android:background="?attr/selectableItemBackground"
+                    android:onClick="@{() -> viewModel.onRetweetClicked(tweet)}"
                     android:scaleType="centerInside"
                     android:src="@mipmap/ic_twitter_retweet_grey"
                     android:tint='@{Color.parseColor(tweet.retweeted ? "#2ecc71" : "#FFFFFF")}' />
@@ -312,14 +312,42 @@
                     android:textColor="@color/colorTextPrimary" />
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/button_cell_detail"
+            <RelativeLayout
+                android:id="@+id/layout_tweet_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/layout_tweet_fav" >
+
+                <ImageView
+                    android:id="@+id/button_cell_detail"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:src="@mipmap/list_grey"
+                    android:tint="#ffffff" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_toRightOf="@id/button_cell_detail"
+                    android:maxEms="3"
+                    android:minEms="3"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+            </RelativeLayout>
+
+
+            <ImageButton
+                android:id="@+id/button_cell_link"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/layout_tweet_fav"
+                android:layout_toRightOf="@id/layout_tweet_detail"
+                android:onClick="@{(view) -> viewModel.onLinkClicked(view, tweet)}"
                 android:background="?attr/selectableItemBackground"
-                android:src="@mipmap/list_grey"
+                android:src="@mipmap/link_grey"
                 android:tint="#ffffff" />
         </RelativeLayout>
     </RelativeLayout>

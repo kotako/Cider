@@ -15,13 +15,13 @@ import java.io.Serializable
 class Tweet(val id: Long, val createdAt: String, favoriteCount: Int, favorited: Boolean, retweeted: Boolean,
             retweetCount: Int, val user: User, val text: String, val source: String, val inReplyToStatusId: Long?,
             val inReplyToUserId: Long?, val inReplyToScreenName: String?, val hashtagEntity: List<HashtagEntity>?,
-            val urlEntity: List<UrlEntity>?, val userMentionEntity: List<MentionEntity>?,
+            val urlEntity: List<UrlEntity>, val userMentionEntity: List<MentionEntity>?,
             val mediaEntity: List<MediaEntity>?, val extendedMediaEntity: List<ExtendedMediaEntity>?, val retweetedUser: User?) : Serializable, BaseObservable() {
 
     constructor(tweet:Tweet, retweetedUser:User? = null):this(
             tweet.id, tweet.createdAt, tweet.favoriteCount, tweet.favorited, tweet.retweeted,
             tweet.retweetCount, User(tweet.user), tweet.text, tweet.source, tweet.inReplyToStatusId,
-            tweet.inReplyToUserId, tweet.inReplyToScreenName, tweet.extendedEntities.hashtags , tweet.extendedEntities.urls,
+            tweet.inReplyToUserId, tweet.inReplyToScreenName, tweet.entities.hashtags , tweet.entities.urls,
             tweet.extendedEntities.userMentions, tweet.extendedEntities.media, null, retweetedUser
     )
 
