@@ -221,132 +221,89 @@
             android:paddingTop="2dp"
             android:visibility="@{tweet.expanded ? View.VISIBLE : View.GONE}">
 
-            <RelativeLayout
-                android:id="@+id/layout_tweet_rep"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/button_cell_reply"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{(view) -> viewModel.onReplyClicked(view, tweet)}"
+                android:scaleType="centerInside"
+                android:src="@mipmap/reply_white"
+                android:tint="#ffffff" />
 
-                <ImageButton
-                    android:id="@+id/button_cell_reply"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:background="?attr/selectableItemBackground"
-                    android:onClick="@{(view) -> viewModel.onReplyClicked(view, tweet)}"
-                    android:scaleType="centerInside"
-                    android:src="@mipmap/reply_white"
-                    android:tint="#ffffff" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="2dp"
-                    android:layout_toRightOf="@id/button_cell_reply"
-                    android:maxEms="3"
-                    android:minEms="3"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_tweet_rt"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
-                android:layout_toRightOf="@id/layout_tweet_rep">
-
-                <ImageButton
-                    android:id="@+id/button_cell_retweet"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:background="?attr/selectableItemBackground"
-                    android:onClick="@{() -> viewModel.onRetweetClicked(tweet)}"
-                    android:scaleType="centerInside"
-                    android:src="@mipmap/ic_twitter_retweet_grey"
-                    android:tint='@{Color.parseColor(tweet.retweeted ? "#2ecc71" : "#FFFFFF")}' />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="4dp"
-                    android:layout_toRightOf="@id/button_cell_retweet"
-                    android:maxEms="3"
-                    android:minEms="3"
-                    android:text='@{tweet.retweetCount==0 ? "" : String.valueOf(tweet.retweetCount)}'
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/colorTextPrimary" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_tweet_fav"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
-                android:layout_toRightOf="@id/layout_tweet_rt">
-
-                <ImageButton
-                    android:id="@+id/button_cell_favorite"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_centerVertical="true"
-                    android:background="?attr/selectableItemBackground"
-                    android:onClick="@{() -> viewModel.onFavoriteClicked(tweet)}"
-                    android:scaleType="centerInside"
-                    android:src="@mipmap/favorite_grey"
-                    android:tint='@{Color.parseColor(tweet.favorited ? "#E74C3C" : "#FFFFFF")}' />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="4dp"
-                    android:layout_toRightOf="@id/button_cell_favorite"
-                    android:maxEms="3"
-                    android:minEms="3"
-                    android:text='@{tweet.favoriteCount==0 ? "": String.valueOf(tweet.favoriteCount)}'
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/colorTextPrimary" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_tweet_detail"
+            <TextView
+                android:id="@+id/textview_cell_reply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/layout_tweet_fav" >
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="8dp"
+                android:layout_toRightOf="@id/button_cell_reply"
+                android:maxEms="3"
+                android:minEms="3"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
 
-                <ImageView
-                    android:id="@+id/button_cell_detail"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:background="?attr/selectableItemBackground"
-                    android:src="@mipmap/list_grey"
-                    android:tint="#ffffff" />
+            <ImageButton
+                android:id="@+id/button_cell_retweet"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/textview_cell_reply"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{() -> viewModel.onRetweetClicked(tweet)}"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_twitter_retweet_grey"
+                android:tint='@{Color.parseColor(tweet.retweeted ? "#2ecc71" : "#FFFFFF")}' />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="2dp"
-                    android:layout_toRightOf="@id/button_cell_detail"
-                    android:maxEms="3"
-                    android:minEms="3"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/textview_cell_retweet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_toRightOf="@id/button_cell_retweet"
+                android:maxEms="3"
+                android:minEms="3"
+                android:text='@{tweet.retweetCount==0 ? "" : String.valueOf(tweet.retweetCount)}'
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                android:textColor="@color/colorTextPrimary" />
 
+            <ImageButton
+                android:id="@+id/button_cell_favorite"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/textview_cell_retweet"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{() -> viewModel.onFavoriteClicked(tweet)}"
+                android:scaleType="centerInside"
+                android:src="@mipmap/favorite_grey"
+                android:tint='@{Color.parseColor(tweet.favorited ? "#E74C3C" : "#FFFFFF")}' />
+
+            <TextView
+                android:id="@+id/textview_cell_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_toRightOf="@id/button_cell_favorite"
+                android:maxEms="3"
+                android:minEms="3"
+                android:text='@{tweet.favoriteCount==0 ? "": String.valueOf(tweet.favoriteCount)}'
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                android:textColor="@color/colorTextPrimary" />
 
             <ImageButton
                 android:id="@+id/button_cell_link"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/layout_tweet_detail"
-                android:onClick="@{(view) -> viewModel.onLinkClicked(view, tweet)}"
+                android:layout_toRightOf="@id/textview_cell_favorite"
                 android:background="?attr/selectableItemBackground"
+                android:onClick="@{(view) -> viewModel.onLinkClicked(view, tweet)}"
                 android:src="@mipmap/link_grey"
                 android:tint="#ffffff" />
         </RelativeLayout>
