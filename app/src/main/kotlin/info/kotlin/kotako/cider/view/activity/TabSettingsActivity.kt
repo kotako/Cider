@@ -19,6 +19,7 @@ import info.kotlin.kotako.cider.model.entity.Tab
 import info.kotlin.kotako.cider.model.entity.TabList
 import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.view.adapter.TabsRecyclerViewAdapter
+import info.kotlin.kotako.cider.view.dialog.TabSelectDialog
 import io.realm.Realm
 
 class TabSettingsActivity : AppCompatActivity() {
@@ -51,7 +52,7 @@ class TabSettingsActivity : AppCompatActivity() {
                 adapter = TabsRecyclerViewAdapter(this@TabSettingsActivity, tabList)
                 layoutManager = LinearLayoutManager(this@TabSettingsActivity)
                 addItemDecoration(DividerItemDecoration(this@TabSettingsActivity, LinearLayoutManager.VERTICAL))
-
+                buttonAddTab.setOnClickListener { TabSelectDialog.newInstance().show(supportFragmentManager, "tab") }
                 ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT) {
                     override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                         val tab = tabList[viewHolder.adapterPosition]

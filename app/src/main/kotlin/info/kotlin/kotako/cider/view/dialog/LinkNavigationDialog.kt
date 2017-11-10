@@ -21,7 +21,7 @@ class LinkNavigationDialog : DialogFragment() {
 
         return AlertDialog.Builder(activity)
                 .setTitle("Links")
-                .setItems(list.toTypedArray(), { _: DialogInterface, which: Int -> openLinkWithBrowser(list[which]) })
+                .setItems(list.toTypedArray(), { _: DialogInterface, which: Int -> openLinkWithBrowser(list[which]); dismiss() })
                 .create()
     }
 
