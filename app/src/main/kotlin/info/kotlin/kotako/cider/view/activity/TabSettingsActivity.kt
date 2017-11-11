@@ -11,18 +11,26 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
+import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.contract.TabSettingsActivityContract
 import info.kotlin.kotako.cider.databinding.ActivityTabSettingsBinding
+import info.kotlin.kotako.cider.model.AccountManager
+import info.kotlin.kotako.cider.model.RestAPIClient
 import info.kotlin.kotako.cider.model.TabManager
 import info.kotlin.kotako.cider.model.entity.Tab
 import info.kotlin.kotako.cider.model.entity.TabList
+import info.kotlin.kotako.cider.model.entity.UserList
+import info.kotlin.kotako.cider.rx.DefaultObserver
 import info.kotlin.kotako.cider.view.adapter.PagerAdapter
 import info.kotlin.kotako.cider.view.adapter.TabsRecyclerViewAdapter
+import info.kotlin.kotako.cider.view.dialog.UserListSelectDialog
 import info.kotlin.kotako.cider.viewmodel.TabSettingsViewModel
+import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 
 class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
@@ -112,11 +120,27 @@ class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
         AlertDialog.Builder(this)
                 .setItems(tabs.map { it.name }.toTypedArray(),
                         { dialog, which ->
+                            // userlistの場合は新たにダイアログを作成する
+                            if (tabs[which].target == TabManager.USERLIST) {
+                                AccountManager.currentAccount()?.userId?.let { getUserList(it) }
+                                return@setItems
+                            }
                             addTab(tabs[which])
                             dialog.dismiss()
                         })
                 .create()
                 .show()
+    }
+
+    private fun getUserList(userId: Long) {
+        RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
+                .UsersObservable()
+                .showUserList(userId, null, null)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(DefaultObserver<List<UserList>>(
+                        next = { if (it.isNotEmpty()) runOnUiThread { UserListSelectDialog.newInstance(it.toTypedArray()).show(fragmentManager, "userList") } },
+                        error = { runOnUiThread { Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show() } }
+                ))
     }
 
     override fun addTab(tab: Tab) {

@@ -139,6 +139,11 @@ class RestAPIClient(session: TwitterSession) {
         fun showUser(@Query("user_id") user_id: Long?,
                      @Query("screen_name") screen_name: String?,
                      @Query("include_entities") include_entities: Boolean?): Observable<User>
+
+        @GET("/1.1/lists/list.json")
+        fun showUserList(@Query("user_id") user_id: Long?,
+                         @Query("screen_name") screen_name: String?,
+                         @Query("reverse") reverse: Boolean?): Observable<List<UserList>>
     }
 
     interface PostObservable {
