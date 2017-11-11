@@ -13,7 +13,7 @@ class PagerAdapter(fm: FragmentManager, val list: ArrayList<Tab> = TabManager.ta
 
     override fun getCount(): Int = list.size
 
-    override fun getPageTitle(position: Int): CharSequence = TabManager.tabList()[position].name
+    override fun getPageTitle(position: Int): CharSequence = list[position].name
 
     override fun getItemPosition(`object`: Any?): Int = PagerAdapter.POSITION_NONE
 

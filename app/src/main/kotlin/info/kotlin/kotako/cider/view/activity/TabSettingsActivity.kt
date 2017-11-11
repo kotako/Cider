@@ -70,8 +70,8 @@ class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
                     }
 
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                        tabList.removeAt(viewHolder.adapterPosition)
-                        adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                        removeTab(viewHolder.adapterPosition)
+                        changed = true
                     }
                 }).attachToRecyclerView(this)
             }
@@ -80,6 +80,7 @@ class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
 
     private fun tabRefresh() {
         binding.tabsPreview.apply {
+            binding.pagerTabsSettings.adapter = PagerAdapter(supportFragmentManager, tabList)
             removeAllTabs()
             setupWithViewPager(binding.pagerTabsSettings)
             for (i in 0 until tabList.size) {
@@ -125,6 +126,16 @@ class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
         }
         tabList.add(tab)
         binding.recyclerViewTabsSettings.adapter.notifyItemInserted(tabList.size)
+        tabRefresh()
+    }
+
+    override fun removeTab(position: Int) {
+        if (tabList.size == 1) {
+            Toast.makeText(this, "これ以上削除できないよ", Toast.LENGTH_SHORT).show()
+            return
+        }
+        tabList.removeAt(position)
+        binding.recyclerViewTabsSettings.adapter.notifyItemRemoved(position)
         tabRefresh()
     }
 }
