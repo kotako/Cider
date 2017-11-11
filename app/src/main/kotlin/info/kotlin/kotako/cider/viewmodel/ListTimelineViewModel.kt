@@ -6,7 +6,9 @@ import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
 import info.kotlin.kotako.cider.model.RestAPIClient
 import info.kotlin.kotako.cider.model.StreamApiClient
+import info.kotlin.kotako.cider.model.entity.ListMembers
 import info.kotlin.kotako.cider.model.entity.Tweet
+import info.kotlin.kotako.cider.model.entity.UserList
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -15,14 +17,27 @@ import twitter4j.Status
 class ListTimelineViewModel(private val timelineView: TimelineFragmentContract, private val listId: Long) : TimelineViewModelContract {
 
     private var disposable = CompositeDisposable()
+    private var memberIdList = ArrayList<Long>()
 
     override fun start() {
         if (timelineView.tweetListSize() < 1) setTimeline()
+        if (memberIdList.size < 1) loadMember(listId)
         startStream()
     }
 
     override fun stop() {
         disposable.dispose()
+    }
+
+    fun loadMember(ListId:Long){
+        RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
+                .UsersObservable()
+                .showUserListMember(listId, null, null, null, 300, null, false, false)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe (DefaultObserver<ListMembers>(
+                        next = { memberIdList.addAll(it.users.map { it.id }) },
+                        error = { Log.d("dev_list_viewmodel", it.localizedMessage) }
+                ))
     }
 
     override fun setTimeline() {
@@ -41,12 +56,10 @@ class ListTimelineViewModel(private val timelineView: TimelineFragmentContract, 
 
     override fun startStream() {
         if (disposable.isDisposed) disposable = CompositeDisposable()
-//      TODO: リストに入っているメンバーを取得
-        val idList = arrayListOf<Long>()
         disposable.add(StreamApiClient
                 .statusObservable
                 .filter({ it is Status })
-                .filter({ idList.contains((it as Status).user.id) })
+                .filter({ memberIdList.contains((it as Status).user.id) })
                 .map { Tweet(it as Status) }
                 .subscribeWith(DefaultObserver<Tweet>(
                         next = { timelineView.addTweet(it) },

@@ -141,9 +141,25 @@ class RestAPIClient(session: TwitterSession) {
                      @Query("include_entities") include_entities: Boolean?): Observable<User>
 
         @GET("/1.1/lists/list.json")
-        fun showUserList(@Query("user_id") user_id: Long?,
-                         @Query("screen_name") screen_name: String?,
-                         @Query("reverse") reverse: Boolean?): Observable<List<UserList>>
+        fun showUserLists(@Query("user_id") user_id: Long?,
+                          @Query("screen_name") screen_name: String?,
+                          @Query("reverse") reverse: Boolean?): Observable<List<UserList>>
+
+        @GET("/1.1/lists/show.json")
+        fun showUserList(@Query("list_id") list_id: Long,
+                         @Query("slug") slug: Long?,
+                         @Query("owner_screen_name") owner_screen_name: String?,
+                         @Query("owner_id") owner_id: Long?): Observable<UserList>
+
+        @GET("/1.1/lists/members.json")
+        fun showUserListMember(@Query("list_id") list_id: Long,
+                               @Query("slug") slug: Long?,
+                               @Query("owner_screen_name") owner_screen_name: String?,
+                               @Query("owner_id") owner_id: Long?,
+                               @Query("count") count: Int?,
+                               @Query("cursor") cursor: Long?,
+                               @Query("include_entities") include_entities: Boolean?,
+                               @Query("skip_status") skip_status: Boolean?): Observable<ListMembers>
     }
 
     interface PostObservable {

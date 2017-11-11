@@ -11,7 +11,6 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
@@ -135,7 +134,7 @@ class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
     private fun getUserList(userId: Long) {
         RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .UsersObservable()
-                .showUserList(userId, null, null)
+                .showUserLists(userId, null, null)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(DefaultObserver<List<UserList>>(
                         next = { if (it.isNotEmpty()) runOnUiThread { UserListSelectDialog.newInstance(it.toTypedArray()).show(fragmentManager, "userList") } },
@@ -151,6 +150,7 @@ class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
         tabList.add(tab)
         binding.recyclerViewTabsSettings.adapter.notifyItemInserted(tabList.size)
         tabRefresh()
+        changed = true
     }
 
     override fun removeTab(position: Int) {
@@ -161,5 +161,6 @@ class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
         tabList.removeAt(position)
         binding.recyclerViewTabsSettings.adapter.notifyItemRemoved(position)
         tabRefresh()
+        changed = true
     }
 }
