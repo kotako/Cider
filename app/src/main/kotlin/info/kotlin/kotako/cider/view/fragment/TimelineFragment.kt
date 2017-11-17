@@ -69,12 +69,6 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
         binding.viewModel?.start()
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.let { tweetList.addAll(it.getSerializable(SAVED_TWEET_LIST_KEY) as ArrayList<Tweet>) }
-        binding.recyclerViewTimeline.adapter?.notifyDataSetChanged()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         binding.viewModel?.stop()
@@ -84,6 +78,12 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
         super.onSaveInstanceState(outState)
         outState?.remove(SAVED_TWEET_LIST_KEY)
         outState?.putSerializable(SAVED_TWEET_LIST_KEY, tweetList)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        savedInstanceState?.let { tweetList.addAll(it.getSerializable(SAVED_TWEET_LIST_KEY) as ArrayList<Tweet>) }
+        binding.recyclerViewTimeline.adapter?.notifyDataSetChanged()
     }
 
     //  ----implements TimelineFragmentContract----

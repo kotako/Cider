@@ -1,5 +1,7 @@
 package info.kotlin.kotako.cider.view.adapter
 
+import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
@@ -16,6 +18,12 @@ class PagerAdapter(fm: FragmentManager, val list: ArrayList<Tab> = TabManager.ta
     override fun getPageTitle(position: Int): CharSequence = list[position].name
 
     override fun getItemPosition(`object`: Any?): Int = PagerAdapter.POSITION_NONE
+
+    override fun saveState(): Parcelable {
+        val bundle = super.saveState() as Bundle
+        bundle.putParcelableArray("states", null)
+        return bundle
+    }
 
     fun refresh() {
         list.clear()
