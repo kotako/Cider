@@ -82,6 +82,7 @@ class TimelineFragment : Fragment(), TimelineFragmentContract {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
+        outState?.remove(SAVED_TWEET_LIST_KEY)
         outState?.putSerializable(SAVED_TWEET_LIST_KEY, tweetList)
     }
 

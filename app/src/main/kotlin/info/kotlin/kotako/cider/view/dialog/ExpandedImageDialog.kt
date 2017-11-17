@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -61,5 +62,10 @@ class ExpandedImageDialog : DialogFragment() {
             setView(view)
             create()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        this.dismiss()
+        return super.onOptionsItemSelected(item)
     }
 }
