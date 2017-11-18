@@ -8,6 +8,7 @@ import info.kotlin.kotako.cider.model.RestAPIClient
 import info.kotlin.kotako.cider.model.StreamApiClient
 import info.kotlin.kotako.cider.model.entity.ListMembers
 import info.kotlin.kotako.cider.model.entity.Tweet
+import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.model.entity.UserList
 import info.kotlin.kotako.cider.rx.DefaultObserver
 import io.reactivex.disposables.CompositeDisposable
@@ -46,7 +47,7 @@ class ListTimelineViewModel(private val timelineView: TimelineFragmentContract, 
         disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .listTimeline(listId, null, null, null, null, null, 50, null, null)
-                .map { it.map { Tweet(it) } }
+                .map { t -> t.map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) } }
                 .subscribeOn(Schedulers.newThread())
                 .subscribeWith(DefaultObserver<List<Tweet>>(
                         next = { timelineView.addTweetList(it); timelineView.hideProgressBar() },
@@ -60,7 +61,8 @@ class ListTimelineViewModel(private val timelineView: TimelineFragmentContract, 
                 .statusObservable
                 .filter({ it is Status })
                 .filter({ memberIdList.contains((it as Status).user.id) })
-                .map { Tweet(it as Status) }
+                .map { it as Status }
+                .map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) }
                 .subscribeWith(DefaultObserver<Tweet>(
                         next = { timelineView.addTweet(it) },
                         error = { Log.d("dev_list_streaming", it.localizedMessage) }
@@ -73,7 +75,7 @@ class ListTimelineViewModel(private val timelineView: TimelineFragmentContract, 
         disposable.add(RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .TimelineObservable()
                 .listTimeline(listId, null, null, null, null, maxId, 50, null, null)
-                .map { it.map { Tweet(it) } }
+                .map { t -> t.map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) } }
                 .map { it.drop(1) }
                 .subscribeOn(Schedulers.newThread())
                 .subscribeWith(DefaultObserver<List<Tweet>>(
