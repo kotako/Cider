@@ -36,22 +36,21 @@ class ProfileActivity : AppCompatActivity(), ProfileActivityContract {
     }
 
     private fun setUpView() {
-        binding.apply {
-            toolbarProfile.apply {
-                setNavigationIcon(R.mipmap.arrow_back_white)
-                setNavigationOnClickListener { finish() }
-            }
+//      toolbarのセットアップ
+        binding.toolbarProfile.setNavigationIcon(R.mipmap.arrow_back_white)
+        binding.toolbarProfile.setNavigationOnClickListener { finish() }
 
-            // viewPager, tabLayoutをせっと
-            intent.extras.getSerializable("userId")?.let { pagerProfile.adapter = ProfilePagerAdapter(supportFragmentManager, it as Long) }
-            tabsProfile.apply {
-                setupWithViewPager(pagerProfile)
-                val tabList = listOf(R.mipmap.ic_twitter_grey, R.mipmap.insert_photo_grey, R.mipmap.friend_grey, R.mipmap.follower_grey)
-                for (i in 0 until tabCount) {
-                    getTabAt(i)?.customView = layoutInflater.inflate(R.layout.tab_default, null).apply {
-                        (findViewById(R.id.imageview_tab) as ImageView).setImageResource(tabList[i])
-                        (findViewById(R.id.imageview_tab) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary))
-                    }
+        // ユーザIDを取得してセットする
+        intent.extras.getSerializable("userId")?.let { binding.pagerProfile.adapter = ProfilePagerAdapter(supportFragmentManager, it as Long) }
+
+//      タブのセット
+        binding.tabsProfile.apply {
+            setupWithViewPager(binding.pagerProfile)
+            val tabList = listOf(R.mipmap.ic_twitter_grey, R.mipmap.insert_photo_grey, R.mipmap.friend_grey, R.mipmap.follower_grey)
+            for (i in 0 until tabCount) {
+                getTabAt(i)?.customView = layoutInflater.inflate(R.layout.tab_default, null).apply {
+                    (findViewById(R.id.imageview_tab) as ImageView).setImageResource(tabList[i])
+                    (findViewById(R.id.imageview_tab) as ImageView).setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary))
                 }
             }
         }

@@ -11,4 +11,4 @@ class Collection(
         val url: String,
         val user_id: String,
         val visibility: String
-): Serializable
+) : Serializable

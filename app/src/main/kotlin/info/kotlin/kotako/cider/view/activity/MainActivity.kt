@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
 
             tabs.apply {
                 setupWithViewPager(pager)
-                val list = TabManager.tabList()
+                val list = TabManager.getTabList()
                 for (i in 0 until list.size) {
                     getTabAt(i)?.customView = layoutInflater.inflate(R.layout.tab_default, null)
                             .apply {

@@ -46,7 +46,7 @@ class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tabList.addAll(TabManager.tabList())
+        tabList.addAll(TabManager.getTabList())
         binding = DataBindingUtil.setContentView(this, R.layout.activity_tab_settings)
         binding.viewModel = TabSettingsViewModel(this)
         setUpView()
@@ -56,7 +56,7 @@ class TabSettingsActivity : AppCompatActivity(), TabSettingsActivityContract {
         supportActionBar?.title = "Tab Settings"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.run {
+        binding.apply {
             pagerTabsSettings.adapter = PagerAdapter(supportFragmentManager)
             tabRefresh()
             recyclerViewTabsSettings.apply {

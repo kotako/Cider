@@ -22,7 +22,7 @@ import info.kotlin.kotako.cider.viewmodel.AccountListViewModel
 class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
 
     override var accountChanged: Boolean = false
-    var viewModel:AccountListViewModel? = null
+    private lateinit var viewModel: AccountListViewModel
 
     companion object {
         fun start(activity: Activity) = activity.startActivityForResult((Intent(activity, AccountListActivity::class.java)), 1)
@@ -31,22 +31,22 @@ class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_list)
+        viewModel = AccountListViewModel(this)
         setUpView()
     }
 
-    fun setUpView() {
+    private fun setUpView() {
         supportActionBar?.title = "Account"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Account一覧をセット
-        viewModel = AccountListViewModel(this)
-        viewModel?.setAccountView()
+        viewModel.setAccountView()
 
         // Login Buttonのアクションをセット
         val loginButton = findViewById(R.id.button_login_with_twitter) as TwitterLoginButton
         loginButton.callback = (object : Callback<TwitterSession>() {
             override fun success(result: Result<TwitterSession>) {
-                viewModel?.onTokenReceived(result)
+                viewModel.onTokenReceived(result)
                 Snackbar.make(findViewById(R.id.layout_account_list), "Successfully", Snackbar.LENGTH_SHORT)
                         .show()
             }
@@ -61,7 +61,7 @@ class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         (findViewById(R.id.button_login_with_twitter) as TwitterLoginButton).onActivityResult(requestCode, resultCode, data)
-        viewModel?.setAccountView()
+        viewModel.setAccountView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -74,7 +74,7 @@ class AccountListActivity : AppCompatActivity(), AccountListActivityContract {
     override fun setAccountView(account: Account) {
         val view = AccountCellView(this)
         view.setAccount(account)
-        viewModel?.let { view.setViewModel(it) }
+        view.setViewModel(viewModel)
         if ((findViewById(R.id.layout_container_account_current) as RelativeLayout).childCount == 0) {
             (findViewById(R.id.layout_container_account_current) as RelativeLayout).addView(view)
             return

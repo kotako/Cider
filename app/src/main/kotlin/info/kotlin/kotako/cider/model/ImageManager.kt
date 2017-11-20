@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -14,9 +13,9 @@ class ImageManager {
 
     companion object {
         fun getCurrentStorageDirectory(context: Context): File =
-                getStorageDirectory(context, SimpleDateFormat("yyyyMMddHHmmss", Locale.ROOT).format(Date()).toString() + ".png")
+                getStorageDirectory(SimpleDateFormat("yyyyMMddHHmmss", Locale.ROOT).format(Date()).toString() + ".png")
 
-        fun getStorageDirectory(context: Context, fileName: String): File =
+        private fun getStorageDirectory(fileName: String): File =
                 File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), fileName)
 
         fun isExternalStorageWritable(): Boolean =

@@ -5,7 +5,6 @@ import com.twitter.sdk.android.core.TwitterCore
 import info.kotlin.kotako.cider.contract.TimelineFragmentContract
 import info.kotlin.kotako.cider.contract.TimelineViewModelContract
 import info.kotlin.kotako.cider.model.RestAPIClient
-import info.kotlin.kotako.cider.model.StreamApiClient
 import info.kotlin.kotako.cider.model.entity.Tweet
 import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.rx.DefaultObserver
@@ -57,17 +56,8 @@ class SearchTimelineViewModel(private val timelineView: TimelineFragmentContract
                         completed = { timelineView.hideProgressBar() })))
     }
 
-    override fun startStream() {
-        if (disposable.isDisposed) disposable = CompositeDisposable()
-        disposable.add(
-                StreamApiClient.searchStatusObservable(query)
-                        .map { tweet -> if (tweet.retweetedStatus != null) Tweet(tweet.retweetedStatus, User(tweet.user)) else Tweet(tweet) }
-                        .subscribeOn(Schedulers.newThread())
-                        .subscribeWith(DefaultObserver<Tweet>(
-                                next = { timelineView.addTweet(it) },
-                                error = { Log.d("TimelineViewModel", it.localizedMessage) }
-                        )))
-    }
+//  searchのストリーミングはなしで……
+    override fun startStream() {}
 
     override fun onRefresh() {
         position = 0L

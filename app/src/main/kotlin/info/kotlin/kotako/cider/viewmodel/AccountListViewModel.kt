@@ -10,8 +10,8 @@ import io.realm.Realm
 
 class AccountListViewModel(private val accountListActivity: AccountListActivityContract ) {
 
-    val realm = Realm.getDefaultInstance()
-    val twitterManager = TwitterCore.getInstance()
+    val realm: Realm = Realm.getDefaultInstance()
+    private val twitterManager: TwitterCore = TwitterCore.getInstance()
 
     fun setAccountView() {
 //      Realmから認証したアカウントを取得し、RecyclerViewにセットする

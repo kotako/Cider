@@ -9,7 +9,7 @@ import android.support.v4.view.PagerAdapter
 import info.kotlin.kotako.cider.model.TabManager
 import info.kotlin.kotako.cider.model.entity.Tab
 
-class PagerAdapter(fm: FragmentManager, val list: ArrayList<Tab> = TabManager.tabList()) : FragmentStatePagerAdapter(fm) {
+class PagerAdapter(fm: FragmentManager, val list: ArrayList<Tab> = TabManager.getTabList()) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment = TabManager.getFragmentByTab(list[position])
 

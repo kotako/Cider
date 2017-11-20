@@ -9,7 +9,7 @@ import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.view.viewHolder.UserViewHolder
 
-class FriendsRecyclerViewAdapter(val context:Context, val friendsList:ArrayList<User>) : RecyclerView.Adapter<UserViewHolder>() {
+class FriendsRecyclerViewAdapter(val context: Context, private val friendsList: ArrayList<User>) : RecyclerView.Adapter<UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): UserViewHolder =
             UserViewHolder(LayoutInflater.from(context).inflate(R.layout.view_user_cell, parent, false))

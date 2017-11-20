@@ -30,12 +30,12 @@ class ListTimelineViewModel(private val timelineView: TimelineFragmentContract, 
         disposable.dispose()
     }
 
-    fun loadMember(ListId:Long){
+    private fun loadMember(listId: Long) {
         RestAPIClient(TwitterCore.getInstance().sessionManager.activeSession)
                 .UsersObservable()
                 .showUserListMember(listId, null, null, null, 300, null, false, false)
                 .subscribeOn(Schedulers.newThread())
-                .subscribe (DefaultObserver<ListMembers>(
+                .subscribe(DefaultObserver<ListMembers>(
                         next = { memberIdList.addAll(it.users.map { it.id }) },
                         error = { Log.d("dev_list_viewmodel", it.localizedMessage) }
                 ))

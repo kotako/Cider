@@ -16,15 +16,4 @@ object StreamApiClient {
                     user()
                 }
     }.share()
-
-    fun searchStatusObservable(query: String): Observable<Status> = Observable.create<Status> { subscriber ->
-        TwitterStreamFactory(AccountManager.currentConfig()).instance
-                .apply {
-                    StreamListenerWrapper.addStatusListener(this, object : UserStreamAdapter() {
-                        override fun onStatus(status: Status) = subscriber.onNext(status)
-                        override fun onException(ex: Exception) = subscriber.onError(ex)
-                    })
-                    filter(query)
-                }
-    }
 }

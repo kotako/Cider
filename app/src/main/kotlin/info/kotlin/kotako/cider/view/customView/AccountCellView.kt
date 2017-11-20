@@ -11,7 +11,7 @@ import info.kotlin.kotako.cider.viewmodel.AccountListViewModel
 
 class AccountCellView constructor(context: Context) : RelativeLayout(context) {
 
-    val binding = DataBindingUtil.inflate<ViewAccountCellBinding>(LayoutInflater.from(context), R.layout.view_account_cell, this, true)
+    val binding: ViewAccountCellBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.view_account_cell, this, true)
 
     fun setAccount(account: Account) {
         binding.account = account

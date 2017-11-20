@@ -5,14 +5,13 @@ import android.support.v4.app.Fragment
 import info.kotlin.kotako.cider.R
 import info.kotlin.kotako.cider.model.entity.Tab
 import info.kotlin.kotako.cider.model.entity.TabList
-import info.kotlin.kotako.cider.model.entity.User
 import info.kotlin.kotako.cider.view.fragment.DirectMessagesFragment
 import info.kotlin.kotako.cider.view.fragment.TimelineFragment
 import io.realm.Realm
 
 class TabManager {
     companion object {
-        //      タグ
+        // タグ
         val TIMELINE = "timeline"
         val DIRECT_MESSAGES = "direct_messages"
         val TAG_COLLECTIONS = "tag_collections"
@@ -22,7 +21,7 @@ class TabManager {
         val USERLIST = "Userlist"
         val SEARCH = "Search"
 
-        //      タブ
+        // デフォルトタブ
         val timelineTabDefault = Tab("Home", TIMELINE, null, R.mipmap.home_grey)
         val mentionTabDefault = Tab("Mention", MENTION, null, R.mipmap.notifications_grey)
         val dmTabDefault = Tab("Direct Messages", DIRECT_MESSAGES, null, R.mipmap.email_grey)
@@ -45,7 +44,7 @@ class TabManager {
             else -> Fragment()
         }
 
-        fun tabList(): ArrayList<Tab> {
+        fun getTabList(): ArrayList<Tab> {
             val result = ArrayList<Tab>()
             Realm.getDefaultInstance().use { realm ->
                 realm.where(TabList::class.java).findFirst()?.tabList?.forEach {
@@ -62,7 +61,7 @@ class TabManager {
                     it.tabList.addAll(tabList)
                 }
             }
-            return Companion.tabList()
+            return Companion.getTabList()
         }
     }
 }
